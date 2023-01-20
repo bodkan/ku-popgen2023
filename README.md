@@ -1,4 +1,4 @@
-# Lecture and exercises on simulation in population genetics
+# Lecture and exercises on simulation in population genetics at Copenhagen University 2022
 
 ### You can find the slides [here](https://martinp.quarto.pub/ku-popgen2022-simulations-in-population-genetics/).
 
