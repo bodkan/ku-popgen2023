@@ -67,7 +67,7 @@ Image from [Schiffels and Durbin (2014)](https://www.nature.com/articles/ng.3015
 
 # What does it mean to simulate a genome?
 
-. . . 
+. . .
 
 <br> How would you design an algorithm for a popgen simulation?</h2>
 
@@ -91,7 +91,7 @@ We need _genetics_.
 
 <br>
 
-. . . 
+. . .
 
 ...a linear sequence of nucleotides...
 
@@ -130,7 +130,6 @@ Let's make the algorithm even more minimal by focusing on the evolution of a sin
 If you want to try the following couple of examples yourself, you will need to paste the following lines into your R session (either R in the terminal, or better an RStudio session):
 
 ```{r, setup}
-library(tidyverse)
 library(parallel)
 library(MASS)
 
@@ -254,6 +253,7 @@ abline(v = 10000 * factors, lwd = 5)
 
 ::: columns
 ::: {.column width="50%"}
+
 ```{r}
 #| code-fold: true
 #| fig-align: center
@@ -268,7 +268,7 @@ final_frequencies <- parallel::mclapply(
     f <- factors[i]
     t <- as.integer(N * f)
     # get complete trajectories as a matrix (each column a single trajectory)
-    reps <- replicate(10000, simulate(N = N, p_start = p_start, generations = t))
+    reps <- replicate(10, simulate(N = N, p_start = p_start, generations = t))
     # only keep the last slice of the matrix with the final frequencies
     data.frame(
       t = sprintf("t = %s * N", f),
@@ -295,6 +295,7 @@ ggplot() +
         legend.title = element_text(size = 15),
         legend.text = element_text(size = 15))
 ```
+
 :::
 
 ::: {.column width="50%"}
@@ -303,45 +304,6 @@ ggplot() +
 :::
 :::
 :::
-
-
-<!-- # Why bother? -->
-
-<!-- ## -->
-
-<!-- :::: columns -->
-
-<!-- ::: {.column width="40%"} -->
-
-<!-- <center> -->
-
-<!-- ![](images/feynman.jpeg) -->
-
-<!-- [Richard Feynman](https://en.wikipedia.org/wiki/Richard_Feynman) -->
-
-<!-- </center> -->
-
-<!-- ::: -->
-
-<!-- ::: {.column width="60%"} -->
-
-<!-- ![](images/feynman_quote.png) -->
-
-<!-- ::: -->
-
-<!-- :::: -->
-
-
-
-# Bonus exercise #1
-
-If you're bored later, **try adding selection** to this model!
-
-In each generation, weight the frequencies based on fitness of each of the tree genotypes.
-
-If you need a hint, take a look [here](https://github.com/bodkan/notebooks/blob/master/MLE_single_locus_selection.ipynb).
-
-
 
 
 # {background-image="images/montypython.jpeg"}
@@ -387,7 +349,7 @@ They are both extremely powerful...
 
 ##
 
-:::: {.columns}   
+:::: {.columns}
 
 ::: {.column width="60%"}
 
@@ -571,9 +533,12 @@ source: [link](https://tskit.dev/msprime/docs/stable/demography.html#demographic
 First run this:
 
 ```{r}
-library(tidyverse) # table processing/filtering and plotting
+# table processing/filtering and plotting
+library(ggplot2)
+library(dplyr)
 
 library(slendr) # simulation and tree-sequence analysis
+init_env()
 ```
 
 <center>_(ignore the message about missing SLiM)_</center>
@@ -923,7 +888,7 @@ t_tskit <- ts_tree(ts_tiny, 1)
 library(ggtree)
 nodes <- ts_nodes(t_phylo) %>% as_tibble %>% dplyr::select(node = phylo_id, pop, node_id)
 ggtree(t_phylo) %<+% nodes +
-  geom_label(aes(label = node_id)) + 
+  geom_label(aes(label = node_id)) +
   guides(color = "none")
 ```
 :::
@@ -1341,7 +1306,7 @@ Collaborator [Hestu](https://zelda.fandom.com/wiki/Hestu) gave you AFS computed 
 
 
 ```{r}
-afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244, 264, 218, 
+afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244, 264, 218,
 133, 173, 159, 142, 167, 129, 125, 143)
 ```
 
