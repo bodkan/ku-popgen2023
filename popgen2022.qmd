@@ -495,7 +495,8 @@ First run this:
 library(ggplot2)
 library(dplyr)
 
-library(slendr) # simulation and tree-sequence analysis
+# simulation and tree-sequence analysis
+library(slendr)
 init_env()
 ```
 
