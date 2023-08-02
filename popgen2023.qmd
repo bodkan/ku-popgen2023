@@ -702,7 +702,7 @@ Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page 
 ::: {.column width="50%"}
 
 ::: {.fragment}
-Start a new R script in [RStudio](http://emily.popgen.dk:3838/) with the following 'template':
+Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this 'template':
 
 ```{r}
 #| eval: false
@@ -1032,7 +1032,7 @@ In our script we'll have something like this:
 ```{r}
 #| eval: false
 #| code-line-numbers: 1-3|5-7
-<... population definitions ...>
+<... population() definitions ...>
 
 model <- compile_model(...)
   
@@ -1277,12 +1277,429 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 ## Exercise #2 --- hints
 
-1.  Write a function (in script `model2.R`) that gets $N_e$ as input, creates a population, compiles a model, simulates a `ts`, runs `ts_afs()` for 10 samples, and returns the AFS vector.
+1.  Write a function (in a script `model2.R`) with `Ne` as its only input. It will create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS vector.
 
-2.  Find the $N_e$ value that will give the closest AFS to the observed one. For instance, you could:
+::: fragment
+2.  Find `Ne` that will give the closest AFS to the observed AFS:
 
-    -   a ) Plot AFS for various $N_e$ values and eyeball $N_e$ value that looks correct judging from a plot _[easy]_
+    -   _option #1_ [_easy_]: Plot AFS for various $N_e$ values and eyeball which AFS looks closest judging from the plot
 
-    -   b ) Simulate AFS in steps of possible $N_e$ values and find the [closest matching](https://en.wikipedia.org/wiki/Mean_squared_error) one _[harder]_
+    -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (`lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
+:::
 
-## Exercise #2 solution -- grid search
+# Exercise #2 --- solution
+
+
+
+
+
+
+
+
+
+
+
+
+# Gene flow / admixture
+
+## We use the function `gene_flow()`
+
+<br>
+
+If we have populations `p1` and `p2`, we schedule a gene flow as:
+
+```{r}
+#| eval: false
+gf <- gene_flow(from = p1, to = p2, start = 500, end = 600, rate = 0.13)
+```
+
+. . .
+
+<br>
+
+Multiple gene-flow events can be gathered in a list:
+
+```{r}
+#| eval: false
+gf <- list(
+  gene_flow(from = p1, to = p2, start = 500, end = 600, rate = 0.13),
+  gene_flow(from = <...>, to = <...>, start = <...>, end = <...>, rate = <...>),
+  < potentially many more ... >
+)
+```
+
+. . .
+
+<br>
+
+<center>**`gene_flow()` checks for consistency!**</center>
+
+
+## Plugging gene flow(s) into the model
+
+<br>
+If you have a _slendr_ script, you can do this:
+<br>
+
+```{r}
+#| eval: false
+#| code-line-numbers: 2-7|11
+<... population() definitions ...>
+
+gf <- list(
+  gene_flow(from = ... to = ..., start = ..., end = ..., rate = ...),
+  gene_flow(from = ..., to = ..., start = ..., end = ..., rate = ...),
+  ...
+)
+
+model <- compile_model(
+  populations = list(...),
+  gene_flow = gf,           # <--- gene flow(s) specified
+  generation_time = <...>
+)
+```
+
+
+
+
+
+# Exercise #3
+
+## Exercise #3 --- adding gene flow
+
+Add archaic introgression to your `model1.R` script:
+
+```{r}
+#| echo: false
+#| fig-align: center
+chimp <- population("CHIMP", time = 7e6, N = 5000)
+afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
+eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
+nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
+
+model <- compile_model(populations = list(chimp, nea, afr, eur), generation_time = 30)
+
+cowplot::plot_grid(
+  plot_model(model) + ggtitle("Normal time scale"),
+  plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
+)
+```
+
+&nbsp;
+
+## Exercise #3 --- adding gene flow
+
+Add archaic introgression to your `model1.R` script:
+
+```{r}
+#| echo: false
+#| fig-align: center
+gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 55000, end = 50000)
+
+model <- compile_model(
+  populations = list(chimp, nea, afr, eur),
+  gene_flow = gf,
+  generation_time = 30
+)
+
+cowplot::plot_grid(
+  plot_model(model, proportions = TRUE) + ggtitle("Normal time scale"),
+  plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
+)
+```
+
+3% pulse (`rate = 0.03`) between 55-50 kya (`start`-`end`)
+
+
+# Exercise #3 --- solution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Exercise #4
+
+## Exercise #4 --- additional statistics
+
+```{r}
+#| fig-align: center
+plot_model(model)
+```
+
+## Exercise #4 --- popgen statistics
+
+Compute [nucleotide diversity ($\pi$)](https://en.wikipedia.org/wiki/Nucleotide_diversity) in each population (`ts_diversity()`). Do your results with known $N_e$ values?
+
+<hr>
+
+Compute `ts_divergence()` (genetic divergence) or `ts_fst()` ([$F_{ST}$](https://en.wikipedia.org/wiki/Fixation_index)) between populations. Do the results match the model?
+
+<hr>
+
+Compute the "outgroup $f_3$" using CHIMP as the outgroup (`ts_f3()`) for different pairs of "A" and "B" populations.
+
+<hr>
+
+Test Neanderthal introgression in EUR using the $f_4$ statistic (`ts_f4()`). \[hint: $f_4$(AFR, EUR; NEAND, CHIMP)\]
+
+
+
+# Exercise #4 --- solution
+
+```{r}
+#|echo: false
+library(slendr)
+init_env()
+
+chimp <- population("CHIMP", time = 7e6, N = 5000)
+afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
+eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
+nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
+
+gf <- gene_flow(from = nea, to = eur, rate = 0.05, start = 50000, end = 40000)
+
+model <- compile_model(
+  populations = list(chimp, nea, afr, eur),
+  gene_flow = gf,
+  generation_time = 30
+)
+ts <-
+  msprime(model, sequence_length = 10e6, recombination_rate = 1e-8) %>%
+  ts_mutate(mutation_rate = 1e-8)
+```
+
+## Diversity
+
+Get a list of named individuals in each population:
+
+```{r}
+samples <- ts_samples(ts) %>% split(., .$pop) %>% lapply(pull, "name")
+```
+
+```{r}
+pi <- ts_diversity(ts, sample_sets = samples)
+arrange(pi, diversity)
+```
+
+## Divergence
+
+```{r}
+div <- ts_divergence(ts, sample_sets = samples)
+arrange(div, desc(divergence))
+```
+
+## Outgroup $f_3$-statistic
+
+```{r}
+# A = Africans, B = Europeans, C = outgroup
+ts_f3(ts, A = list(afr = samples$AFR), B = list(eur = samples$EUR), C = "CHIMP_1")
+# A = Africans, B = Neanderthals, C = outgroup
+ts_f3(ts, A = list(afr = samples$AFR), B = list(nea = samples$NEA), C = "CHIMP_1")
+# A = Europeans, B = Neanderthals, C = outgroup
+ts_f3(ts, A = list(eur = samples$EUR), B = list(nea = samples$NEA), C = "CHIMP_1")
+```
+
+## $f_4$-statistic
+
+`f4(AFR_1, X; NEA, CH)` is "almost zero" for `X = AFR`:
+
+```{r}
+ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1")
+```
+
+`f4(AFR, X; NEA, CH)` is "signif. negative" for `X = EUR`:
+
+```{r}
+ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1")
+```
+
+## $f_4$-statistic for all samples
+
+```{r}
+#| echo: false
+afr_samples <- samples$AFR %>% sample(25)
+eur_samples <- samples$EUR %>% sample(25)
+
+f4_afr <- lapply(afr_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
+f4_eur <- lapply(eur_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
+
+f4_afr$pop <- "AFR"
+f4_eur$pop <- "EUR"
+
+library(ggplot2)
+
+rbind(f4_afr, f4_eur) %>%
+  ggplot(aes(pop, f4, color = pop)) +
+  geom_boxplot() +
+  geom_jitter() +
+  geom_hline(yintercept = 0, linetype = 2)
+```
+
+
+
+
+
+
+
+
+
+
+# 
+
+
+<h1><font color="orange">B</font><font color="darkblue">O</font><font color="green">N</font><font color="red">U</font><font color="pink">S</font> <font color="purple">H</font><font color="orange">O</font><font color="green">M</font><font color="lightblue">E</font><font color="cyan">W</font><font color="green">O</font><font color="red">R</font><font color="orange">K</font>
+
+
+
+
+
+# Time-series data
+
+## Sampling aDNA samples through time
+
+<br>
+
+Imagine we have `pop1`, `pop2`, ... compiled in a `model`.
+
+<br>
+
+To record *ancient* individuals in the tree sequence, we can use `schedule_sampling()` like this:
+
+```{r}
+#| eval: false
+schedule_sampling(
+  model,                # compiled slendr model object
+  times = c(100, 500),  # at these times (can be also a single number) ...
+  list(pop1, 42),       # ... sample 42 individuals from pop1
+  list(pop2, 10),       # ... sample 10 individuals from pop2
+  list(pop3, 1)         # ... sample 1 individual from pop 3
+) 
+```
+
+## Sampling schedule format
+
+The output of `schedule_sampling()` is a plain data frame:
+
+```{r}
+schedule_sampling(model, times = c(40000, 30000, 20000, 10000), list(eur, 1))
+```
+
+. . .
+
+We can bind multiple sampling schedules together, giving us finer control about sampling:
+
+```{r}
+eur_samples <- schedule_sampling(model, times = c(40000, 30000, 20000, 10000, 0), list(eur, 1))
+afr_samples <- schedule_sampling(model, times = 0, list(afr, 1))
+
+samples <- bind_rows(eur_samples, afr_samples)
+```
+
+## How to use a sampling schedule?
+
+To sample individuals based on a given schedule, we use the `samples =` argument of the `msprime()` functions:
+
+```{r}
+ts <- msprime(model, samples = samples, sequence_length = 1e6, recombination_rate = 1e-8) %>% 
+  ts_mutate(mutation_rate = 1e-8)
+```
+
+. . .
+
+We can verify that only specific individuals are recorded:
+
+::: columns
+::: {.column width="40%"}
+```{r}
+ts_samples(ts)
+```
+:::
+
+::: {.column width="60%"}
+::: fragment
+```{r}
+ts
+```
+:::
+:::
+:::
+
+# Exercise #5
+
+## Exercise #5a --- ancient samples
+
+```{r}
+#| echo: false
+chimp <- population("CHIMP", time = 7e6, N = 5000)
+afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
+eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
+nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
+
+gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 50000, end = 40000)
+
+model <- compile_model(
+  populations = list(chimp, nea, afr, eur),
+  gene_flow = gf,
+  generation_time = 30
+)
+
+plot_model(model)
+```
+
+## Exercise #5a --- ancient samples
+
+Simulate data from your model using this sampling:
+
+-   one present-day CHIMP and AFR individual
+-   20 present-day EUR individuals
+-   1 NEA at 70 ky, 1 NEA at 40 ky
+-   1 EUR every 1000 years between 50-5 kya
+
+Reminder: you can do this by:
+
+```{r}
+#| eval: false
+samples <- # rbind(...) together individual schedule_sampling() data frames
+
+ts <-
+  msprime(model, samples = samples, sequence_length = 100e6, recombination_rate = 1e-8) %>%
+  ts_mutate(mutation_rate = 1e-8)
+```
+
+## Exercise #5b --- $f_4$-ratio statistic
+
+Use $f_4$-ratio statistic to replicate the [following figure](https://www.pnas.org/doi/10.1073/pnas.1814338116#fig01):
+
+![](images/neand_decline.png){width="60%" fig-align="center"}
+
+::: aside
+Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `ts_f4ratio(ts, X = X, "NEA_1", "NEA_2", "AFR_1", "CHIMP_1")`.
+:::
+
+# Exercise #5 --- solution
+
+## More information
+
+<br>
+
+- _slendr_ paper on [bioRxiv](https://www.biorxiv.org/content/10.1101/2022.03.20.485041v3)
+
+- Documentation, tutorials can be found [here](https://www.slendr.net)
+
+- GitHub repo (bug reports!) is [here](http://github.com/bodkan/slendr)
+
+<hr>
+
+- new R package for demographic inference [_demografr_](http://github.com/bodkan/demografr)
+
