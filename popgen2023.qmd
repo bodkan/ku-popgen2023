@@ -1152,6 +1152,21 @@ ts_names(ts) %>% head(5)
 
 # Analyzing tree sequences with *slendr*
 
+## Workflows always follow this pattern
+
+::: incremental
+1. You define populations and compile a `model`
+2. You simulate a tree-sequence from the model
+
+   [in this session, always `ts <- msprime(model, ...)`]
+
+3. Get samples (`ts_names(ts)` or individual names directly)
+
+4. Compute statistic with something along the lines of `ts_<statistic>(ts, <sample names>)`
+5. All tree-sequence statistic functions return a data frame
+:::
+
+
 ## Example: [allele frequency spectrum](https://en.wikipedia.org/wiki/Allele_frequency_spectrum)
 
 ```{r}
@@ -1267,13 +1282,13 @@ afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
 
 . . .
 
-You know that the population had constant $N_e$ somewhere between 1000 and 30000 for the past 100,000 generations.
+You know that the population had constant $N_e$ somewhere between 1000 and 30000 for the past 100,000 generations, and had mutation and recombination rates of 1e-8.
 
 . . .
 
 <hr>
 
-**Use *slendr* to guess the true value of** $N_e$ given the observed AFS by running single-population simulations of different $N_e$ and comparing `ts_afs()` results to `afs_observed`.
+**Try to guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed`.
 
 ## Exercise #2 --- hints
 
@@ -1284,7 +1299,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
     -   _option #1_ [_easy_]: Plot AFS for various $N_e$ values and eyeball which AFS looks closest judging from the plot
 
-    -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (`lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
+    -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
 :::
 
 # Exercise #2 --- solution
@@ -1306,7 +1321,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 <br>
 
-If we have populations `p1` and `p2`, we schedule a gene flow as:
+If we have populations `p1` and `p2`, we schedule gene flow as:
 
 ```{r}
 #| eval: false
@@ -1335,7 +1350,7 @@ gf <- list(
 <center>**`gene_flow()` checks for consistency!**</center>
 
 
-## Plugging gene flow(s) into the model
+## Plugging gene flow(s) into a model
 
 <br>
 If you have a _slendr_ script, you can do this:
@@ -1343,7 +1358,7 @@ If you have a _slendr_ script, you can do this:
 
 ```{r}
 #| eval: false
-#| code-line-numbers: 2-7|11
+#| code-line-numbers: 3-7|9-13|11
 <... population() definitions ...>
 
 gf <- list(
@@ -1367,7 +1382,7 @@ model <- compile_model(
 
 ## Exercise #3 --- adding gene flow
 
-Add archaic introgression to your `model1.R` script:
+Add NEA → EUR introgression to your `model1.R` script:
 
 ```{r}
 #| echo: false
@@ -1389,7 +1404,7 @@ cowplot::plot_grid(
 
 ## Exercise #3 --- adding gene flow
 
-Add archaic introgression to your `model1.R` script:
+Add NEA → EUR introgression to your `model1.R` script:
 
 ```{r}
 #| echo: false
@@ -1430,20 +1445,24 @@ cowplot::plot_grid(
 
 # Exercise #4
 
-## Exercise #4 --- additional statistics
+## Exercise #4 --- more statistics
+
+Practice computing tree seqence statistics on the `ts` object you simulated in your `model1.R` script.
 
 ```{r}
 #| fig-align: center
-plot_model(model)
+#| fig-width: 7
+#| echo: false
+plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
 
-## Exercise #4 --- popgen statistics
+## Exercise #4 --- more statistics
 
 Compute [nucleotide diversity ($\pi$)](https://en.wikipedia.org/wiki/Nucleotide_diversity) in each population (`ts_diversity()`). Do your results with known $N_e$ values?
 
 <hr>
 
-Compute `ts_divergence()` (genetic divergence) or `ts_fst()` ([$F_{ST}$](https://en.wikipedia.org/wiki/Fixation_index)) between populations. Do the results match the model?
+Compute `ts_divergence()` (genetic divergence) or `ts_fst()` ([$F_{ST}$](https://en.wikipedia.org/wiki/Fixation_index)) between populations.
 
 <hr>
 
@@ -1458,7 +1477,7 @@ Test Neanderthal introgression in EUR using the $f_4$ statistic (`ts_f4()`). \[h
 # Exercise #4 --- solution
 
 ```{r}
-#|echo: false
+#| echo: false
 library(slendr)
 init_env()
 
@@ -1481,33 +1500,71 @@ ts <-
 
 ## Diversity
 
-Get a list of named individuals in each population:
+<br>
+
+First get a list of individuals in each population:
 
 ```{r}
-samples <- ts_samples(ts) %>% split(., .$pop) %>% lapply(pull, "name")
+samples <- ts_names(ts, split = "pop")
+```
+
+<br>
+
+```{r}
+#| output-location: fragment
+#| eval: false
+pi <- ts_diversity(ts, sample_sets = samples)
+
+arrange(pi, diversity)
 ```
 
 ```{r}
-pi <- ts_diversity(ts, sample_sets = samples)
-arrange(pi, diversity)
+#| echo: false
+as.data.frame(arrange(pi, diversity))
 ```
 
 ## Divergence
 
+<br>
+
+Using the same list of individual `samples`:
+
 ```{r}
+#| output-location: fragment
+#| eval: false
 div <- ts_divergence(ts, sample_sets = samples)
-arrange(div, desc(divergence))
+
+arrange(div, divergence)
+```
+
+```{r}
+#| echo: false
+as.data.frame(arrange(div, divergence))
 ```
 
 ## Outgroup $f_3$-statistic
 
 ```{r}
+#| eval: false
 # A = Africans, B = Europeans, C = outgroup
-ts_f3(ts, A = list(afr = samples$AFR), B = list(eur = samples$EUR), C = "CHIMP_1")
+ts_f3(ts, A = samples["AFR"], B = samples["EUR"], C = "CHIMP_1")
+
 # A = Africans, B = Neanderthals, C = outgroup
-ts_f3(ts, A = list(afr = samples$AFR), B = list(nea = samples$NEA), C = "CHIMP_1")
+ts_f3(ts, A = samples["AFR"], B = samples["NEA"], C = "CHIMP_1")
+
 # A = Europeans, B = Neanderthals, C = outgroup
-ts_f3(ts, A = list(eur = samples$EUR), B = list(nea = samples$NEA), C = "CHIMP_1")
+ts_f3(ts, A = samples["EUR"], B = samples["NEA"], C = "CHIMP_1")
+```
+
+```{r}
+#| echo: false
+as.data.frame(ts_f3(ts, A = samples["AFR"], B = samples["EUR"], C = "CHIMP_1"))
+
+# A = Africans, B = Neanderthals, C = outgroup
+as.data.frame(ts_f3(ts, A = samples["AFR"], B = samples["NEA"], C = "CHIMP_1"))
+
+# A = Europeans, B = Neanderthals, C = outgroup
+as.data.frame(ts_f3(ts, A = samples["EUR"], B = samples["NEA"], C = "CHIMP_1"))
 ```
 
 ## $f_4$-statistic
@@ -1515,13 +1572,25 @@ ts_f3(ts, A = list(eur = samples$EUR), B = list(nea = samples$NEA), C = "CHIMP_1
 `f4(AFR_1, X; NEA, CH)` is "almost zero" for `X = AFR`:
 
 ```{r}
+#| echo: false
 ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1")
+```
+
+```{r}
+#| echo: false
+as.data.frame(ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1"))
 ```
 
 `f4(AFR, X; NEA, CH)` is "signif. negative" for `X = EUR`:
 
 ```{r}
+#| echo: false
 ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1")
+```
+
+```{r}
+#| echo: false
+as.data.frame(ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1"))
 ```
 
 ## $f_4$-statistic for all samples
