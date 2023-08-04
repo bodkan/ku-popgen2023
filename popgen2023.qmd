@@ -709,7 +709,7 @@ Don't worry about gene flow yet. We will add it at a later stage.
 <br><br><br><br>
 
 ::: aside
-[`ex1.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex1.R) one-page handouts for reference.
+See [`ex1.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex1.R) for a solution.
 :::
 
 
@@ -1256,7 +1256,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 <br><br><br><br>
 
 ::: aside
-[`ex2.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2.R) one-page handouts for reference.
+See [`ex2_simple.R` script](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_simple.R) for a simple solution and [`ex2_grid.R` script](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_grid.R) for a more elaborate grid-search solution.
 :::
 
 
@@ -1362,14 +1362,6 @@ Add NEA → EUR introgression to your `model1.R` script:
 ```{r}
 #| echo: false
 #| fig-align: center
-gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 55000, end = 50000)
-
-model <- compile_model(
-  populations = list(chimp, nea, afr, eur),
-  gene_flow = gf,
-  generation_time = 30
-)
-
 cowplot::plot_grid(
   plot_model(model, proportions = TRUE) + ggtitle("Normal time scale"),
   plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
@@ -1384,7 +1376,7 @@ cowplot::plot_grid(
 <br><br><br><br>
 
 ::: aside
-[`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3.R) one-page handouts for reference.
+See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3_ex4.R) for a solution.
 :::
 
 
@@ -1463,7 +1455,7 @@ ts_diversity(ts, sample_sets = samples)
 <br><br><br><br>
 
 ::: aside
-[`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex4.R) one-page handouts for reference.
+See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3_ex4.R) for a solution.
 :::
 
 
@@ -1628,9 +1620,5 @@ Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `t
 <br><br><br><br>
 
 ::: aside
-[`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) one-page handouts for reference.
-:::<br><br><br><br>
-
-::: aside
-Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+See [`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) for a solution.
 :::
