@@ -243,7 +243,7 @@ final_frequencies <- parallel::mclapply(
     f <- factors[i]
     t <- as.integer(N * f)
     # get complete trajectories as a matrix (each column a single trajectory)
-    reps <- replicate(1000, simulate(N = N, p_0 = p_0, T = t))
+    reps <- replicate(10000, simulate(N = N, p_0 = p_0, T = t))
     # only keep the last slice of the matrix with the final frequencies
     data.frame(
       t = sprintf("t = %s * N", f),
