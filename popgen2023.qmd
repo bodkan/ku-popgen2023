@@ -615,9 +615,7 @@ pop4 <-
 pop5 <-
   population("pop5", N = 100, time = 600, parent = pop4) %>%
   resize(N = 50, how = "step", time = 900) %>%
-  resize(N = 250, how = "step", time = 1200) %>%
-  resize(N = 1000, how = "exponential", time = 1600, end = 2200) %>%
-  resize(N = 400, how = "step", time = 2400)
+  resize(N = 1000, how = "exponential", time = 1600, end = 2200)
 ```
 
 ## Each object carries its history!
@@ -641,10 +639,6 @@ model <- compile_model(
 <br>
 
 <center>**Compilation takes a list of model components, performs internal consistency checks, returns a single model object.**</center>
-
-::: aside
-The model is also compiled to disk which gives a nice additional layer of reproducibility. The exact location can be specified via ``path=`` argument to `compile_model()`.
-:::
 
 ## Model summary
 
@@ -671,7 +665,7 @@ plot_model(model)
 Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
 :::
 
-## Exercise #1 --- writing a _slendr_ model
+## Exercise #1: write this model in _slendr_
 
 ::: columns
 
@@ -708,7 +702,7 @@ plot_model(model) # verify visually
 Don't worry about gene flow yet. We will add it at a later stage.
 :::
 
-# Exercise #1 --- solution
+# Exercise #1: solution
 
 
 
@@ -1226,7 +1220,7 @@ Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page 
 :::
 
 
-## Exercise #2 --- estimating $N_e$ from AFS
+## Exercise #2: estimating $N_e$ from AFS
 
 ```{r}
 #| echo: false
@@ -1270,7 +1264,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 **Try to guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed`.
 
-## Exercise #2 --- hints
+## Exercise #2: hints
 
 1.  Write a function (in a script `model2.R`) with `Ne` as its only input. It will create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS vector.
 
@@ -1282,7 +1276,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
     -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
 :::
 
-# Exercise #2 --- solution
+# Exercise #2: solution
 
 
 
@@ -1360,7 +1354,7 @@ model <- compile_model(
 
 # Exercise #3
 
-## Exercise #3 --- adding gene flow
+## Exercise #3: adding gene flow
 
 Add NEA → EUR introgression to your `model1.R` script:
 
@@ -1382,7 +1376,7 @@ cowplot::plot_grid(
 
 &nbsp;
 
-## Exercise #3 --- adding gene flow
+## Exercise #3: adding gene flow
 
 Add NEA → EUR introgression to your `model1.R` script:
 
@@ -1406,7 +1400,7 @@ cowplot::plot_grid(
 3% pulse (`rate = 0.03`) between 55-50 kya (`start`-`end`)
 
 
-# Exercise #3 --- solution
+# Exercise #3: solution
 
 
 
@@ -1425,7 +1419,7 @@ cowplot::plot_grid(
 
 # Exercise #4
 
-## Exercise #4 --- more statistics!
+## Exercise #4: more statistics!
 
 Practice computing tree seqence statistics on the `ts` object you simulated in your `model1.R` script.
 
@@ -1436,7 +1430,7 @@ Practice computing tree seqence statistics on the `ts` object you simulated in y
 plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
 
-## Exercise #4 --- more statistics!
+## Exercise #4: more statistics!
 
 **Compute (some of) these on your tree sequence:**
 
@@ -1456,7 +1450,7 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
 
 
 
-# Exercise #4 --- solution
+# Exercise #4: solution
 
 ```{r}
 #| echo: false
