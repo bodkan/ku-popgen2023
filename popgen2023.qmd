@@ -118,7 +118,7 @@ each carrying *chromosomes* inherited from its parents.
 
 <h3>"What is the expected trajectory of a (neutral) allele under the influence of genetic drift?"</h3>
 
-## Complete single-locus simulation R script
+## Complete simulation R script
 
 ```{r}
 #| results: hide
