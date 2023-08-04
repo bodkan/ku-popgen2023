@@ -31,9 +31,9 @@ ts <-
     recombination_rate = 1e-8
   ) %>%
   ts_mutate(mutation_rate = 1e-8)
-#ts_save(ts, "data/ex5.trees")
+#ts_save(ts, "/tmp/ex5.trees")
 
-ts <- ts_load("data/ex5.trees", model)
+ts <- ts_load("/tmp/ex5.trees", model)
 ts
 
 

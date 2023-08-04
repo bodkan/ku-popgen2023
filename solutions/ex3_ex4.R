@@ -2,7 +2,7 @@ library(slendr)
 init_env()
 
 
-# part a ------------------------------------------------------------------
+# Exercise #3 ------------------------------------------------------------------
 
 chimp <- population("CHIMP", time = 7e6, N = 5000)
 afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
@@ -18,13 +18,20 @@ model <- compile_model(
   generation_time = 30
 )
 
+plot_model(model, proportions = TRUE)
+plot_model(model, proportions = TRUE, log = TRUE)
+
 ts <-
-  msprime(model, sequence_length = 10e6, recombination_rate = 1e-8) %>%
+  msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
 
+# for comparison of gene flow and non-gene flow models:
+# ts_save(ts, "/tmp/ex3.trees")
+# ts <- ts_load("/tmp/ex3.trees", model)
+# ts <- ts_load("/tmp/ex1.trees", model)
 
 
-# part b ------------------------------------------------------------------
+# Exercise #4 ------------------------------------------------------------------
 
 library(dplyr)
 library(ggplot2)
@@ -44,7 +51,7 @@ arrange(pi, diversity)
 
 div <- ts_divergence(ts, sample_sets = samples)
 
-arrange(div, desc(divergence))
+arrange(div, divergence)
 
 
 # outgroup f3
@@ -69,13 +76,15 @@ ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1")
 
 ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1")
 
+set.seed(42)
 afr_samples <- samples$AFR %>% sample(25)
 eur_samples <- samples$EUR %>% sample(25)
 
 f4_afr <- lapply(afr_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
 f4_eur <- lapply(eur_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
 
-f4_afr$pop <- "AFR"; f4_eur$pop <- "EUR"
+f4_afr$pop <- "AFR"
+f4_eur$pop <- "EUR"
 
 rbind(f4_afr, f4_eur) %>%
   ggplot(aes(pop, f4, color = pop)) +
