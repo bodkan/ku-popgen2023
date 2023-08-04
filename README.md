@@ -50,13 +50,9 @@ Finally, make sure you get a positive confirmation from the following check:
 
 ## Other R package dependencies
 
-I will use some tidyverse packages for analysis and plotting.
+I will use some tidyverse packages for analysis and plotting. You can install them with:
 
-I recommend you install the following packages:
-
-    install.packages(c("tidyverse", "MASS"))
-
-Note that *tidyverse* is a huge collection of packages so the installation might take a bit of time.
+    install.packages(c("dplyr", "ggplot2"))"
 
 # Testing the setup
 
