@@ -1,10 +1,10 @@
-# Lecture and exercises on simulation in population genetics at Copenhagen University 2022
+# Lecture and exercises on simulation in population genetics at Copenhagen University 2023
 
-### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2022-simulations-in-population-genetics/).
+### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/).
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2022-simulations-in-population-genetics-onepage/) is a render of the slides as a single HTML page (easier for quick reading).
+### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a render of the slides as a single HTML page (easier for quick reading).
 
-_This lecture has been originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2022"](http://popgen.dk/popgen22/). However, the materials in this repository are completely self-contained and will be updated going forward as their own thing._
+_This lecture has been originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/). However, the materials in this repository are completely self-contained and will be updated going forward as their own thing._
 
 ------------------------------------------------------------------------
 
@@ -63,6 +63,7 @@ Note that *tidyverse* is a huge collection of packages so the installation might
 Copy the following script to your R session after you successfully installed your R dependencies as described above.
 
     library(slendr)
+    init_env()
 
     o <- population("outgroup", time = 1, N = 100)
     b <- population("b", parent = o, time = 500, N = 100)
