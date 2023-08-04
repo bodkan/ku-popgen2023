@@ -66,13 +66,9 @@ Image from [Schiffels and Durbin (2014)](https://www.nature.com/articles/ng.3015
 
 # What does it mean to simulate a genome?
 
-. . .
-
 <br> How would you design an algorithm for a popgen simulation?
 
 </h2>
-
-. . .
 
 <br>What minimum components are needed?
 
@@ -94,54 +90,53 @@ We need *genetics*.
 
 . . .
 
-...a linear sequence of nucleotides...
+...a linear sequence of nucleotides
 
 -   a list of characters (A/G/C/T nucleotides)
--   a list of 0 or 1 values (ancestral/derived allele)
+-   a list of 0 or 1 values (ancestral/derived allele),
 
 . . .
 
-... which mutates at a given *mutation rate*,
+which mutates at a given *mutation rate*,<br>
 
-. . .
-
-... and recombines at a certain *recombination rate*.
+and recombines at a certain *recombination rate*.
 
 # A population is...
 
+. . . 
+
 <br>
 
-... a collection of *individuals* at a given point in time,
+... a collection of *individuals* at a given point in time,<br><br>
+each carrying *chromosomes* inherited from its parents.
 
-. . .
+# 
 
-... each carrying *chromosomes* inherited from its parents.
-
-# Home-brewed single-locus simulation in R
+<h1>Homebrewed<br>single-locus<br>simulation in R</h1>
 
 <br>
 
 <h3>"What is the expected trajectory of a (neutral) allele under the influence of genetic drift?"</h3>
 
-## Single-locus simulation
+## Complete single-locus simulation R script
 
 ```{r}
 #| results: hide
-#| code-line-numbers: "|1-3|5|7-8|9-10|12-14|17"
+#| code-line-numbers: "|1-3|5-6|8-9|10-11|13-14|17"
 p_0 <- 0.5  # initial allele frequency
 N   <- 500  # number of chromosomes in a population
 T   <- 500  # number of generations to simulate
 
-p_trajectory <- p_0
+# a vector for storing frequencies over time
+p_trajectory <- p_0 
 
 # in each generation:
 for (gen_i in 2:T) {
-  # get the current frequency
-  p <- p_trajectory[gen_i - 1] 
+  # get frequency in the previous generation
+  p_prev <- p_trajectory[gen_i - 1] 
 
-  # calculate frequency in the next generation
-  p_next <- rbinom(1, N, p) / N 
-  p_trajectory[gen_i] <- p_next
+  # calculate frequency in this generation
+  p_trajectory[gen_i] <- rbinom(1, N, p_prev) / N 
 }
 
 p_trajectory
@@ -163,14 +158,14 @@ abline(h = p_0, lty = 2, col = "red")
 **Output:** allele frequency trajectory vector
 
 ```{r}
-#| code-line-numbers: true
+#| code-line-numbers: "|1"
 simulate <- function(p_0, N, T) {
   p_trajectory <- p_0
 
   for (gen_i in 2:T) {
-    p <- p_trajectory[gen_i - 1]
-    p_next <- rbinom(1, N, p) / N
-    p_trajectory[gen_i] <- p_next
+    p_prev <- p_trajectory[gen_i - 1]
+    p <- rbinom(1, N, p_prev) / N
+    p_trajectory[gen_i] <- p
   }
 
   p_trajectory
@@ -212,7 +207,7 @@ matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", t
 ```{r}
 #| code-fold: true
 #| fig-align: center
-reps <- replicate(20, simulate(N = 10000, p_0 = 0.5, T = 20000))
+reps <- replicate(20, simulate(N = 10000, p_0 = 0.5, T = 30000))
 
 matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", type = "l", lty = 1)
 ```
@@ -289,6 +284,9 @@ ggplot() +
 #  {background-image="images/montypython.jpeg"}
 
 ::: fragment
+
+<h1><br><br><br></h1>
+
 <h1 color="black" style="background-color: white">
 
 But now for something completely different.
@@ -298,9 +296,11 @@ But now for something completely different.
 
 #  {background-image="images/montypython.jpeg"}
 
+<h1><br><br><br></h1>
+
 <h1 color="black" style="background-color: white">
 
-Let's talk about<br>"real" simulations!
+Let's talk about<br>"real" simulations.
 
 </h1>
 
@@ -310,25 +310,23 @@ Let's talk about<br>"real" simulations!
 
 The most famous and widely used are [SLiM](https://messerlab.org/slim/) and [*msprime*](https://tskit.dev/msprime/docs/stable/intro.html).
 
-<div>
-
 <br>
 
-Both are very powerful...
+They are <u>very</u> powerful but both require:
 
-... but require quite a bit of programming knowledge\...
+::: incremental
 
-... and a lot of code for non-trivial simulations (🐛🪲🐜).
+- quite a bit of programming knowledge,
+- a lot of code for non-trivial simulations (🐛🪲🐜).
 
-</div>
-
-::: fragment
-<br>
-
-<center><h2>**The exercises will focus on the [*slendr*](http://www.slendr.net)**<br>popgen simulation toolkit for R.</h2></center>
 :::
 
-# SLiM
+::: fragment
+
+<br>
+
+<center><h3>**The exercises will focus on the [*slendr*](http://www.slendr.net)**<br>popgen simulation toolkit for R.</h3></center>
+:::
 
 ## 
 
@@ -370,29 +368,11 @@ Both are very powerful...
 cat examples/script.slim
 ```
 
-# _msprime_
-
 ## 
 
 ::: columns
 ::: {.column width="60%"}
-<h2>What is [_msprime_](https://tskit.dev/msprime/docs/stable/intro.html)?</h2>
-:::
-
-::: {.column width="40%"}
-<center>
-
-![Modified from [Alexei Drummond](http://alexeidrummond.org/bayesian_phylo_lectures/lecture10/)](images/sim_sketches.001.png){width="100%"}
-
-</center>
-:::
-:::
-
-## 
-
-::: columns
-::: {.column width="60%"}
-<h2>What is [_msprime_](https://tskit.dev/msprime/docs/stable/intro.html)?</h2>
+<h2>What is _msprime_</h2>
 
 ::: fragment
 -   A Python module for writing **coalescent simulations**
@@ -417,8 +397,6 @@ cat examples/script.slim
 :::
 
 ## Simple simulation using *msprime*
-
-This is basically the same model as the SLiM script earlier:
 
 ```{bash}
 #| echo: false
@@ -458,7 +436,7 @@ source: [link](https://tskit.dev/msprime/docs/stable/demography.html#demographic
 :::
 
 ::: fragment
--   90% <citation needed> of simulations are basically the same!
+-   90% <sup><font color="blue">[citation needed]</font></sup> of simulations are basically the same!
 
     -   create populations (splits and $N_e$ changes)
 
