@@ -233,6 +233,7 @@ library(ggplot2)
 library(dplyr)
 library(parallel)
 
+if (!file.exists("diffusion.rds")) {
 p_0 <- 0.5
 N <- 10000
 factors <- MASS::fractions(c(3, 2, 1, 1/2, 1/5, 1/10))
@@ -252,6 +253,10 @@ final_frequencies <- parallel::mclapply(
   mc.cores = parallel::detectCores()
 ) %>% do.call(rbind, .)
 final_frequencies$t <- forcats::fct_rev(forcats::fct_relevel(final_frequencies$t, sprintf("t = %s * N", factors)))
+saveRDS(final_frequencies, "diffusion.rds")
+} else {
+  final_frequencies <- readRDS("diffusion.rds")
+}
 
 final_frequencies %>% .[.$freq > 0 & .$freq < 1, ] %>%
 ggplot() +
@@ -1624,4 +1629,8 @@ Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `t
 
 ::: aside
 [`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) one-page handouts for reference.
+:::<br><br><br><br>
+
+::: aside
+Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
 :::
