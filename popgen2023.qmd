@@ -773,7 +773,7 @@ ts <- msprime(model, sequence_length = 100e6, recombination_rate = 1e-8)
 
 ## What we usually *want*
 
-A representation of our samples' history:
+An understanding of our samples' evolutionary history:
 
 <center>![](images/tree_sequence_diagram_no_muts.png)</center>
 
@@ -785,12 +785,6 @@ A representation of our samples' history:
 
 They allow computing of popgen statistics *without genotypes*!
 
-<center>![](images/tree_sequence_diagram_no_muts.png)</center>
-
-## The magic of tree sequences
-
-They allow computing of popgen statistics *without genotypes*!
-
 <center>
 
 ![](images/tree_sequence_diagram_no_muts.png)
@@ -798,16 +792,19 @@ They allow computing of popgen statistics *without genotypes*!
 </center>
 
 
-Because of a "duality" between mutations and branch lengths.
+There is a "duality" between mutations and branch lengths.
 
 ::: aside
-[Ralph et al. (2020)](https://academic.oup.com/genetics/article/215/3/779/5930459)
+See an amazing paper by [Ralph et al. (2020)](https://academic.oup.com/genetics/article/215/3/779/5930459) for more detail.
 :::
 
 
 
 
-## Coalescent and mutation processes can be decoupled
+## What if we need mutations though?
+
+::: fragment
+Coalescent and mutation processes can be decoupled!
 
 <center>
 
@@ -815,16 +812,19 @@ Because of a "duality" between mutations and branch lengths.
 
 </center>
 
+:::
+
+## What if we need mutations though?
 
 
-## Coalescent and mutation processes can be decoupled
+Coalescent and mutation processes can be decoupled!
 
 <center>
 
 ![](images/tree_sequence_diagram.png)
 
 ::: fragment
-<h3>This means we can add mutations<br>*after* the simulation with `ts_mutate()`.</h3>
+<h3>With _slendr_, we can add mutations *after* the simulation using `ts_mutate()`.</h3>
 :::
 
 </center>
@@ -1005,7 +1005,25 @@ In our script we'll have something like this:
 
 ```{r}
 #| eval: false
-#| code-line-numbers: 1-3|5-7
+#| code-line-numbers: 1-3|5-6
+<... population() definitions ...>
+
+model <- compile_model(...)
+  
+ts <-
+  msprime(model, sequence_length = 50e6, recombination_rate = 1e-8)
+```
+
+
+## ... and simulate data from it
+
+<br>
+
+In our script we'll have something like this:
+
+```{r}
+#| eval: false
+#| code-line-numbers: "7"
 <... population() definitions ...>
 
 model <- compile_model(...)
@@ -1014,6 +1032,7 @@ ts <-
   msprime(model, sequence_length = 50e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
 ```
+
 
 ```{r}
 #| echo: false
@@ -1052,33 +1071,20 @@ ts <-
 <!-- ``` -->
 
 
-## *slendr*'s R interface to [*tskit*](https://tskit.dev/tskit)
+## *slendr*'s R interface to [*tskit*](https://tskit.dev/tskit) statistics
 
 <center>
 
 ![](images/slendr_tskit.png)
 
-This [R interface](https://www.slendr.net/reference/index.html#tree-sequence-loading-and-processing) links to Python methods implemented in [*tskit*](https://tskit.dev/tskit/docs/stable/python-api.html#statistics).
-
 </center>
 
-## Extracting sample information
-
-Let's say we have a `ts` output from this `model`:
-
-```{r}
-#| fig-align: center
-#| echo: false
-#| fig-width: 8
-plot_model(model)
-```
+Allele-frequecy spectrum, nucleotide diversity $\pi$, $F_{ST}$, etc.
 
 ## Extracting sample information
 
-We can get recorded samples with `ts_samples()`:
+We can get samples recorded in `ts` with `ts_samples()`:
 
-::: columns
-::: {.column width="55%"}
 ```{r}
 #| eval: false
 ts_samples(ts)
@@ -1089,30 +1095,14 @@ ts_samples(ts)
 #| output-location: fragment
 ts_samples(ts) %>% head(5)
 ```
-:::
 
-::: {.column width="2%"}
- 
-:::
-
-::: {.column width="43%"}
-::: fragment
-```{r}
-ts_samples(ts) %>% count(pop)
-```
-:::
-:::
-:::
-
-
-::: fragment
-
-<br>
+. . .
 
 Sometimes a shortcut `ts_names()` can be useful:
 
 ```{r}
 #| eval: false
+# gives a single vector of all names
 ts_names(ts)
 ```
 
@@ -1120,26 +1110,6 @@ ts_names(ts)
 #| echo: false
 ts_names(ts) %>% head(5)
 ```
-
-
-:::
-
-# Analyzing tree sequences with *slendr*
-
-## Workflows always follow this pattern
-
-::: incremental
-1. You define populations and compile a `model`
-2. You simulate a tree-sequence from the model
-
-   [in this session, always `ts <- msprime(model, ...)`]
-
-3. Get samples (`ts_names(ts)` or individual names directly)
-
-4. Compute statistic with something along the lines of `ts_<statistic>(ts, <sample names>)`
-5. All tree-sequence statistic functions return a data frame
-:::
-
 
 ## Example: [allele frequency spectrum](https://en.wikipedia.org/wiki/Allele_frequency_spectrum)
 
@@ -1312,8 +1282,8 @@ Multiple gene-flow events can be gathered in a list:
 #| eval: false
 gf <- list(
   gene_flow(from = p1, to = p2, start = 500, end = 600, rate = 0.13),
-  gene_flow(from = <...>, to = <...>, start = <...>, end = <...>, rate = <...>),
-  < potentially many more ... >
+  gene_flow(from = ..., to = ..., start = ..., end = ..., rate = ...),
+  ...
 )
 ```
 
@@ -1440,13 +1410,40 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
 
 - [`ts_fst()`](https://www.slendr.net/reference/ts_fst.html#ref-examples) between populations<br>
 
-- outgroup [`ts_f3()`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) using CHIMP as the outgroup for different pairs of "A" and "B" populations<br>
+- outgroup [`ts_f3()`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) using CHIMP as the outgroup (A!) for different pairs of "B" and "C" populations<br>
 
 - [`ts_f4()`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) test of Neanderthal introgression in EUR
 
   \[hint: $f_4$(\<AFR\>, \<EUR\>; \<NEAND\>, \<CHIMP\>)\]
 
-**Do results match your expectation given your model?**
+<center>**Do results match expectations given your model?**</center>
+
+
+## Exercise #4: hint
+
+For multipopulation statistics, you need a (named) list of samples in each population.
+
+`ts_names()` has a `split = "pop"` option just for this:
+
+```{r}
+#| eval: false
+samples <- ts_names(ts, split = "pop")
+samples
+```
+
+```{r}
+#| echo: false
+ts_tmp <- msprime(model, sequence_length = 1, recombination_rate = 0)
+tmp_list <- ts_names(ts_tmp, split = "pop") %>% lapply(`[`, 1:3) %>% .[c("AFR", "NEA")]
+tmp_list
+```
+
+You can use this in place of `sample_names =` in code like:
+
+```{r}
+#| eval: false
+ts_diversity(ts, sample_sets = samples)
+```
 
 
 
@@ -1530,12 +1527,12 @@ as.data.frame(arrange(div, divergence))
 ```{r}
 #| eval: false
 # A = Africans, B = Europeans, C = outgroup
-ts_f3(ts, A = samples["AFR"], B = samples["EUR"], C = "CHIMP_1")
+ts_f3(ts, B = samples["AFR"], B = samples["EUR"], C = "CHIMP_1")
 ```
 
 ```{r}
 #| echo: false
-as.data.frame(ts_f3(ts, A = samples["AFR"], B = samples["EUR"], C = "CHIMP_1"))
+as.data.frame(ts_f3(ts, B = samples["AFR"], C = samples["EUR"], A = "CHIMP_1"))
 ```
 
 <br>
@@ -1543,7 +1540,7 @@ as.data.frame(ts_f3(ts, A = samples["AFR"], B = samples["EUR"], C = "CHIMP_1"))
 ```{r}
 #| eval: false
 # A = Africans, B = Neanderthals, C = outgroup
-ts_f3(ts, A = samples["AFR"], B = samples["NEA"], C = "CHIMP_1")
+ts_f3(ts, B = samples["AFR"], C = samples["NEA"], A = "CHIMP_1")
 ```
 
 ```{r}
@@ -1600,26 +1597,41 @@ as.data.frame(ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1"))
 
 ```{r}
 #| echo: false
+#| code-fold: true
 afr_samples <- samples$AFR %>% sample(25)
 eur_samples <- samples$EUR %>% sample(25)
 
 f4_afr <- lapply(afr_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
 f4_eur <- lapply(eur_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
 
-f4_afr$pop <- "AFR"
-f4_eur$pop <- "EUR"
-
-library(ggplot2)
+f4_afr$pop <- "AFR"; f4_eur$pop <- "EUR"
 
 rbind(f4_afr, f4_eur) %>%
   ggplot(aes(pop, f4, color = pop)) +
-  geom_boxplot() +
-  geom_jitter() +
-  geom_hline(yintercept = 0, linetype = 2)
+  geom_boxplot() + geom_jitter() + geom_hline(yintercept = 0, linetype = 2)
 ```
 
 
 
+
+
+## More information
+
+<br>
+
+- _slendr_ paper is now in [PCI EvolBiol](https://evolbiol.peercommunityin.org/articles/rec?id=630)
+
+- documentation, tutorials is [here](https://www.slendr.net)
+
+- GitHub repo (bug reports!) is [here](http://github.com/bodkan/slendr)
+
+<hr>
+
+- check out new R package for demographic inference [_demografr_](http://github.com/bodkan/demografr)
+
+<hr>
+
+- contact details at <bodkan.net>
 
 
 
@@ -1760,18 +1772,4 @@ Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `t
 :::
 
 # Exercise #5 --- solution
-
-## More information
-
-<br>
-
-- _slendr_ paper on [bioRxiv](https://www.biorxiv.org/content/10.1101/2022.03.20.485041v3)
-
-- Documentation, tutorials can be found [here](https://www.slendr.net)
-
-- GitHub repo (bug reports!) is [here](http://github.com/bodkan/slendr)
-
-<hr>
-
-- new R package for demographic inference [_demografr_](http://github.com/bodkan/demografr)
 
