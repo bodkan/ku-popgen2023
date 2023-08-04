@@ -3,8 +3,8 @@ init_env()
 
 simulate_afs <- function(Ne) {
   # create a slendr model with a given N size
-  pop <- population("pop", N = Ne, time = 100000)
-  model <- compile_model(pop, generation_time = 1, direction = "backward")
+  pop <- population("pop", N = Ne, time = 1)
+  model <- compile_model(pop, generation_time = 1, simulation_length = 100000)
   
   # simulate a tree sequence
   ts <-
@@ -12,10 +12,10 @@ simulate_afs <- function(Ne) {
     ts_mutate(mutation_rate = 1e-8)
   
   # get a random sample of names of 10 individuals
-  samples <- ts_samples(ts) %>% dplyr::sample_n(10) %>% dplyr::pull(name)
+  samples <- ts_names(ts) %>% sample(10)
   
-  # compute the AFS vector
-  afs <- ts_afs(ts, list(samples), polarised = TRUE)
+  # compute the AFS vector (dropping the 0-th element added by tskit)
+  afs <- ts_afs(ts, list(samples))[-1]
   
   afs
 }
@@ -27,18 +27,18 @@ afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
 Ne_grid <- seq(from = 1000, to = 30000, by = 1000)
 Ne_grid
 
-afs_grid <- lapply(Ne_grid, simulate_afs) # saveRDS(afs_grid, "data/ex2_grid.rds")
-afs_grid <- readRDS("data/ex2_grid.rds")
+library(parallel)
+
+afs_grid <- mclapply(Ne_grid, simulate_afs, mc.cores = detectCores())
 names(afs_grid) <- Ne_grid
 
 # plot the observed AFS and overlay the simulated AFS vectors on top of it
-plot(afs_observed, type = "b", col = "red", lwd = 3,
-     xlab = "allele count bin", ylab = "count")
+plot(afs_observed, type = "b", col = "black", lwd = 3, xlab = "allele count bin", ylab = "count")
 for (i in seq_along(Ne_grid)) {
   lines(afs_grid[[i]], lwd = 0.5)
 }
 legend("topright", legend = c("observed AFS", "simulated AFS"),
-       fill = c("red", "black"))
+       fill = c("black", "gray"))
 
 # compute mean-squared error of the AFS produced by each Ne value across the grid
 errors <- sapply(afs_grid, function(sim_afs) {
@@ -46,19 +46,22 @@ errors <- sapply(afs_grid, function(sim_afs) {
 })
 
 # plot the errors, highlight the most likely value
+TRUE_NE <- 6543
+
 plot(Ne_grid, errors, ylab = "error")
-abline(v = Ne_grid[which.min(errors)], col = "green")
-abline(v = TRUE_NE, col = "purple")
-legend("topright", legend = paste("closest inferred Ne =",
-                                  Ne_grid[which.min(errors)]), fill = "green")
+abline(v = Ne_grid[which.min(errors)], col = "red")
+abline(v = TRUE_NE, col = "black")
+legend("topright",
+       legend = c("true Ne", paste("closest inferred Ne =", Ne_grid[which.min(errors)])),
+       fill = c("black", "red"))
 
 # Plot the AFS again, highlighting the most likely spectrum
-plot(afs_observed, type = "b", col = "red", lwd = 1,
+plot(afs_observed, type = "b", col = "black", lwd = 3,
      xlab = "allele count bin", ylab = "count")
 for (i in seq_along(Ne_grid)) {
-  color <- if (i == which.min(errors)) "green" else "gray"
-  width <- if (i == which.min(errors)) 2 else 0.5
+  color <- if (i == which.min(errors)) "red" else "gray"
+  width <- if (i == which.min(errors)) 2 else 0.75
   lines(afs_grid[[i]], lwd = width, col = color)
 }
 legend("topright", legend = c("observed AFS", paste("Ne =", Ne_grid[which.min(errors)])),
-       fill = c("red", "green"))
+       fill = c("black", "red"))

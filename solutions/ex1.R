@@ -28,7 +28,7 @@ plot_model(model, sizes = FALSE, log = TRUE)
 
 # models can also be serialized to a permanent location
 
-model_dir <- "~/Desktop/ex1_model"
+model_dir <- "/tmp/ex1_model"
 
 model <- compile_model(
   populations = list(chimp, nea, afr, eur),
@@ -37,16 +37,3 @@ model <- compile_model(
 )
 
 list.files(model_dir)
-
-
-
-
-
-
-
-
-
-
-
-
-
