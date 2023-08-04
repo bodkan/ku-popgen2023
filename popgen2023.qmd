@@ -664,7 +664,7 @@ plot_model(model)
 <br><br><br><br>
 
 ::: aside
-Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
 ## Exercise #1: write this model in _slendr_
@@ -1191,7 +1191,7 @@ plot(afs[-1], type = "b",
 <br><br><br><br>
 
 ::: aside
-Use [these](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
 
@@ -1333,6 +1333,12 @@ model <- compile_model(
 
 # Exercise #3
 
+<br><br><br><br>
+
+::: aside
+Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
+:::
+
 ## Exercise #3: adding gene flow
 
 Add NEA → EUR introgression to your `model1.R` script:
@@ -1391,6 +1397,12 @@ See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/
 
 
 # Exercise #4
+
+<br><br><br><br>
+
+::: aside
+Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
+:::
 
 ## Exercise #4: more statistics!
 
@@ -1564,6 +1576,12 @@ ts
 :::
 
 # Exercise #5
+
+<br><br><br><br>
+
+::: aside
+Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
+:::
 
 ## Exercise #5a: ancient samples
 
