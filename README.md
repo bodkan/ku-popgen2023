@@ -4,7 +4,7 @@
 
 ### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a render of the slides as a single HTML page (easier for quick reading).
 
-_This lecture has been originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/). However, the materials in this repository are completely self-contained and will be updated going forward as their own thing._
+_This lecture has been originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/). However, the materials in this repository are completely self-contained and you can use them for future reference._
 
 ------------------------------------------------------------------------
 
