@@ -8,13 +8,11 @@ date: "August 2023"
 date-format: "MMMM YYYY"
 format:
   revealjs:
-    # eval: false
     echo: true
     code-line-numbers: false
     fig-align: center
     slide-number: true
   # html:
-  #   # eval: false
   #   echo: true
   #   code-line-numbers: false
   #   fig-align: center
@@ -231,7 +229,6 @@ abline(v = 10000 * factors, lwd = 5)
 #| fig-align: center
 #| fig-height: 10
 #| fig-width: 10
-#| eval: false
 library(ggplot2)
 library(dplyr)
 library(parallel)
@@ -245,7 +242,7 @@ final_frequencies <- parallel::mclapply(
     f <- factors[i]
     t <- as.integer(N * f)
     # get complete trajectories as a matrix (each column a single trajectory)
-    reps <- replicate(10, simulate(N = N, p_0 = p_0, T = t))
+    reps <- replicate(1000, simulate(N = N, p_0 = p_0, T = t))
     # only keep the last slice of the matrix with the final frequencies
     data.frame(
       t = sprintf("t = %s * N", f),
@@ -707,7 +704,7 @@ Don't worry about gene flow yet. We will add it at a later stage.
 <br><br><br><br>
 
 ::: aside
-[`ex1.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+[`ex1.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex1.R) one-page handouts for reference.
 :::
 
 
@@ -1254,7 +1251,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 <br><br><br><br>
 
 ::: aside
-[`ex2.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+[`ex2.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2.R) one-page handouts for reference.
 :::
 
 
@@ -1382,7 +1379,7 @@ cowplot::plot_grid(
 <br><br><br><br>
 
 ::: aside
-[`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+[`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3.R) one-page handouts for reference.
 :::
 
 
@@ -1461,7 +1458,7 @@ ts_diversity(ts, sample_sets = samples)
 <br><br><br><br>
 
 ::: aside
-[`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+[`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex4.R) one-page handouts for reference.
 :::
 
 
@@ -1623,3 +1620,8 @@ Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `t
 
 # Exercise #5: solution
 
+<br><br><br><br>
+
+::: aside
+[`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) one-page handouts for reference.
+:::
