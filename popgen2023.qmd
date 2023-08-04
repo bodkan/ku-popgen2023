@@ -705,7 +705,9 @@ Don't worry about gene flow yet. We will add it at a later stage.
 # Exercise #1: solution
 
 
-
+::: aside
+[`ex1.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+:::
 
 
 
@@ -1249,6 +1251,9 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 # Exercise #2: solution
 
 
+::: aside
+[`ex2.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+:::
 
 
 
@@ -1375,6 +1380,9 @@ cowplot::plot_grid(
 
 
 
+::: aside
+[`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+:::
 
 
 
@@ -1448,6 +1456,10 @@ ts_diversity(ts, sample_sets = samples)
 
 
 # Exercise #4: solution
+
+::: aside
+[`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
+:::
 
 ```{r}
 #| echo: false
