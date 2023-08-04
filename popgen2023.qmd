@@ -704,6 +704,7 @@ Don't worry about gene flow yet. We will add it at a later stage.
 
 # Exercise #1: solution
 
+<br><br><br><br>
 
 ::: aside
 [`ex1.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
@@ -1250,6 +1251,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 # Exercise #2: solution
 
+<br><br><br><br>
 
 ::: aside
 [`ex2.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
@@ -1377,8 +1379,7 @@ cowplot::plot_grid(
 
 # Exercise #3: solution
 
-
-
+<br><br><br><br>
 
 ::: aside
 [`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
@@ -1457,174 +1458,11 @@ ts_diversity(ts, sample_sets = samples)
 
 # Exercise #4: solution
 
+<br><br><br><br>
+
 ::: aside
 [`ex3_ex4.R` script on GitHub](https://bodkan.quarto.pub/2023-08-23-ku-popgen23-onepage/) one-page handouts for reference.
 :::
-
-```{r}
-#| echo: false
-library(slendr)
-init_env()
-
-chimp <- population("CHIMP", time = 7e6, N = 5000)
-afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
-eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
-nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
-
-gf <- gene_flow(from = nea, to = eur, rate = 0.05, start = 50000, end = 40000)
-
-model <- compile_model(
-  populations = list(chimp, nea, afr, eur),
-  gene_flow = gf,
-  generation_time = 30
-)
-ts <-
-  msprime(model, sequence_length = 10e6, recombination_rate = 1e-8) %>%
-  ts_mutate(mutation_rate = 1e-8)
-```
-
-## Diversity
-
-<br>
-
-First get a list of individuals in each population:
-
-```{r}
-samples <- ts_names(ts, split = "pop")
-```
-
-::: fragment
-<br>
-
-Then use that to compute diversity:
-
-```{r}
-#| eval: false
-pi <- ts_diversity(ts, sample_sets = samples)
-
-arrange(pi, diversity)
-```
-
-```{r}
-#| output-location: fragment
-#| echo: false
-options(scipen=999)
-pi <- ts_diversity(ts, sample_sets = samples)
-as.data.frame(arrange(pi, diversity))
-```
-:::
-
-## Divergence
-
-<br>
-
-Compute pairwise divergence using the same `samples`:
-
-```{r}
-#| eval: false
-div <- ts_divergence(ts, sample_sets = samples)
-
-arrange(div, divergence)
-```
-
-```{r}
-#| output-location: fragment
-#| echo: false
-div <- ts_divergence(ts, sample_sets = samples)
-as.data.frame(arrange(div, divergence))
-```
-
-## Outgroup $f_3$-statistic
-
-```{r}
-#| eval: false
-# A = Africans, B = Europeans, C = outgroup
-ts_f3(ts, B = samples["AFR"], B = samples["EUR"], C = "CHIMP_1")
-```
-
-```{r}
-#| echo: false
-as.data.frame(ts_f3(ts, B = samples["AFR"], C = samples["EUR"], A = "CHIMP_1"))
-```
-
-<br>
-
-```{r}
-#| eval: false
-# A = Africans, B = Neanderthals, C = outgroup
-ts_f3(ts, B = samples["AFR"], C = samples["NEA"], A = "CHIMP_1")
-```
-
-```{r}
-#| echo: false
-# A = Africans, B = Neanderthals, C = outgroup
-as.data.frame(ts_f3(ts, A = samples["AFR"], B = samples["NEA"], C = "CHIMP_1"))
-```
-
-<br>
-
-```{r}
-#| eval: false
-# A = Europeans, B = Neanderthals, C = outgroup
-ts_f3(ts, A = samples["EUR"], B = samples["NEA"], C = "CHIMP_1")
-```
-
-```{r}
-#| echo: false
-# A = Europeans, B = Neanderthals, C = outgroup
-as.data.frame(ts_f3(ts, A = samples["EUR"], B = samples["NEA"], C = "CHIMP_1"))
-```
-
-## $f_4$-statistic
-
-<br>
-
-`f4(AFR_1, X = AFR_2; NEA, CH)` is "almost zero":
-
-```{r}
-#| eval: false
-ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1")
-```
-
-```{r}
-#| echo: false
-as.data.frame(ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1"))
-```
-
-<br>
-
-`f4(AFR, X = EUR; NEA, CH)` is "significantly negative":
-
-```{r}
-#| eval: false
-ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1")
-```
-
-```{r}
-#| echo: false
-as.data.frame(ts_f4(ts, W = "AFR_1", X = "EUR_1", Y = "NEA_1", Z = "CHIMP_1"))
-```
-
-## $f_4$-statistic for all samples
-
-```{r}
-#| echo: false
-#| code-fold: true
-afr_samples <- samples$AFR %>% sample(25)
-eur_samples <- samples$EUR %>% sample(25)
-
-f4_afr <- lapply(afr_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
-f4_eur <- lapply(eur_samples, function(x) ts_f4(ts, W = "AFR_1", X = x, Y = "NEA_1", Z = "CHIMP_1")) %>% bind_rows()
-
-f4_afr$pop <- "AFR"; f4_eur$pop <- "EUR"
-
-rbind(f4_afr, f4_eur) %>%
-  ggplot(aes(pop, f4, color = pop)) +
-  geom_boxplot() + geom_jitter() + geom_hline(yintercept = 0, linetype = 2)
-```
-
-
-
 
 
 ## More information
