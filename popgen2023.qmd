@@ -448,7 +448,7 @@ source: [link](https://tskit.dev/msprime/docs/stable/demography.html#demographic
 :::
 
 ::: fragment
-<center>***slendr*** **makes "standard" simulations trivial _and_<br> unlocks new kinds of spatial simulations**</center>
+<center>***slendr*** **makes "standard" simulations trivial and<br> unlocks new kinds of spatial simulations**</center>
 :::
 
 # Let's get started
@@ -477,6 +477,26 @@ library(dplyr)
 (*) You can safely ignore the message about missing SLiM.
 :::
 
+
+<!-- ## Workaround for an RStudio bug -->
+
+<!-- RStudio sometimes interferes with Python setup that we need for simulation. To fix this, go to `Tools` -\> `Global Options` in your RStudio and set the following options: -->
+
+<!-- <center>![](images/rstudio_setting.png){width="40%"}</center> -->
+
+
+## Typical steps of a _slendr_ R workflow
+
+<br>
+
+1.  creating populations
+2.  scheduling population splits
+3.  programming $N_e$ size changes
+4.  encoding gene-flow events
+5.  simulation sequence of a given size
+6.  computing statistics from simulated outputs
+
+
 # 
 
 ::: {style="text-align: right"}
@@ -496,24 +516,6 @@ simulate data from them.
 
 Just one plain R script.
 :::
-
-<!-- ## Workaround for an RStudio bug -->
-
-<!-- RStudio sometimes interferes with Python setup that we need for simulation. To fix this, go to `Tools` -\> `Global Options` in your RStudio and set the following options: -->
-
-<!-- <center>![](images/rstudio_setting.png){width="40%"}</center> -->
-
-
-## Typical steps of a _slendr_ R workflow
-
-<br>
-
-1.  creating populations
-2.  scheduling population splits
-3.  programming $N_e$ size changes
-4.  encoding gene-flow events
-5.  simulation sequence of a given size
-6.  computing statistics from simulated outputs
 
 ## Creating a `population()`
 
