@@ -27,8 +27,8 @@ ts <-
 
 # for comparison of gene flow and non-gene flow models:
 # ts_save(ts, "/tmp/ex3.trees")
-# ts <- ts_load("/tmp/ex3.trees", model)
-# ts <- ts_load("/tmp/ex1.trees", model)
+# ts <- ts_load("ex3.trees", model)
+# ts <- ts_load("ex1.trees", model)
 
 
 # Exercise #4 ------------------------------------------------------------------
