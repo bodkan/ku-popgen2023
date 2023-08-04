@@ -713,7 +713,7 @@ Don't worry about gene flow yet. We will add it at a later stage.
 
 #
 
-<h1>So now we can<br>write a `model`</h1>
+<h1>So, now we can<br>write a `model`</h1>
 
 
 
@@ -725,21 +725,21 @@ Don't worry about gene flow yet. We will add it at a later stage.
 
 ## How do we simulate from it?
 
-*slendr* has two built-in simulation engines:
+*slendr* has two built-in simulation "engine scripts":
 
 - SLiM engine ([source](https://github.com/bodkan/slendr/blob/main/inst/scripts/script.slim))
 - *msprime* engine ([source](https://github.com/bodkan/slendr/blob/main/inst/scripts/script.py))
 
+They are designed to understand *slendr* models.
+
 . . .
 
-<br> This is all that's needed to simulate data:
+<br>All you need to simulate data is this one line of code:
 
 ```{r}
 #| eval: false
 ts <- msprime(model, sequence_length = 100e6, recombination_rate = 1e-8)
 ```
-
-. . .
 
 <center>
 
@@ -765,7 +765,7 @@ ts <- msprime(model, sequence_length = 100e6, recombination_rate = 1e-8)
 
 <br>
 
-<h3>Why not VCF, or some genotype table?</h3>
+<h3>Why not VCF or a normal genotype table?</h3>
 
 ## What we usually have
 
