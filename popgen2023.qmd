@@ -499,25 +499,6 @@ library(dplyr)
 6.  computing statistics from simulated outputs
 
 
-# 
-
-::: {style="text-align: right"}
-<h1>*slendr* haiku</h1>
-:::
-
-<br>
-
-::: {style="text-align: right"}
-Build simple models,
-
-<br>
-
-simulate data from them.
-
-<br>
-
-Just one plain R script.
-:::
 
 ## Creating a `population()`
 
@@ -701,7 +682,7 @@ plot_model(model) # verify visually
 :::
 
 ::: fragment
-Don't worry about gene flow yet. We will add it at a later stage.
+You can specify events in "units of years ago"! Just write times in a "decreasing order" (i.e. present-day will be at time 0).
 :::
 
 # Exercise #1: solution
