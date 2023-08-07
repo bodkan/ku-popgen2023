@@ -32,6 +32,38 @@ format:
 :::
 :::
 
+# First things first
+
+These slides and other resources are (and always will be) at:
+
+[github.com/bodkan/ku-popgen2023](https://github.com/bodkan/ku-popgen2023)
+
+[a one-page version of the slides, exercise solutions, etc.]
+
+<br>
+
+**Open this link now so you have everything at hand later.**
+
+# First things first
+
+In order to make sure you can do the exercises, you should log into your [online RStudio session](emily.popgen.dk:3838/) and run this in your R console:
+
+```{r}
+#| eval: false
+library(slendr)
+setup_env(agree = TRUE)
+```
+
+<br>
+
+If you want to do the exercises on your own laptop (if you potentially _can_, you definitely _should_), you need to do this first before running the above:
+
+```{r}
+#| eval: false
+install.packages("slendr")
+```
+
+
 # Why use simulations?
 
 1.  Making sense of inferred statistics
@@ -205,12 +237,22 @@ matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", t
 ```{r}
 #| code-fold: true
 #| fig-align: center
-reps <- replicate(20, simulate(N = 10000, p_0 = 0.5, T = 30000))
+reps <- replicate(20, simulate(N = 10000, p_0 = 0.5, T = 2000))
 
 matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", type = "l", lty = 1)
 ```
 
-## $N$ = 10000, $p_0 = 0.5$ (20 replicates)
+## $N$ = 10000, $p_0 = 0.5$ (100 replicates)
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+reps <- replicate(100, simulate(N = 10000, p_0 = 0.5, T = 30000))
+
+matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", type = "l", lty = 1)
+```
+
+## $N$ = 10000, $p_0 = 0.5$ (100 replicates)
 
 ```{r}
 #| code-fold: true
@@ -219,6 +261,7 @@ factors <- MASS::fractions(c(3, 2, 1, 1/2, 1/5, 1/10))
 matplot(reps, ylim = c(0, 1), xlab = "generations", ylab = "allele frequency", type = "l", lty = 1)
 abline(v = 10000 * factors, lwd = 5)
 ```
+
 
 ## Expected allele frequency distribution
 
@@ -480,13 +523,6 @@ library(dplyr)
 :::
 
 
-<!-- ## Workaround for an RStudio bug -->
-
-<!-- RStudio sometimes interferes with Python setup that we need for simulation. To fix this, go to `Tools` -\> `Global Options` in your RStudio and set the following options: -->
-
-<!-- <center>![](images/rstudio_setting.png){width="40%"}</center> -->
-
-
 ## Typical steps of a _slendr_ R workflow
 
 <br>
@@ -648,15 +684,34 @@ plot_model(model)
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
+
+## Workaround for an RStudio bug
+
+:::: columns
+
+::: {.column width="40%"}
+RStudio sometimes interferes with Python which is needed for simulations.
+
+Go to `Tools` → `Global Options` in your RStudio and set the options like this.
+
+Also happens on the [shared server](http://emily.popgen.dk:3838/)!
+:::
+
+::: {.column width="60%"}
+<center>![](images/rstudio_setting.png)</center>
+:::
+
+::::
+
 ## Exercise #1: write this model in _slendr_
 
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 ![](images/intro_model1.png)
 :::
 
-::: {.column width="50%"}
+::: {.column width="55%"}
 
 ::: {.fragment}
 Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this "template":
@@ -681,8 +736,8 @@ plot_model(model) # verify visually
 
 :::
 
-::: fragment
-You can specify events in "units of years ago"! Just write times in a "decreasing order" (i.e. present-day will be at time 0).
+::: aside
+You can specify events in "units of years ago". Just program times in a "decreasing order" (7Mya → 6Mya → ..., as above).
 :::
 
 # Exercise #1: solution
@@ -1088,7 +1143,6 @@ Sometimes a shortcut `ts_names()` can be useful:
 
 ```{r}
 #| eval: false
-# gives a single vector of all names
 ts_names(ts)
 ```
 
@@ -1222,22 +1276,73 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 ## Exercise #2: hints
 
-1.  Write a function (in a script `model2.R`) with `Ne` as its only input. It will create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS vector.
+1.  Write a function (in a new script `model2.R`) taking `Ne` as a parameter. It should create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS.
 
 ::: fragment
-2.  Find `Ne` that will give the closest AFS to the observed AFS:
+If we call it `simulate_afs()`, it should work like this:
 
-    -   _option #1_ [_easy_]: Plot AFS for various $N_e$ values and eyeball which AFS looks closest judging from the plot
+```{r}
+#| echo: false
+simulate_afs <- function(Ne) {
+  n <- 10 + 1 # 1 is for the fixed sites included by tskit
+  theta <- 4 * 1e-8 * Ne * 100e6
+  round(theta * 1/1:n)
+}
+```
+
+```{r}
+simulate_afs(Ne = 1000)
+```
+:::
+
+::: fragment
+```{r}
+simulate_afs(Ne = 12000)
+```
+
+:::
+
+
+::: aside
+[Don't panic---you can pretty much just tweak bits of my earlier example code.]
+:::
+
+## Exercise #2: hints
+
+2.  Using your custom `simulate_afs()` function, find the value of `Ne` that will give the closest AFS to the observed AFS:
+
+    -   _option #1_ [_easy_]: Plot AFS vectors for various $N_e$ values, then eyeball which looks closest to the observed AFS
 
     -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
-:::
+
+## Exercise #2: hints
+
+If you're completely lost, you can start from this "template" again:
+
+```{r}
+#| eval: false
+library(slendr)
+init_env()
+
+simulate_afs <- function(Ne) {
+  <... AFS simulation code you cannibalized from my slides ...>
+}
+
+afs_1k  <- simulate_afs(Ne = 1000)
+afs_12k <- simulate_afs(Ne = 12000)
+<...>
+
+<... some plotting or statistics ...>
+```
 
 # Exercise #2: solution
 
 <br><br><br><br>
 
 ::: aside
-See [`ex2_simple.R` script](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_simple.R) for a simple solution and [`ex2_grid.R` script](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_grid.R) for a more elaborate grid-search solution.
+See [`ex2_simple.R`](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_simple.R) for a simple "eyeballing" solution.<br>
+
+See [`ex2_grid.R`](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex2_grid.R) for a more elaborate grid-search solution.
 :::
 
 
@@ -1621,3 +1726,35 @@ Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `t
 ::: aside
 See [`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) for a solution.
 :::
+
+
+## Conversion to other genotype formats
+
+If you have a tree-sequence object `ts`, you can do...
+
+```{r}
+#| eval: false
+ts_vcf(ts, path = "path/to/a/file.vcf.gz")
+```
+
+```{r}
+#| eval: false
+ts_eigenstrat(ts, prefix = "path/to/eigenstrat/prefix")
+```
+
+```{r}
+#| echo: false
+ts <- ts_simplify(ts, simplify_to = c("AFR_1", "EUR_1", "EUR_2"))
+```
+
+```{r}
+#| eval: false
+ts_genotypes(ts)
+```
+
+```{r}
+#| output-location: fragment
+#| echo: false
+ts_genotypes(ts) %>% as.data.frame() %>% head(10)
+```
+
