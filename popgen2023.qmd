@@ -34,11 +34,11 @@ format:
 
 # Why use simulations?
 
-1.  Making sense of estimated statistics
+1.  Making sense of inferred statistics
 2.  Fitting model parameters (i.e. [ABC](https://en.wikipedia.org/wiki/Approximate_Bayesian_computation))
 3.  Ground truth for method development
 
-## Making sense of estimated statistics
+## Making sense of inferred statistics
 
 <center>![](images/fstats_sims.png)</center>
 
@@ -110,18 +110,18 @@ each carrying *chromosomes* inherited from its parents.
 
 # 
 
-<h1>Homebrewed<br>single-locus<br>simulation in R</h1>
+<h1>Single-locus<br>Wright-Fisher<br>simulation in R</h1>
 
 <br>
 
-<h3>"What is the expected trajectory of a (neutral) allele under the influence of genetic drift?"</h3>
+<h3>"What is the expected trajectory of a neutral allele under the influence of genetic drift?"</h3>
 
 ## Complete simulation R script
 
 ```{r}
 #| results: hide
 #| code-line-numbers: "|1-3|5-6|8-9|10-11|13-14|17"
-p_0 <- 0.5  # initial allele frequency
+p_0 <- 0.5  # initial allele frequency ("50% marbles" from lecture #1)
 N   <- 500  # number of chromosomes in a population
 T   <- 500  # number of generations to simulate
 
@@ -133,7 +133,7 @@ for (gen_i in 2:T) {
   # get frequency in the previous generation
   p_prev <- p_trajectory[gen_i - 1] 
 
-  # calculate frequency in this generation
+  # calculate new frequency ("sampling marbles from a jar")
   p_trajectory[gen_i] <- rbinom(1, N, p_prev) / N 
 }
 
@@ -302,7 +302,7 @@ But now for something completely different.
 
 <h1 color="black" style="background-color: white">
 
-Let's talk about<br>"real" simulations.
+Let's talk about<br>_real_ simulations.
 
 </h1>
 
@@ -316,7 +316,7 @@ The most famous and widely used are [SLiM](https://messerlab.org/slim/) and [*ms
 
 They are <u>very</u> powerful but both require:
 
-::: incremental
+::: fragment
 
 - quite a bit of programming knowledge,
 - a lot of code for non-trivial simulations (🐛🪲🐜).
@@ -678,14 +678,14 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 ::: {.column width="50%"}
 
 ::: {.fragment}
-Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this 'template':
+Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this "template":
 
 ```{r}
 #| eval: false
 library(slendr)
 init_env()
 
-chimp <- population(...)
+chimp <- population("CHIMP", time = 7e6, N = 5000)
 # <... rest of your code ...>
 
 model <- compile_model(
