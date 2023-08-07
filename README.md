@@ -48,23 +48,10 @@ First, run this in your R console:
 install.packages("slendr")
 ```
 
-Assuming the above runs successfully, you will next need to setup a dedicated Python environment with tools we'll be using for simulation and analysis. To do this, *slendr* provides a helper function [`setup_env()`](https://www.slendr.net/reference/setup_env.html) that takes care of everything on your behalf.
-
-First, load *slendr* itself.
+Then load *slendr* itself and set it up by running this bit of code in your R console:
 
 ```         
 library(slendr)
-```
-
-This will very likely write a message that you are:
-
-1.  missing SLiM -- this is OK, feel free to ignore this
-
-2.  missing a Python environment.
-
-Next, run the following command. This will ask for permission to install an isolated Python mini-environment just for *slendr* -- this won't affect your own Python setup at all, so don't be afraid to confirm this!
-
-```         
 setup_env(agree = TRUE)
 ```
 
