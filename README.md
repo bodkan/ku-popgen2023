@@ -38,8 +38,6 @@ You will need:
 -   A working [R installation](https://cloud.r-project.org) (preferably version 4.x)
 -   [RStudio](https://www.rstudio.com/products/rstudio/download/) (not crucial but highly recommended)
 
-### *slendr* simulation package
-
 Getting *slendr* to work is critical. The whole lecture is dedicated to this package.
 
 First, run this in your R console:
