@@ -23,12 +23,13 @@ simulate_afs <- function(Ne) {
 afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
                   264, 218,  133, 173, 159, 142, 167, 129, 125, 143)
 
-# regularly spaced values of potential Ne
+# regularly spaced values of potential Ne values
 Ne_grid <- seq(from = 1000, to = 30000, by = 1000)
 Ne_grid
 
 library(parallel)
 
+# compute AFS (in parallel) across the entire grid of possible Ne values
 afs_grid <- mclapply(Ne_grid, simulate_afs, mc.cores = detectCores())
 names(afs_grid) <- Ne_grid
 
@@ -45,15 +46,10 @@ errors <- sapply(afs_grid, function(sim_afs) {
   sum((sim_afs - afs_observed)^2) / length(sim_afs)
 })
 
-# plot the errors, highlight the most likely value
-TRUE_NE <- 6543
-
 plot(Ne_grid, errors, ylab = "error")
 abline(v = Ne_grid[which.min(errors)], col = "red")
-abline(v = TRUE_NE, col = "black")
-legend("topright",
-       legend = c("true Ne", paste("closest inferred Ne =", Ne_grid[which.min(errors)])),
-       fill = c("black", "red"))
+# abline(v = TRUE_NE, col = "black")
+legend("topright", legend = paste("minimum error Ne =", Ne_grid[which.min(errors)]), fill = "red")
 
 # Plot the AFS again, highlighting the most likely spectrum
 plot(afs_observed, type = "b", col = "black", lwd = 3,
@@ -63,5 +59,7 @@ for (i in seq_along(Ne_grid)) {
   width <- if (i == which.min(errors)) 2 else 0.75
   lines(afs_grid[[i]], lwd = width, col = color)
 }
-legend("topright", legend = c("observed AFS", paste("Ne =", Ne_grid[which.min(errors)])),
+legend("topright", legend = c("observed AFS", paste("best fitting Ne =", Ne_grid[which.min(errors)])),
        fill = c("black", "red"))
+
+# the true Ne was 6543!
