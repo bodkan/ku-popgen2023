@@ -18,20 +18,6 @@ format:
   #   fig-align: center
 ---
 
-# 
-
-::: columns
-::: {.column width="70%"}
-> Many problems in population genetics cannot be solved by a mathematician, no matter how gifted. \[It\] is already clear that computer methods are very powerful. This is good. It \[...\] **permits people with limited mathematical knowledge to work on important problems** \[...\].
-:::
-
-::: {.column width="30%"}
-![](images/crow.jpeg)
-
-[James F. Crow](https://en.wikipedia.org/wiki/James_F._Crow) -- [interview](http://www.gnxp.com/blog/2006/06/10-questions-for-jim-crow.php)
-:::
-:::
-
 # First things first
 
 These slides and other resources are (and always will be) at:
@@ -56,13 +42,26 @@ setup_env(agree = TRUE)
 
 <br>
 
-If you want to do the exercises on your own laptop (if you potentially _can_, you definitely _should_), you need to do this first before running the above:
+If you want to do the exercises on your own laptop (if you _can_, you _should_), you need to do this first before running the above:
 
 ```{r}
 #| eval: false
 install.packages("slendr")
 ```
 
+# 
+
+::: columns
+::: {.column width="70%"}
+> Many problems in population genetics cannot be solved by a mathematician, no matter how gifted. \[It\] is already clear that computer methods are very powerful. This is good. It \[...\] **permits people with limited mathematical knowledge to work on important problems** \[...\].
+:::
+
+::: {.column width="30%"}
+![](images/crow.jpeg)
+
+[James F. Crow](https://en.wikipedia.org/wiki/James_F._Crow) -- [interview](http://www.gnxp.com/blog/2006/06/10-questions-for-jim-crow.php)
+:::
+:::
 
 # Why use simulations?
 
