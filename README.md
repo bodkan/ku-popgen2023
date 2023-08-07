@@ -6,7 +6,7 @@
 
 ### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content).
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version of the slides (easier for quick reading).
+### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises).
 
 ------------------------------------------------------------------------
 
