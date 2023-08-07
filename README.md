@@ -10,7 +10,7 @@
 
 ------------------------------------------------------------------------
 
-This README summarizes steps needed to set up your machine for the lecture and exercises. After you're done installing everything, make sure to run a small testing simulation (code below) to know that everything works as needed.
+This README summarizes steps needed to set up your machine for the lecture and exercises. After you're done installing everything, make sure to [run a small testing simulation](#testing-the-setup) to know that everything works as needed.
 
 **For course participants:** If you don't want to work on your own laptop, you can also use the [online RStudio server](http://emily.popgen.dk:3838/) provided by the course organizers.
 
