@@ -35,7 +35,7 @@ This will automatically install and set up necessary Python modules. **The serve
 
 You will need:
 
--   A working [R installation](https://cloud.r-project.org) (preferably version 4.x)
+-   A working [R installation](https://cloud.r-project.org) (preferably version 4.x) --- installators for macOS and Windows are provided. Linux users will surely know what to do.
 -   [RStudio](https://www.rstudio.com/products/rstudio/download/) (not crucial but highly recommended)
 
 Getting *slendr* to work is critical. The whole lecture is dedicated to this package.
