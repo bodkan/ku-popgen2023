@@ -18,7 +18,7 @@ This README summarizes steps needed to set up your machine for the lecture and e
 
 # Installation instructions
 
-In case you will be using RStudio (highly recommended), you should do [this](#workaround-for-an-rstudio-bug) first. This fixes an awful default setting of RStudio which not only sabotages using Python, but breaks reproducibility of your analysis.
+In case you will be using RStudio (highly recommended), you should do [this](#workaround-for-an-rstudio-bug) first. This fixes a questionable default setting of RStudio which not only complicates using Python from R, but can break reproducibility of your analyses.
 
 ## If you want to use the online RStudio server
 
