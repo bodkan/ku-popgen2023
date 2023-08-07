@@ -22,7 +22,7 @@ In case you will be using RStudio (highly recommended), you should do [this](#wo
 
 ## If you want to use the online RStudio server
 
-**If you want to use** the [online RStudio server](http://emily.popgen.dk:3838/) provided by the course organizers, the only thing you should do after logging into the RStudio session, is to run this bit of code:
+**If you want to use** the [online RStudio server](http://emily.popgen.dk:3838/) provided by the course organizers, you should run this bit of code in the R console after you log in:
 
 ```
 library(slendr)
