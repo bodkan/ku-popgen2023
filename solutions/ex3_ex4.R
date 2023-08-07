@@ -25,11 +25,6 @@ ts <-
   msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
 
-# for comparison of gene flow and non-gene flow models:
-# ts_save(ts, "/tmp/ex3.trees")
-# ts <- ts_load("ex3.trees", model)
-# ts <- ts_load("ex1.trees", model)
-
 
 # Exercise #4 ------------------------------------------------------------------
 
@@ -92,3 +87,13 @@ rbind(f4_afr, f4_eur) %>%
   geom_jitter() +
   geom_hline(yintercept = 0, linetype = 2) +
   ggtitle("f4(AFR, EUR; NEA, CHIMP)")
+
+
+
+
+# you can ignore the rest -------------------------------------------------
+
+# for comparison of gene flow and non-gene flow models:
+# ts_save(ts, "/tmp/ex3.trees")
+# ts <- ts_load("ex3.trees", model)
+# ts <- ts_load("ex1.trees", model)

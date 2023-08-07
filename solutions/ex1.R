@@ -39,6 +39,10 @@ model <- compile_model(
 list.files(model_dir)
 
 
+
+
+# you can ignore the rest -------------------------------------------------
+
 # ts <-
 #   msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
 #   ts_mutate(mutation_rate = 1e-8)
