@@ -1,4 +1,4 @@
-# Lecture and exercises on simulations in population genetics at Copenhagen University 2023
+# Lecture and exercises on simulations in population genetics at University of Copenhagen 2023
 
 *These lecture materials were originally part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/).*
 
