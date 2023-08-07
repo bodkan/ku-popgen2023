@@ -100,6 +100,6 @@ If this runs without error and you get a small summary table from the `ts` objec
 
 RStudio sometimes interferes with Python which is needed for simulations.
 
-Go to \`Tools\` → \`Global Options\` in your RStudio and set the following options like this:
+Go to `Tools` → `Global Options` in your RStudio and set the following options like this:
 
 ![](images/rstudio_setting.png)
