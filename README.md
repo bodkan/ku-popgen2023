@@ -1,10 +1,13 @@
-# Lecture and exercises on simulation in population genetics at Copenhagen University 2023
+# Lecture and exercises on simulations in population genetics at Copenhagen University 2023
 
-### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/).
+_This lecture was originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/)._
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a render of the slides as a single HTML page (easier for quick reading).
+------------------------------------------------------------------------
 
-_This lecture has been originally presented as part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/). However, the materials in this repository are completely self-contained and you can use them for future reference._
+### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercies, bonus content).
+
+### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version of the slides (easier for quick reading).
+
 
 ------------------------------------------------------------------------
 
