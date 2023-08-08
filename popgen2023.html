@@ -759,10 +759,8 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 </section>
 <section id="there-are-many-simulation-tools" class="slide level2">
 <h2>There are many simulation tools</h2>
-<p><br></p>
 <p>The most famous and widely used are <a href="https://messerlab.org/slim/">SLiM</a> and <a href="https://tskit.dev/msprime/docs/stable/intro.html"><em>msprime</em></a>.</p>
-<p><br></p>
-<p>They are <u>very</u> powerful but both require:</p>
+<p><br>They are <u>very</u> powerful but both require:</p>
 <div class="fragment">
 <ul>
 <li>quite a bit of programming knowledge,</li>
@@ -775,6 +773,12 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 <h3>
 <strong>The exercises will focus on the <a href="http://www.slendr.net"><em>slendr</em></a></strong><br>popgen simulation toolkit for R.
 </h3>
+</center>
+</div>
+<div class="fragment">
+<br>
+<center>
+But let’s look at SLiM and <em>msprime</em> at least a little bit.
 </center>
 </div>
 </section>
@@ -1147,7 +1151,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmp4FoAUs/file878d600e400 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpCuvrRA/filebb533e7ebb60 </code></pre>
 </div>
 </div>
 </section>
@@ -1166,20 +1170,6 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 <aside><div>
 <p>Use <a href="https://bodkan.quarto.pub/ku-popgen2023-onepage/">these</a> one-page handouts for reference.</p>
 </div></aside></section>
-<section id="workaround-for-an-rstudio-bug" class="slide level2">
-<h2>Workaround for an RStudio bug</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>RStudio sometimes interferes with Python which is needed for simulations.</p>
-<p>Go to <code>Tools</code> → <code>Global Options</code> in your RStudio and set the options like this.</p>
-<p><strong>Also happens on the <a href="http://emily.popgen.dk:3838/">shared server</a>!</strong></p>
-</div><div class="column" style="width:60%;">
-<center>
-<img data-src="images/rstudio_setting.png">
-</center>
-</div>
-</div>
-</section>
 <section id="exercise-1-write-this-model-in-slendr" class="slide level2">
 <h2>Exercise #1: write this model in <em>slendr</em></h2>
 <div class="columns">
@@ -1207,7 +1197,7 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 </div>
 
 <aside><div>
-<p><strong>Note:</strong> You can specify events in more natural “units of years ago”. Just program times in a “decreasing order” (7Mya → 6Mya → …, as shown in the picture above).</p>
+<p><strong>Note:</strong> With <em>slendr</em>, you can specify events in more natural “units of years ago”. Just program times in a “decreasing order” (7Mya → 6Mya → …, as shown in the picture above).</p>
 </div></aside></section></section>
 <section id="exercise-1-solution" class="title-slide slide level1 center">
 <h1>Exercise #1: solution</h1>
@@ -1540,7 +1530,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3757 1993 1299  988  821  623  650  473  372  399</code></pre>
+<pre><code> [1] 3944 2170 1378  997  712  668  658  501  453  408</code></pre>
 </div>
 </div>
 </div>
@@ -1560,6 +1550,9 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </div>
 </div>
 </div>
+</div>
+<div class="fragment">
+<p><small> <strong>Note:</strong> We drop the first element (<code>afs[-1]</code>) technical reasons related to <em>tskit</em>. You don’t have to worry about that here, but you can read <a href="https://tskit.dev/tutorials/analysing_tree_sequences.html#sec-tutorial-afs-zeroth-entry">this</a> for more detail. </small></p>
 </div>
 </section></section>
 <section>
@@ -1595,7 +1588,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <li>Write a function (in a new script <code>model2.R</code>) taking <code>Ne</code> as a parameter. It should create one population, compile a model, run <code>ts_afs()</code> for 10 samples, and return the AFS.</li>
 </ol>
 <div class="fragment">
-<p>If we call it <code>simulate_afs()</code>, it should work like this:</p>
+<p>If we call it <code>simulate_afs()</code>, it should work like this (your numbers will be different, of course!):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1739,9 +1732,10 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </div></aside></section>
 <section id="exercise-4-more-statistics" class="slide level2">
 <h2>Exercise #4: more statistics!</h2>
-<p>Practice computing tree seqence statistics on the <code>ts</code> object you simulated in your <code>model1.R</code> script.</p>
+<p>Simulate a <code>ts</code> tree sequence from your complete Neanderthal introgression model in <code>model1.R</code>.</p>
 
-<img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-57-1.png" width="672" class="r-stretch quarto-figure-center"></section>
+<img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-57-1.png" width="672" class="r-stretch quarto-figure-center"><p>(Remember to add mutations with <code>ts_mutate()</code>.)</p>
+</section>
 <section id="exercise-4-more-statistics-1" class="slide level2">
 <h2>Exercise #4: more statistics!</h2>
 <p><strong>Compute (some of) these on your tree sequence:</strong></p>
@@ -1754,12 +1748,12 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <p>[hint: <span class="math inline">\(f_4\)</span>(&lt;AFR&gt;, &lt;EUR&gt;; &lt;NEAND&gt;, &lt;CHIMP&gt;)]</p></li>
 </ul>
 <center>
-<strong>Do results match expectations given your model?</strong>
+<strong>Do your results fit expectations from your model?</strong>
 </center>
 </section>
 <section id="exercise-4-hint" class="slide level2">
 <h2>Exercise #4: hint</h2>
-<p>For multipopulation statistics, you need a (named) list of samples in each population.</p>
+<p>For multipopulation statistics, you need a (named) list of samples recorded in each population.</p>
 <p><code>ts_names()</code> has a <code>split = "pop"</code> option just for this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">ts_names</span>(ts, <span class="at">split =</span> <span class="st">"pop"</span>)</span>
@@ -1774,7 +1768,7 @@ $NEA
 [1] "NEA_1" "NEA_2" "NEA_3"</code></pre>
 </div>
 </div>
-<p>You can use this in place of <code>sample_names =</code> in code like:</p>
+<p>You can use this in place of <code>sample_names</code> in code like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_diversity</span>(ts, <span class="at">sample_sets =</span> samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1889,7 +1883,7 @@ $NEA
 <pre><code>╔═══════════════════════════╗
 ║TreeSequence               ║
 ╠═══════════════╤═══════════╣
-║Trees          │       1355║
+║Trees          │       1236║
 ╟───────────────┼───────────╢
 ║Sequence Length│    1000000║
 ╟───────────────┼───────────╢
@@ -1897,26 +1891,26 @@ $NEA
 ╟───────────────┼───────────╢
 ║Sample Nodes   │         12║
 ╟───────────────┼───────────╢
-║Total Size     │  296.6 KiB║
+║Total Size     │  274.3 KiB║
 ╚═══════════════╧═══════════╝
 ╔═══════════╤════╤═════════╤════════════╗
 ║Table      │Rows│Size     │Has Metadata║
 ╠═══════════╪════╪═════════╪════════════╣
-║Edges      │4150│129.7 KiB│          No║
+║Edges      │3790│118.4 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Individuals│   6│192 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Migrations │   0│  8 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Mutations  │1725│ 62.3 KiB│          No║
+║Mutations  │1611│ 58.2 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Nodes      │ 939│ 25.7 KiB│          No║
+║Nodes      │ 881│ 24.1 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Populations│   4│341 Bytes│         Yes║
 ╟───────────┼────┼─────────┼────────────╢
-║Provenances│   2│  3.3 KiB│          No║
+║Provenances│   2│  3.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Sites      │1722│ 42.1 KiB│          No║
+║Sites      │1610│ 39.3 KiB│          No║
 ╚═══════════╧════╧═════════╧════════════╝</code></pre>
 </div>
 </div>
@@ -1935,8 +1929,9 @@ $NEA
 </div></aside></section>
 <section id="exercise-5a-ancient-samples" class="slide level2">
 <h2>Exercise #5a: ancient samples</h2>
+<p>Let’s return to your introgression model:</p>
 
-<img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-67-1.png" width="960" class="r-stretch"></section>
+<img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-67-1.png" width="576" class="r-stretch quarto-figure-center"></section>
 <section id="exercise-5a-ancient-samples-1" class="slide level2">
 <h2>Exercise #5a: ancient samples</h2>
 <p>Simulate data from your model using this sampling:</p>
@@ -1975,31 +1970,35 @@ $NEA
 <aside><div>
 <p>See <a href="https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R"><code>ex5.R</code> script on GitHub</a> for a solution.</p>
 </div></aside></section>
-<section id="conversion-to-other-genotype-formats" class="slide level2">
-<h2>Conversion to other genotype formats</h2>
-<p>If you have a tree-sequence object <code>ts</code>, you can do…</p>
+<section id="standard-genotype-formats" class="slide level2">
+<h2>Standard genotype formats</h2>
+<p>If a tree sequence doesn’t cut it, you can always:</p>
+<ul>
+<li>export genotypes to a VCF file:</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_vcf</span>(ts, <span class="at">path =</span> <span class="st">"path/to/a/file.vcf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>export genotypes in an EIGENSTRAT format:</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_eigenstrat</span>(ts, <span class="at">prefix =</span> <span class="st">"path/to/eigenstrat/prefix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>access genotypes in a data frame:</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_genotypes</span>(ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>    pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  2869          1          0          0          0          1          1
-2  3976          1          0          0          0          0          0
-3  4573          0          1          0          0          0          0
-4  4584          0          1          1          1          0          0
-5  5579          0          0          0          0          1          0
-6  7119          0          0          1          1          0          0
-7  8646          0          0          0          0          0          1
-8  8872          1          0          0          0          1          0
-9  9232          1          0          0          0          1          0
-10 9449          1          0          0          0          1          0</code></pre>
+<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1 2415          0          0          1          0          1          1
+2 2569          1          0          0          0          0          0
+3 3936          0          1          0          1          0          0
+4 3960          1          0          1          0          1          1
+5 4251          1          1          0          1          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

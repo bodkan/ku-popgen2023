@@ -47,6 +47,7 @@ If you want to do the exercises on your own laptop (if you _can_, you _should_),
 install.packages("slendr")
 ```
 
+
 # 
 
 ::: columns
@@ -351,13 +352,9 @@ ggplot() +
 
 ## There are many simulation tools
 
-<br>
-
 The most famous and widely used are [SLiM](https://messerlab.org/slim/) and [*msprime*](https://tskit.dev/msprime/docs/stable/intro.html).
 
-<br>
-
-They are <u>very</u> powerful but both require:
+<br>They are <u>very</u> powerful but both require:
 
 ::: fragment
 
@@ -371,6 +368,11 @@ They are <u>very</u> powerful but both require:
 <br>
 
 <center><h3>**The exercises will focus on the [*slendr*](http://www.slendr.net)**<br>popgen simulation toolkit for R.</h3></center>
+:::
+
+::: fragment
+
+<br><center>But let's look at SLiM and _msprime_ at least a little bit.</center>
 :::
 
 ## 
@@ -682,25 +684,6 @@ plot_model(model)
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
-
-## Workaround for an RStudio bug
-
-:::: columns
-
-::: {.column width="40%"}
-RStudio sometimes interferes with Python which is needed for simulations.
-
-Go to `Tools` → `Global Options` in your RStudio and set the options like this.
-
-**Also happens on the [shared server](http://emily.popgen.dk:3838/)!**
-:::
-
-::: {.column width="60%"}
-<center>![](images/rstudio_setting.png)</center>
-:::
-
-::::
-
 ## Exercise #1: write this model in _slendr_
 
 ::: columns
@@ -735,7 +718,7 @@ plot_model(model) # verify visually
 :::
 
 ::: aside
-**Note:** You can specify events in more natural "units of years ago". Just program times in a "decreasing order" (7Mya → 6Mya → ..., as shown in the picture above).
+**Note:** With _slendr_, you can specify events in more natural "units of years ago". Just program times in a "decreasing order" (7Mya → 6Mya → ..., as shown in the picture above).
 :::
 
 # Exercise #1: solution
@@ -1218,6 +1201,12 @@ plot(afs[-1], type = "b",
 :::
 :::
 
+::: fragment
+<small>
+**Note:** We drop the first element (`afs[-1]`) technical reasons related to _tskit_. You don't have to worry about that here, but you can read [this](https://tskit.dev/tutorials/analysing_tree_sequences.html#sec-tutorial-afs-zeroth-entry) for more detail.
+</small>
+:::
+
 # Exercise #2
 
 
@@ -1277,7 +1266,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 1.  Write a function (in a new script `model2.R`) taking `Ne` as a parameter. It should create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS.
 
 ::: fragment
-If we call it `simulate_afs()`, it should work like this:
+If we call it `simulate_afs()`, it should work like this (your numbers will be different, of course!):
 
 ```{r}
 #| echo: false
@@ -1452,6 +1441,8 @@ Add NEA → EUR introgression to your `model1.R` script:
 ```{r}
 #| echo: false
 #| fig-align: center
+gf <- gene_flow(nea, eur, start = 55000, end = 50000, rate = 0.03)
+model <- compile_model(populations = list(chimp, nea, afr, eur), gene_flow = gf, generation_time = 30)
 cowplot::plot_grid(
   plot_model(model, proportions = TRUE) + ggtitle("Normal time scale"),
   plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
@@ -1490,14 +1481,17 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 
 ## Exercise #4: more statistics!
 
-Practice computing tree seqence statistics on the `ts` object you simulated in your `model1.R` script.
+Simulate a `ts` tree sequence from your complete Neanderthal introgression model in `model1.R`.
 
 ```{r}
 #| fig-align: center
+#| fig-height: 5
 #| fig-width: 7
 #| echo: false
 plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
+
+(Remember to add mutations with `ts_mutate()`.)
 
 ## Exercise #4: more statistics!
 
@@ -1515,12 +1509,11 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
 
   \[hint: $f_4$(\<AFR\>, \<EUR\>; \<NEAND\>, \<CHIMP\>)\]
 
-<center>**Do results match expectations given your model?**</center>
-
+<center>**Do your results fit expectations from your model?**</center>
 
 ## Exercise #4: hint
 
-For multipopulation statistics, you need a (named) list of samples in each population.
+For multipopulation statistics, you need a (named) list of samples recorded in each population.
 
 `ts_names()` has a `split = "pop"` option just for this:
 
@@ -1537,7 +1530,7 @@ tmp_list <- ts_names(ts_tmp, split = "pop") %>% lapply(`[`, 1:3) %>% .[c("AFR", 
 tmp_list
 ```
 
-You can use this in place of `sample_names =` in code like:
+You can use this in place of `sample_names` in code like:
 
 ```{r}
 #| eval: false
@@ -1669,8 +1662,12 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 
 ## Exercise #5a: ancient samples
 
+Let's return to your introgression model:
+
 ```{r}
 #| echo: false
+#| fig-width: 6
+#| fig-align: "center"
 chimp <- population("CHIMP", time = 7e6, N = 5000)
 afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
 eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
@@ -1684,7 +1681,7 @@ model <- compile_model(
   generation_time = 30
 )
 
-plot_model(model)
+plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
 
 ## Exercise #5a: ancient samples
@@ -1726,19 +1723,25 @@ See [`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main
 :::
 
 
-## Conversion to other genotype formats
+## Standard genotype formats
 
-If you have a tree-sequence object `ts`, you can do...
+If a tree sequence doesn't cut it, you can always:
+
+- export genotypes to a VCF file:
 
 ```{r}
 #| eval: false
 ts_vcf(ts, path = "path/to/a/file.vcf.gz")
 ```
 
+- export genotypes in an EIGENSTRAT format:
+
 ```{r}
 #| eval: false
 ts_eigenstrat(ts, prefix = "path/to/eigenstrat/prefix")
 ```
+
+- access genotypes in a data frame:
 
 ```{r}
 #| echo: false
@@ -1753,6 +1756,6 @@ ts_genotypes(ts)
 ```{r}
 #| output-location: fragment
 #| echo: false
-ts_genotypes(ts) %>% as.data.frame() %>% head(10)
+ts_genotypes(ts) %>% as.data.frame() %>% head(5)
 ```
 
