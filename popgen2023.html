@@ -413,8 +413,7 @@ Martin Petr
 <h1>First things first</h1>
 <p>These slides and other resources are (and always will be) at:</p>
 <p><a href="https://github.com/bodkan/ku-popgen2023">github.com/bodkan/ku-popgen2023</a></p>
-<p>[a one-page version of the slides, exercise solutions, etc.]</p>
-<p><br></p>
+<p><br><br></p>
 <p><strong>Open this link now so you have everything at hand later.</strong></p>
 </section>
 
@@ -500,24 +499,24 @@ Martin Petr
 </div>
 </section>
 
-<section id="a-chromosome-is" class="title-slide slide level1 center">
-<h1>A chromosome is…</h1>
+<section id="the-genetics-part" class="title-slide slide level1 center">
+<h1>The ‘genetics’ part…</h1>
 <p><br></p>
 <div class="fragment">
-<p>…a linear sequence of nucleotides</p>
+<p>…a linear sequence of nucleotides (a chromosome)</p>
 <ul>
 <li>a list of characters (A/G/C/T nucleotides)</li>
 <li>a list of 0 or 1 values (ancestral/derived allele),</li>
 </ul>
 </div>
 <div class="fragment">
-<p>which mutates at a given <em>mutation rate</em>,<br></p>
-<p>and recombines at a certain <em>recombination rate</em>.</p>
+<p>which (maybe) mutates at a given <em>mutation rate</em>,<br></p>
+<p>and (maybe) recombines at a certain <em>recombination rate</em>.</p>
 </div>
 </section>
 
-<section id="a-population-is" class="title-slide slide level1 center">
-<h1>A population is…</h1>
+<section id="the-population-part" class="title-slide slide level1 center">
+<h1>The ‘population’ part…</h1>
 <div class="fragment">
 <p><br></p>
 <p>… a collection of <em>individuals</em> at a given point in time,<br><br> each carrying <em>chromosomes</em> inherited from its parents.</p>
@@ -535,8 +534,15 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 “What is the expected trajectory of a neutral allele under the influence of genetic drift?”
 </h3>
 </section>
-<section id="complete-simulation-r-script" class="slide level2">
-<h2>Complete simulation R script</h2>
+<section id="from-fernandos-lecture-on-monday" class="slide level2">
+<h2>From Fernando’s lecture on Monday…</h2>
+<p><br></p>
+<center>
+<img data-src="images/wf_trajectory.png" style="width:60.0%">
+</center>
+</section>
+<section id="a-complete-wright-fisher-simulation" class="slide level2">
+<h2>A complete Wright-Fisher simulation</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1-3|5-6|8-9|10-11|13-14|17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>p_0 <span class="ot">&lt;-</span> <span class="fl">0.5</span>  <span class="co"># initial allele frequency ("50% marbles" from lecture #1)</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>N   <span class="ot">&lt;-</span> <span class="dv">500</span>  <span class="co"># number of chromosomes in a population</span></span>
@@ -554,7 +560,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 <span id="cb3-14"><a href="#cb3-14"></a>  p_trajectory[gen_i] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N, p_prev) <span class="sc">/</span> N </span>
 <span id="cb3-15"><a href="#cb3-15"></a>}</span>
 <span id="cb3-16"><a href="#cb3-16"></a></span>
-<span id="cb3-17"><a href="#cb3-17"></a>p_trajectory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="fu">plot</span>(p_trajectory)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="n-500-p_0-0.5" class="slide level2">
@@ -733,14 +739,12 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 </section></section>
 <section id="section-2" class="title-slide slide level1 center" data-background-image="images/montypython.jpeg">
 <h1></h1>
-<div class="fragment">
 <h1>
 <br><br><br>
 </h1>
 <h1 color="black" style="background-color: white">
-<p>But now for something completely different.</p>
+<p>&nbsp;&nbsp;But now for something<br>&nbsp;&nbsp;completely different.</p>
 </h1>
-</div>
 </section>
 
 <section>
@@ -750,7 +754,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 <br><br><br>
 </h1>
 <h1 color="black" style="background-color: white">
-<p>Let’s talk about<br><em>real</em> simulations.</p>
+<p>&nbsp;&nbsp;Let’s talk about<br>&nbsp;&nbsp;<em>real</em> simulations.</p>
 </h1>
 </section>
 <section id="there-are-many-simulation-tools" class="slide level2">
@@ -781,19 +785,21 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 <h2>
 What is SLiM?
 </h2>
+<ul>
+<li><strong>A forward-time simulator</strong></li>
+</ul>
 <div class="fragment">
 <ul>
-<li><p><strong>Forward-time simulator</strong></p></li>
-<li><p>It’s fully programmable!</p></li>
+<li>It’s fully programmable!</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
 <li>Massive library of functions for:
 <ul>
-<li>Demographic events</li>
-<li>Various mating systems</li>
-<li>Selection, quantitative traits, …</li>
+<li>demographic events</li>
+<li>various mating systems</li>
+<li>selection, quantitative traits, …</li>
 </ul></li>
 </ul>
 </div>
@@ -855,13 +861,11 @@ What is SLiM?
 <div class="columns">
 <div class="column" style="width:60%;">
 <h2>
-What is <em>msprime</em>
+What is <em>msprime</em>?
 </h2>
-<div class="fragment">
 <ul>
 <li>A Python module for writing <strong>coalescent simulations</strong></li>
 </ul>
-</div>
 <div class="fragment">
 <ul>
 <li>Extremely fast (genome-scale, population-scale data)</li>
@@ -904,7 +908,6 @@ ts = msprime.sim_ancestry(
 )</code></pre>
 </div>
 </div>
-<p>source: <a href="https://tskit.dev/msprime/docs/stable/demography.html#demographic-models">link</a></p>
 </section></section>
 <section>
 <section id="section-6" class="title-slide slide level1 center">
@@ -929,14 +932,15 @@ Why a new package?
 <img data-src="images/animation.gif" style="width:70.0%">
 </center>
 </section>
-<section id="why-a-new-package" class="slide level2">
-<h2>Why a new package?</h2>
-<div class="fragment">
+<section id="section-7" class="slide level2">
+<h2></h2>
+<h2>
+Why a new package?
+</h2>
 <ul>
 <li><p>Most researchers are not expert programmers</p></li>
 <li><p>All but the most trivial simulations require lots of code</p></li>
 </ul>
-</div>
 <div class="fragment">
 <ul>
 <li><p>90% <sup><font color="blue">[citation needed]</font></sup> of simulations are basically the same!</p>
@@ -953,7 +957,7 @@ Why a new package?
 </div>
 <div class="fragment">
 <center>
-<strong><em>slendr</em></strong> <strong>makes “standard” simulations trivial and<br> unlocks new kinds of spatial simulations</strong>
+<strong><em>slendr</em></strong> <strong>makes “standard” demographic simulations trivial<br>and unlocks new kinds of spatial simulations</strong>
 </center>
 </div>
 </section></section>
@@ -1064,6 +1068,7 @@ population history overview:
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">population</span>(<span class="st">"pop1"</span>, <span class="at">N =</span> <span class="dv">1000</span>, <span class="at">time =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resize</span>(<span class="at">N =</span> <span class="dv">100</span>, <span class="at">time =</span> <span class="dv">500</span>, <span class="at">how =</span> <span class="st">"step"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 <p>Exponential increase:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span></span>
@@ -1142,7 +1147,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmp2xulP0/filee91d24a408c5 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpboxaPL/file7fe223fdd7f </code></pre>
 </div>
 </div>
 </section>
@@ -1167,7 +1172,7 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 <div class="column" style="width:40%;">
 <p>RStudio sometimes interferes with Python which is needed for simulations.</p>
 <p>Go to <code>Tools</code> → <code>Global Options</code> in your RStudio and set the options like this.</p>
-<p>Also happens on the <a href="http://emily.popgen.dk:3838/">shared server</a>!</p>
+<p><strong>Also happens on the <a href="http://emily.popgen.dk:3838/">shared server</a>!</strong></p>
 </div><div class="column" style="width:60%;">
 <center>
 <img data-src="images/rstudio_setting.png">
@@ -1202,18 +1207,18 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 </div>
 
 <aside><div>
-<p>You can specify events in “units of years ago”. Just program times in a “decreasing order” (7Mya → 6Mya → …, as above).</p>
+<p><strong>Note:</strong> You can specify events in more natural “units of years ago”. Just program times in a “decreasing order” (7Mya → 6Mya → …, as shown in the picture above).</p>
 </div></aside></section></section>
 <section id="exercise-1-solution" class="title-slide slide level1 center">
 <h1>Exercise #1: solution</h1>
 <p><br><br><br><br></p>
 
 <aside><div>
-<p>See <a href="https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex1.R"><code>ex1.R</code> script on GitHub</a> for a solution.</p>
+<p>See <a href="https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex1.R"><code>ex1.R</code> on GitHub</a> for a solution.</p>
 </div></aside></section>
 
 <section>
-<section id="section-7" class="title-slide slide level1 center">
+<section id="section-8" class="title-slide slide level1 center">
 <h1></h1>
 <h1>
 So, now we can<br>write a <code>model</code>
@@ -1456,7 +1461,7 @@ With <em>slendr</em>, we can add mutations <em>after</em> the simulation using <
 <p><br></p>
 <center>
 <h2>
-How do we work with this <code>ts</code> thing?
+Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </h2>
 </center>
 </div>
@@ -1535,7 +1540,7 @@ How do we work with this <code>ts</code> thing?
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4258 2084 1393  944  785  644  656  510  453  407</code></pre>
+<pre><code> [1] 4008 2043 1244  951  750  685  557  594  500  392</code></pre>
 </div>
 </div>
 </div>
@@ -1799,7 +1804,7 @@ $NEA
 <li>contact details at <a href="https://bodkan.net">bodkan.net</a></li>
 </ul>
 </section></section>
-<section id="section-8" class="title-slide slide level1 center">
+<section id="section-9" class="title-slide slide level1 center">
 <h1></h1>
 <h1>
 <p><font color="orange">B</font><font color="darkblue">O</font><font color="green">N</font><font color="red">U</font><font color="pink">S</font> <font color="purple">H</font><font color="orange">O</font><font color="green">M</font><font color="lightblue">E</font><font color="cyan">W</font><font color="green">O</font><font color="red">R</font><font color="orange">K</font></p>
@@ -1884,7 +1889,7 @@ $NEA
 <pre><code>╔═══════════════════════════╗
 ║TreeSequence               ║
 ╠═══════════════╤═══════════╣
-║Trees          │       1263║
+║Trees          │       1335║
 ╟───────────────┼───────────╢
 ║Sequence Length│    1000000║
 ╟───────────────┼───────────╢
@@ -1892,26 +1897,26 @@ $NEA
 ╟───────────────┼───────────╢
 ║Sample Nodes   │         12║
 ╟───────────────┼───────────╢
-║Total Size     │  274.3 KiB║
+║Total Size     │  298.0 KiB║
 ╚═══════════════╧═══════════╝
 ╔═══════════╤════╤═════════╤════════════╗
 ║Table      │Rows│Size     │Has Metadata║
 ╠═══════════╪════╪═════════╪════════════╣
-║Edges      │3902│121.9 KiB│          No║
+║Edges      │4142│129.4 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Individuals│   6│192 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Migrations │   0│  8 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Mutations  │1547│ 55.9 KiB│          No║
+║Mutations  │1763│ 63.7 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Nodes      │ 870│ 23.8 KiB│          No║
+║Nodes      │ 918│ 25.1 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Populations│   4│341 Bytes│         Yes║
 ╟───────────┼────┼─────────┼────────────╢
 ║Provenances│   2│  3.3 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Sites      │1546│ 37.8 KiB│          No║
+║Sites      │1760│ 43.0 KiB│          No║
 ╚═══════════╧════╧═════════╧════════════╝</code></pre>
 </div>
 </div>
@@ -1985,16 +1990,16 @@ $NEA
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>    pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1   528          1          0          0          0          0          0
-2   937          0          0          0          0          1          0
-3   999          1          0          0          0          0          0
-4  1167          0          1          1          1          1          1
-5  1716          0          1          1          0          0          0
-6  1860          0          1          1          1          0          1
-7  1988          1          0          0          0          0          0
-8  2301          1          0          0          0          0          0
-9  2782          0          1          1          1          1          1
-10 3103          0          1          1          1          0          1</code></pre>
+1   469          1          1          1          1          0          1
+2   554          0          0          0          0          1          0
+3  3222          1          0          1          1          1          1
+4  3295          0          0          0          0          0          1
+5  3906          0          1          0          0          0          0
+6  3915          0          0          0          0          1          0
+7  4306          1          0          1          1          1          1
+8  5210          0          0          0          1          0          1
+9  6672          1          0          1          0          0          0
+10 6842          1          1          1          0          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">
