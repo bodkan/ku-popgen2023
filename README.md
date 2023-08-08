@@ -69,7 +69,7 @@ install.packages(c("dplyr", "ggplot2"))"
 
 # Testing the setup
 
-Copy the following script to your R session **after (!) you successfully installed _slendr_ as described above**.
+Copy the following script to your R session **after (!) you successfully installed _slendr_ and ran `setup_env()` as described above**.
 
 ```         
 library(slendr)
