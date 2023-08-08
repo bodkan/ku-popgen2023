@@ -760,7 +760,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 <section id="there-are-many-simulation-tools" class="slide level2">
 <h2>There are many simulation tools</h2>
 <p>The most famous and widely used are <a href="https://messerlab.org/slim/">SLiM</a> and <a href="https://tskit.dev/msprime/docs/stable/intro.html"><em>msprime</em></a>.</p>
-<p><br>They are <u>very</u> powerful but both require:</p>
+<p>They are <u>very</u> powerful but both require:</p>
 <div class="fragment">
 <ul>
 <li>quite a bit of programming knowledge,</li>
@@ -1151,7 +1151,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpkZhGEv/filedcca322f4d64 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpFpeSkr/filedf5e35ee6924 </code></pre>
 </div>
 </div>
 </section>
@@ -1530,7 +1530,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3961 1932 1339  989  678  569  566  461  440  381</code></pre>
+<pre><code> [1] 4074 2026 1350  948  793  645  548  542  438  482</code></pre>
 </div>
 </div>
 </div>
@@ -1883,7 +1883,7 @@ $NEA
 <pre><code>╔═══════════════════════════╗
 ║TreeSequence               ║
 ╠═══════════════╤═══════════╣
-║Trees          │       1289║
+║Trees          │       1234║
 ╟───────────────┼───────────╢
 ║Sequence Length│    1000000║
 ╟───────────────┼───────────╢
@@ -1891,26 +1891,26 @@ $NEA
 ╟───────────────┼───────────╢
 ║Sample Nodes   │         12║
 ╟───────────────┼───────────╢
-║Total Size     │  284.1 KiB║
+║Total Size     │  281.6 KiB║
 ╚═══════════════╧═══════════╝
 ╔═══════════╤════╤═════════╤════════════╗
 ║Table      │Rows│Size     │Has Metadata║
 ╠═══════════╪════╪═════════╪════════════╣
-║Edges      │3888│121.5 KiB│          No║
+║Edges      │3773│117.9 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Individuals│   6│192 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Migrations │   0│  8 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Mutations  │1694│ 61.2 KiB│          No║
+║Mutations  │1750│ 63.2 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Nodes      │ 917│ 25.1 KiB│          No║
+║Nodes      │ 864│ 23.6 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Populations│   4│341 Bytes│         Yes║
 ╟───────────┼────┼─────────┼────────────╢
 ║Provenances│   2│  3.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Sites      │1692│ 41.3 KiB│          No║
+║Sites      │1749│ 42.7 KiB│          No║
 ╚═══════════╧════╧═════════╧════════════╝</code></pre>
 </div>
 </div>
@@ -1993,12 +1993,12 @@ $NEA
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1 1143          1          0          0          0          0          0
-2 1410          0          0          1          0          0          1
-3 2021          0          1          0          1          0          0
-4 2328          1          0          1          0          0          1
-5 2735          1          0          0          0          0          0</code></pre>
+<pre><code>  pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1 395          0          1          0          1          0          0
+2 410          0          0          1          0          0          0
+3 464          0          0          1          0          0          0
+4 638          0          0          0          0          1          0
+5 931          0          0          1          0          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

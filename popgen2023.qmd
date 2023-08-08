@@ -354,7 +354,7 @@ ggplot() +
 
 The most famous and widely used are [SLiM](https://messerlab.org/slim/) and [*msprime*](https://tskit.dev/msprime/docs/stable/intro.html).
 
-<br>They are <u>very</u> powerful but both require:
+They are <u>very</u> powerful but both require:
 
 ::: fragment
 
