@@ -726,8 +726,22 @@ plot_model(model) # verify visually
 :::
 
 ::: aside
-**Note:** With _slendr_, you can specify events in more natural "units of years ago". Just program times in a "decreasing order" (7Mya → 6Mya → ..., as shown in the picture above).
+**Note:** You can also give time in units of "years ago", just write them in a decreasing order (7Mya → 6Mya → ..., as shown above). In that case, don't set `simulation_length`.
 :::
+
+## Exercise #1 (bonus): your own model
+
+<br>
+
+Program a model for an organism that you study.
+
+<br>
+
+If applicable, include bottlenecks, expansions, etc. Don't hesitate to make it as complex as you want.
+
+<br>
+
+Save it in a different script&mdash;you will use it in later exercises.
 
 # Exercise #1: solution
 
@@ -1299,7 +1313,7 @@ simulate_afs(Ne = 12000)
 
 
 ::: aside
-[Don't panic---you can pretty much just tweak bits of my earlier example code.]
+[Don't panic---you can use bits of my earlier example AFS code as LEGO pieces.]
 :::
 
 ## Exercise #2: hints
@@ -1312,7 +1326,9 @@ simulate_afs(Ne = 12000)
 
 ## Exercise #2: hints
 
-If you're completely lost, you can start from this "template" again:
+<br>
+
+If you're totally lost, build `model2.R` from this "template":
 
 ```{r}
 #| eval: false
@@ -1387,7 +1403,7 @@ gf <- list(
 ## Plugging gene flow(s) into a model
 
 <br>
-If you have a _slendr_ script, you can do this:
+In a _slendr_ script with your model, you can do this:
 <br>
 
 ```{r}

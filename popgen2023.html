@@ -1160,7 +1160,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmp6zp1l2/filee7b52807e1c2 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpeqS3RE/file117e73cc6a3e9 </code></pre>
 </div>
 </div>
 </section>
@@ -1206,8 +1206,17 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 </div>
 
 <aside><div>
-<p><strong>Note:</strong> With <em>slendr</em>, you can specify events in more natural “units of years ago”. Just program times in a “decreasing order” (7Mya → 6Mya → …, as shown in the picture above).</p>
-</div></aside></section></section>
+<p><strong>Note:</strong> You can also give time in units of “years ago”, just write them in a decreasing order (7Mya → 6Mya → …, as shown above). In that case, don’t set <code>simulation_length</code>.</p>
+</div></aside></section>
+<section id="exercise-1-bonus-your-own-model" class="slide level2">
+<h2>Exercise #1 (bonus): your own model</h2>
+<p><br></p>
+<p>Program a model for an organism that you study.</p>
+<p><br></p>
+<p>If applicable, include bottlenecks, expansions, etc. Don’t hesitate to make it as complex as you want.</p>
+<p><br></p>
+<p>Save it in a different script—you will use it in later exercises.</p>
+</section></section>
 <section id="exercise-1-solution" class="title-slide slide level1 center">
 <h1>Exercise #1: solution</h1>
 <p><br><br><br><br></p>
@@ -1539,7 +1548,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3582 2033 1258 1087  795  661  560  499  373  388</code></pre>
+<pre><code> [1] 4189 2023 1265 1007  878  655  579  530  448  307</code></pre>
 </div>
 </div>
 </div>
@@ -1615,7 +1624,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </div>
 
 <aside><div>
-<p>[Don’t panic—you can pretty much just tweak bits of my earlier example code.]</p>
+<p>[Don’t panic—you can use bits of my earlier example AFS code as LEGO pieces.]</p>
 </div></aside></section>
 <section id="exercise-2-hints-1" class="slide level2">
 <h2>Exercise #2: hints</h2>
@@ -1629,7 +1638,8 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </section>
 <section id="exercise-2-hints-2" class="slide level2">
 <h2>Exercise #2: hints</h2>
-<p>If you’re completely lost, you can start from this “template” again:</p>
+<p><br></p>
+<p>If you’re totally lost, build <code>model2.R</code> from this “template”:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slendr)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">init_env</span>()</span>
@@ -1686,7 +1696,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </section>
 <section id="plugging-gene-flows-into-a-model" class="slide level2">
 <h2>Plugging gene flow(s) into a model</h2>
-<p><br> If you have a <em>slendr</em> script, you can do this: <br></p>
+<p><br> In a <em>slendr</em> script with your model, you can do this: <br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55" data-code-line-numbers="3-7|9-13|11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="sc">&lt;</span>... <span class="fu">population</span>() definitions ...<span class="sc">&gt;</span></span>
 <span id="cb55-2"><a href="#cb55-2"></a></span>
@@ -1892,7 +1902,7 @@ $NEA
 <pre><code>╔═══════════════════════════╗
 ║TreeSequence               ║
 ╠═══════════════╤═══════════╣
-║Trees          │       1280║
+║Trees          │       1360║
 ╟───────────────┼───────────╢
 ║Sequence Length│    1000000║
 ╟───────────────┼───────────╢
@@ -1900,26 +1910,26 @@ $NEA
 ╟───────────────┼───────────╢
 ║Sample Nodes   │         12║
 ╟───────────────┼───────────╢
-║Total Size     │  279.8 KiB║
+║Total Size     │  302.7 KiB║
 ╚═══════════════╧═══════════╝
 ╔═══════════╤════╤═════════╤════════════╗
 ║Table      │Rows│Size     │Has Metadata║
 ╠═══════════╪════╪═════════╪════════════╣
-║Edges      │3911│122.2 KiB│          No║
+║Edges      │4325│135.2 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Individuals│   6│192 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Migrations │   0│  8 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Mutations  │1619│ 58.5 KiB│          No║
+║Mutations  │1703│ 61.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Nodes      │ 893│ 24.4 KiB│          No║
+║Nodes      │ 953│ 26.1 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Populations│   4│341 Bytes│         Yes║
 ╟───────────┼────┼─────────┼────────────╢
 ║Provenances│   2│  3.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Sites      │1617│ 39.5 KiB│          No║
+║Sites      │1702│ 41.6 KiB│          No║
 ╚═══════════╧════╧═════════╧════════════╝</code></pre>
 </div>
 </div>
@@ -2002,12 +2012,12 @@ $NEA
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>    pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  4992          0          0          0          0          0          1
-2  5346          0          0          0          0          0          1
-3  5830          0          0          0          0          0          1
-4 10911          0          0          0          0          0          1
-5 12328          1          0          0          0          0          0</code></pre>
+<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1   76          0          0          0          0          0          1
+2  296          1          0          0          0          0          0
+3  569          0          0          0          1          0          0
+4 1144          0          0          0          1          0          0
+5 1202          0          1          1          0          1          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">
