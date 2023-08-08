@@ -463,6 +463,15 @@ Martin Petr
 <aside><div>
 <p>Image from <a href="https://academic.oup.com/genetics/article/202/4/1485/5930214">Peter (2016)</a></p>
 </div></aside></section>
+<section id="making-sense-of-inferred-statistics-1" class="slide level2">
+<h2>Making sense of inferred statistics</h2>
+<center>
+<img data-src="images/admixture.png">
+</center>
+
+<aside><div>
+<p>Image from <a href="https://www.nature.com/articles/s41467-018-05257-7">Lawson <em>et al.</em> (2018)</a></p>
+</div></aside></section>
 <section id="fitting-model-parameters-i.e.-abc" class="slide level2">
 <h2>Fitting model parameters (i.e.&nbsp;<a href="https://en.wikipedia.org/wiki/Approximate_Bayesian_computation">ABC</a>)</h2>
 <center>
@@ -1151,7 +1160,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpwQ0mYh/filee41032a3eb03 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmp6zp1l2/filee7b52807e1c2 </code></pre>
 </div>
 </div>
 </section>
@@ -1530,7 +1539,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4294 2013 1302  941  806  676  521  538  417  366</code></pre>
+<pre><code> [1] 3582 2033 1258 1087  795  661  560  499  373  388</code></pre>
 </div>
 </div>
 </div>
@@ -1883,7 +1892,7 @@ $NEA
 <pre><code>╔═══════════════════════════╗
 ║TreeSequence               ║
 ╠═══════════════╤═══════════╣
-║Trees          │       1267║
+║Trees          │       1280║
 ╟───────────────┼───────────╢
 ║Sequence Length│    1000000║
 ╟───────────────┼───────────╢
@@ -1891,26 +1900,26 @@ $NEA
 ╟───────────────┼───────────╢
 ║Sample Nodes   │         12║
 ╟───────────────┼───────────╢
-║Total Size     │  281.7 KiB║
+║Total Size     │  279.8 KiB║
 ╚═══════════════╧═══════════╝
 ╔═══════════╤════╤═════════╤════════════╗
 ║Table      │Rows│Size     │Has Metadata║
 ╠═══════════╪════╪═════════╪════════════╣
-║Edges      │3983│124.5 KiB│          No║
+║Edges      │3911│122.2 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Individuals│   6│192 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Migrations │   0│  8 Bytes│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Mutations  │1609│ 58.2 KiB│          No║
+║Mutations  │1619│ 58.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Nodes      │ 881│ 24.1 KiB│          No║
+║Nodes      │ 893│ 24.4 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
 ║Populations│   4│341 Bytes│         Yes║
 ╟───────────┼────┼─────────┼────────────╢
 ║Provenances│   2│  3.5 KiB│          No║
 ╟───────────┼────┼─────────┼────────────╢
-║Sites      │1608│ 39.3 KiB│          No║
+║Sites      │1617│ 39.5 KiB│          No║
 ╚═══════════╧════╧═════════╧════════════╝</code></pre>
 </div>
 </div>
@@ -1993,12 +2002,12 @@ $NEA
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  503          1          0          1          1          1          1
-2 2457          0          1          0          0          0          0
-3 4816          1          0          0          1          0          0
-4 5023          1          0          0          1          0          0
-5 5601          0          0          1          0          1          1</code></pre>
+<pre><code>    pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1  4992          0          0          0          0          0          1
+2  5346          0          0          0          0          0          1
+3  5830          0          0          0          0          0          1
+4 10911          0          0          0          0          0          1
+5 12328          1          0          0          0          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

@@ -76,6 +76,14 @@ install.packages("slendr")
 Image from [Peter (2016)](https://academic.oup.com/genetics/article/202/4/1485/5930214)
 :::
 
+## Making sense of inferred statistics
+
+<center>![](images/admixture.png)</center>
+
+::: aside
+Image from [Lawson _et al._ (2018)](https://www.nature.com/articles/s41467-018-05257-7)
+:::
+
 ## Fitting model parameters (i.e. [ABC](https://en.wikipedia.org/wiki/Approximate_Bayesian_computation))
 
 <center>![](images/abc_scheme.png){width="50%"}</center>
