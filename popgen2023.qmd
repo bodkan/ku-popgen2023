@@ -1241,13 +1241,7 @@ afs_observed <- ts_afs(ts, list(samples))
 
 Imagine you sequenced 10 samples from a population and computed this AFS vector (# singletons, doubletons, etc.):
 
-<!-- ```{r} -->
-
-<!-- #| echo: false -->
-
 <!-- dput(as.vector(observed_afs)) -->
-
-<!-- ``` -->
 
 ```{r}
 afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
@@ -1262,7 +1256,7 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 <hr>
 
-**Try to guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed`.
+**Guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed` (simulate 10 Mb).
 
 ## Exercise #2: hints
 
@@ -1630,10 +1624,11 @@ samples <- bind_rows(eur_samples, afr_samples)
 
 ## How to use a sampling schedule?
 
-To sample individuals based on a given schedule, we use the `samples =` argument of the `msprime()` functions:
+To sample individuals based on a given schedule, we use the `samples =` argument of the `msprime()` function:
 
 ```{r}
-ts <- msprime(model, samples = samples, sequence_length = 1e6, recombination_rate = 1e-8) %>% 
+ts <-
+  msprime(model, samples = samples, sequence_length = 1e6, recombination_rate = 1e-8) %>% 
   ts_mutate(mutation_rate = 1e-8)
 ```
 
@@ -1641,21 +1636,11 @@ ts <- msprime(model, samples = samples, sequence_length = 1e6, recombination_rat
 
 We can verify that only specific individuals are recorded:
 
-::: columns
-::: {.column width="40%"}
+
 ```{r}
 ts_samples(ts)
 ```
-:::
 
-::: {.column width="60%"}
-::: fragment
-```{r}
-ts
-```
-:::
-:::
-:::
 
 # Exercise #5
 
