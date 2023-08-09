@@ -31,7 +31,7 @@ setup_env(agree = TRUE)
 
 This will automatically install and set up necessary Python modules. **The server is quite slow, so the process can easily take five or more minutes!**
 
-## If you want to use your own computer (recommended)
+## If you want to use your computer (the server can be slow)
 
 You will need:
 
