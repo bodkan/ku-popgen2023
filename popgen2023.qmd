@@ -28,25 +28,6 @@ These slides and other resources are (and always will be) at:
 
 **Open this link now so you have everything at hand later.**
 
-# First things first
-
-In order to make sure you can do the exercises, you should log into your [online RStudio session](emily.popgen.dk:3838/) and run this in your R console:
-
-```{r}
-#| eval: false
-library(slendr)
-setup_env(agree = TRUE)
-```
-
-<br>
-
-If you want to do the exercises on your own laptop (if you _can_, you _should_), you need to do this first before running the above:
-
-```{r}
-#| eval: false
-install.packages("slendr")
-```
-
 
 # 
 
@@ -1780,6 +1761,6 @@ ts_genotypes(ts)
 ```{r}
 #| output-location: fragment
 #| echo: false
-ts_genotypes(ts) %>% as.data.frame() %>% head(5)
+ts_genotypes(ts) %>% as.data.frame() %>% head(3)
 ```
 
