@@ -1146,7 +1146,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpGu9UDU/file389a49e28a2f </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpHfFuXw/file7c8e17700c1d </code></pre>
 </div>
 </div>
 </section>
@@ -1483,6 +1483,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <p><img data-src="images/slendr_tskit.png"></p>
 </center>
 <p>Allele-frequecy spectrum, nucleotide diversity <span class="math inline">\(\pi\)</span>, <span class="math inline">\(F_{ST}\)</span>, etc.</p>
+<p>Find help at <a href="https://slendr.net/reference">slendr.net/reference</a> or in R under <code>?ts_fst</code> etc.</p>
 </section>
 <section id="extracting-sample-information" class="slide level2">
 <h2>Extracting sample information</h2>
@@ -1534,7 +1535,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3838 2113 1332 1005  699  636  609  623  443  389</code></pre>
+<pre><code> [1] 4041 1963 1396 1016  824  687  579  510  477  339</code></pre>
 </div>
 </div>
 </div>
@@ -1732,26 +1733,41 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <aside><div>
 <p>Use <a href="https://bodkan.quarto.pub/ku-popgen2023-onepage/">these</a> one-page handouts for reference.</p>
 </div></aside></section>
-<section id="exercise-4-more-statistics" class="slide level2">
-<h2>Exercise #4: more statistics!</h2>
+<section id="exercise-4-more-statistics-a" class="slide level2">
+<h2>Exercise #4: more statistics! (a)</h2>
 <p>Simulate a <code>ts</code> tree sequence from your complete Neanderthal introgression model in <code>model1.R</code>.</p>
 
 <img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-55-1.png" width="672" class="r-stretch quarto-figure-center"><p>(Remember to add mutations with <code>ts_mutate()</code>.)</p>
 </section>
-<section id="exercise-4-more-statistics-1" class="slide level2">
-<h2>Exercise #4: more statistics!</h2>
-<p><strong>Compute (some of) these on your tree sequence:</strong></p>
+<section id="exercise-4-more-statistics-b" class="slide level2">
+<h2>Exercise #4: more statistics! (b)</h2>
+<p><strong>In <code>model1.R</code> compute (some of) these on your <code>ts</code> object:</strong></p>
 <ul>
 <li><p>nucleotide <a href="https://www.slendr.net/reference/ts_diversity.html#ref-examples"><code>ts_diversity()</code></a> in each population <br></p></li>
 <li><p><a href="https://www.slendr.net/reference/ts_divergence.html#ref-examples"><code>ts_divergence()</code></a> between populations<br></p></li>
-<li><p><a href="https://www.slendr.net/reference/ts_fst.html#ref-examples"><code>ts_fst()</code></a> between populations<br></p></li>
-<li><p>outgroup <a href="https://www.slendr.net/reference/ts_f4ratio.html#ref-examples"><code>ts_f3()</code></a> using CHIMP as the outgroup (A!) for different pairs of “B” and “C” populations<br></p></li>
-<li><p><a href="https://www.slendr.net/reference/ts_f4ratio.html#ref-examples"><code>ts_f4()</code></a> test of Neanderthal introgression in EUR</p>
-<p>[hint: <span class="math inline">\(f_4\)</span>(&lt;AFR&gt;, &lt;EUR&gt;; &lt;NEAND&gt;, &lt;CHIMP&gt;)]</p></li>
+<li><p>outgroup <a href="https://www.slendr.net/reference/ts_f4ratio.html#ref-examples"><code>ts_f3(A; B, C)</code></a> using CHIMP as the outgroup (A!) for different pairs of “B” and “C” populations<br></p>
+<ul>
+<li>using Ben’s explanation on Wednesday, try to compute this <span class="math inline">\(f_3\)</span> using combination of <span class="math inline">\(f_2\)</span> statistics (<code>ts_f2(A, B)</code>)</li>
+</ul></li>
 </ul>
-<center>
-<strong>Do your results fit expectations from your model?</strong>
-</center>
+<p><strong>You can find help by typing <code>?ts_diversity</code> etc. into R!</strong></p>
+</section>
+<section id="exercise-4-more-statistics-c" class="slide level2">
+<h2>Exercise #4: more statistics! (c)</h2>
+<ul>
+<li><p><strong>Compute <span class="math inline">\(f_4\)</span> test of Neanderthal introgression in EUR:</strong></p>
+<ul>
+<li><p>hint: check the values of these two statistics:</p>
+<ul>
+<li><span class="math inline">\(f_4\)</span>(&lt;afr&gt;, &lt;eur&gt;; &lt;neand&gt;, &lt;chimp&gt;)</li>
+<li><span class="math inline">\(f_4\)</span>(&lt;afr1&gt;, &lt;afr2&gt;; &lt;neand&gt;, &lt;chimp&gt;)]</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><be></be></p>
+<ul>
+<li>You’ve learned about symmetries in <span class="math inline">\(f_4\)</span> depending on the arrangement of the “quartet”. <strong>How many unique <span class="math inline">\(f_4\)</span> values involving a quartet can you find and why?</strong> (When computing <code>ts_f4()</code> here, set <code>mode = "branch"</code>).</li>
+</ul>
 </section>
 <section id="exercise-4-hint" class="slide level2">
 <h2>Exercise #4: hint</h2>
@@ -1953,9 +1969,9 @@ $NEA
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  348          0          0          0          0          1          1
-2 1896          0          0          0          0          1          1
-3 2395          0          0          0          1          0          0</code></pre>
+1  680          1          1          0          1          0          0
+2  919          0          0          1          0          0          0
+3 1492          1          1          0          1          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

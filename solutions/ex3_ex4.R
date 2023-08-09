@@ -63,6 +63,30 @@ ts_f3(ts, B = samples["AFR"], C = samples["NEA"], A = "CHIMP_1")
 ts_f3(ts, B = samples["EUR"], C = samples["NEA"], A = "CHIMP_1")
 
 
+# outgroup f3 as a linear combination of f2 statistics
+
+# mutation-based version
+ts_f3(ts, B = "AFR_1", C = "AFR_2", A = "CHIMP_1")
+
+my_f3 <- (
+  ts_f2(ts, A = "AFR_1", B = "CHIMP_1")$f2 +
+  ts_f2(ts, A = "AFR_2", B = "CHIMP_1")$f2 -
+  ts_f2(ts, A = "AFR_1", B = "AFR_2")$f2
+) / 2
+
+my_f3
+
+# branch-based version
+ts_f3(ts, B = "AFR_1", C = "AFR_2", A = "CHIMP_1", mode = "branch")
+
+my_f3 <- (
+  ts_f2(ts, A = "AFR_1", B = "CHIMP_1", mode = "branch")$f2 +
+    ts_f2(ts, A = "AFR_2", B = "CHIMP_1", mode = "branch")$f2 -
+    ts_f2(ts, A = "AFR_1", B = "AFR_2", mode = "branch")$f2
+) / 2
+my_f3
+
+
 # admixture detection -----------------------------------------------------
 
 # D(AFR, EUR; NEA, CHIMP)
@@ -90,6 +114,29 @@ rbind(f4_afr, f4_eur) %>%
 
 
 
+# unique quartets
+
+# # install a combinatorics R package
+# install.packages("combinat")
+
+quartet <- c("AFR_1", "EUR_1", "NEA_1", "CHIMP_1")
+
+quartets <- combinat::permn(quartet)
+
+# how many permutations there are in total?
+# 4! = 4 * 3 * 2 * 1 = 24
+
+length(quartets)
+
+# loop across all quartets, computing the corresponding f4 statistic
+all_f4s <- lapply(quartets, function(q) ts_f4(ts, q[1], q[2], q[3], q[4], mode = "branch"))
+
+# bind the list of f4 results into a single data frame
+all_f4s <- do.call(rbind, all_f4s) %>% dplyr::arrange(abs(f4)) %>% as.data.frame()
+all_f4s
+
+unique(all_f4s$f4)
+unique(abs(all_f4s$f4))
 
 # you can ignore the rest -------------------------------------------------
 

@@ -1106,6 +1106,8 @@ ts <-
 
 Allele-frequecy spectrum, nucleotide diversity $\pi$, $F_{ST}$, etc.
 
+Find help at [slendr.net/reference](https://slendr.net/reference) or in R under `?ts_fst` etc.
+
 ## Extracting sample information
 
 We can get samples recorded in `ts` with `ts_samples()`:
@@ -1478,7 +1480,7 @@ See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
-## Exercise #4: more statistics!
+## Exercise #4: more statistics! (a)
 
 Simulate a `ts` tree sequence from your complete Neanderthal introgression model in `model1.R`.
 
@@ -1492,23 +1494,32 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
 
 (Remember to add mutations with `ts_mutate()`.)
 
-## Exercise #4: more statistics!
+## Exercise #4: more statistics! (b)
 
-**Compute (some of) these on your tree sequence:**
+**In `model1.R` compute (some of) these on your `ts` object:**
 
 - nucleotide [`ts_diversity()`](https://www.slendr.net/reference/ts_diversity.html#ref-examples) in each population <br>
 
 - [`ts_divergence()`](https://www.slendr.net/reference/ts_divergence.html#ref-examples) between populations<br>
 
-- [`ts_fst()`](https://www.slendr.net/reference/ts_fst.html#ref-examples) between populations<br>
+- outgroup [`ts_f3(A; B, C)`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) using CHIMP as the outgroup (A!) for different pairs of "B" and "C" populations<br>
 
-- outgroup [`ts_f3()`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) using CHIMP as the outgroup (A!) for different pairs of "B" and "C" populations<br>
+    + using Ben's explanation on Wednesday, try to compute this $f_3$ using combination of $f_2$ statistics (`ts_f2(A, B)`)
+    
+**You can find help by typing `?ts_diversity` etc. into R!**
 
-- [`ts_f4()`](https://www.slendr.net/reference/ts_f4ratio.html#ref-examples) test of Neanderthal introgression in EUR
+## Exercise #4: more statistics! (c)
 
-  \[hint: $f_4$(\<AFR\>, \<EUR\>; \<NEAND\>, \<CHIMP\>)\]
+- **Compute $f_4$ test of Neanderthal introgression in EUR:**
 
-<center>**Do your results fit expectations from your model?**</center>
+    + hint: check the values of these two statistics:
+    
+        - $f_4$(\<afr\>, \<eur\>; \<neand\>, \<chimp\>)
+        - $f_4$(\<afr1\>, \<afr2\>; \<neand\>, \<chimp\>)\]
+
+<be>
+
+- You've learned about symmetries in $f_4$ depending on the arrangement of the "quartet". **How many unique $f_4$ values involving a quartet can you find and why?** (When computing `ts_f4()` here, set `mode = "branch"`).
 
 ## Exercise #4: hint
 
