@@ -1,6 +1,9 @@
 library(slendr)
 init_env()
 
+
+# exercise 2 -- part a ----------------------------------------------------
+
 simulate_afs <- function(Ne) {
   # create a slendr model with a given N size
   pop <- population("pop", N = Ne, time = 1)
@@ -19,6 +22,18 @@ simulate_afs <- function(Ne) {
   
   afs
 }
+
+
+afs_1 <- simulate_afs(1000)
+afs_10 <- simulate_afs(10000)
+afs_30 <- simulate_afs(30000)
+
+afs_1 %>% plot(type = "o", main = "AFS, Ne = 1000")
+afs_10 %>% plot(type = "o", main = "AFS, Ne = 10000")
+afs_30 %>% plot(type = "o", main = "AFS, Ne = 30000")
+
+
+# exercise 2 -- part b ----------------------------------------------------
 
 afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
                   264, 218,  133, 173, 159, 142, 167, 129, 125, 143)

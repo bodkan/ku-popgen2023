@@ -191,7 +191,7 @@ simulate <- function(p_0, N, T) {
     p_trajectory[gen_i] <- p
   }
 
-  p_trajectory
+  return(p_trajectory)
 }
 ```
 
@@ -676,7 +676,8 @@ gf <- list(
 model <- compile_model(
   list(pop1, pop2, pop3, pop4, pop5),
   generation_time = 1,
-  simulation_length = 3000
+  simulation_length = 3000,
+  direction = "forward"
 )
 ```
 
@@ -695,7 +696,8 @@ model <- compile_model(
   list(pop1, pop2, pop3, pop4, pop5),
   gene_flow = gf,      # <----- in case our model includes gene flow
   generation_time = 1,
-  simulation_length = 3000
+  simulation_length = 3000,
+  direction = "forward"
 )
 ```
 
@@ -722,11 +724,14 @@ plot_model(model, proportions = TRUE)
 
 # Exercise #1
 
-<br><br><br><br>
+## Go to the lecure & exercises page
 
-::: aside
-Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
-:::
+<h3>Link: [github.com/bodkan/ku-popgen2023](https://github.com/bodkan/ku-popgen2023)</h3>
+
+Open the two red-highlighted links.
+
+<center>![](images/github.png)</center>
+
 
 ## Exercise #1: write this model in _slendr_
 
@@ -780,7 +785,7 @@ Use `plot_model()` to check your model visually.
 
 <br>
 
-Save it all in a different R script&mdash;you will use it in a later exercise.
+Save it in a different R script&mdash;you will use it in a later exercise.
 
 # Exercise #1: solution
 
@@ -1279,8 +1284,52 @@ plot(afs[-1], type = "b",
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
+## Part _a_: One-population AFS simulator
 
-## Exercise #2: estimating $N_e$ from AFS
+In a new script `model2.R` write a function taking `Ne` as its only parameter.
+
+It should create a one-population _forward-time_ model (`simulation_length` 100000, `generation_time` 1), simulate 10Mb tree sequence (recombination and mutation rates of 1e-8), compute AFS for 10 samples and return it.
+
+::: fragment
+<br>When used in R, it should work like this:
+
+```{r}
+#| echo: false
+simulate_afs <- function(Ne) {
+  n <- 10 + 1 # 1 is for the fixed sites included by tskit
+  theta <- 4 * 1e-8 * Ne * 100e6
+  round(theta * 1/1:n)
+}
+```
+
+```{r}
+simulate_afs(Ne = 1000)
+```
+:::
+
+
+## Part _a_: Hint
+
+You can start building `model2.R` from this "template":
+
+```{r}
+#| eval: false
+library(slendr)
+init_env()
+
+simulate_afs <- function(Ne) {
+  <... AFS simulation code you adapted from my slides ...>
+  
+  result <- ts_afs(...) # use this as shown in the example
+  return(result)
+}
+
+afs_1 <- simulate_afs(Ne = 1000)
+plot(afs_1, type ="o")
+```
+
+
+## Part _b_: Estimating Ne using AFS
 
 ```{r}
 #| echo: false
@@ -1318,71 +1367,14 @@ You know that the population had constant $N_e$ somewhere between 1000 and 30000
 
 **Guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed` (simulate 10 Mb).
 
-## Exercise #2: hints
-
-1.  Write a function (in a new script `model2.R`) taking `Ne` as a parameter. It should create one population, compile a model, run `ts_afs()` for 10 samples, and return the AFS.
-
-::: fragment
-If we call it `simulate_afs()`, it should work like this (your numbers will be different, of course!):
-
-```{r}
-#| echo: false
-simulate_afs <- function(Ne) {
-  n <- 10 + 1 # 1 is for the fixed sites included by tskit
-  theta <- 4 * 1e-8 * Ne * 100e6
-  round(theta * 1/1:n)
-}
-```
-
-```{r}
-simulate_afs(Ne = 1000)
-```
-:::
-
-::: fragment
-```{r}
-simulate_afs(Ne = 12000)
-```
-
-:::
-
-
-::: aside
-[Don't panic---you can use bits of my earlier example AFS code as LEGO pieces.]
-:::
-
-## Exercise #2: hints
+## Part _b_: Hints
 
 2.  Using your custom `simulate_afs()` function, find the value of `Ne` that will give the closest AFS to the observed AFS:
 
     -   _option #1_ [_easy_]: Plot AFS vectors for various $N_e$ values, then eyeball which looks closest to the observed AFS
 
-    -   _option #2_ [_harder_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
+    -   _option #2_ [_hard_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
 
-## Exercise #2: hints
-
-<br>
-
-If you're totally lost, build `model2.R` from this "template":
-
-```{r}
-#| eval: false
-library(slendr)
-init_env()
-
-simulate_afs <- function(Ne) {
-  <... AFS simulation code you cannibalized from my slides ...>
-}
-
-afs_1k  <- simulate_afs(Ne = 1000)
-afs_12k <- simulate_afs(Ne = 12000)
-<...>
-  
-afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
-                  264, 218,  133, 173, 159, 142, 167, 129, 125, 143)
-
-<... some plotting or statistics ...>
-```
 
 # Exercise #2: solution
 
