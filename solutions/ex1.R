@@ -27,29 +27,3 @@ plot_model(model)
 plot_model(model, sizes = FALSE)
 plot_model(model, sizes = FALSE, log = TRUE)
 plot_model(model, sizes = FALSE, log = TRUE, proportions = TRUE)
-
-
-# notes -------------------------------------------------------------------
-
-# models can also be serialized to a permanent location
-
-model_dir <- "/tmp/ex1_model"
-
-model <- compile_model(
-  populations = list(chimp, nea, afr, eur),
-  generation_time = 30,
-  path = model_dir
-)
-
-list.files(model_dir)
-
-
-
-
-# you can ignore the rest -------------------------------------------------
-
-# ts <-
-#   msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
-#   ts_mutate(mutation_rate = 1e-8)
-# 
-# ts_save(ts, "/tmp/ex1.trees")

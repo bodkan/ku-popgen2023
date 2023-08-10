@@ -27,10 +27,6 @@ ts <- msprime(model, samples = rbind(nea_samples, present_samples, emh_samples),
               sequence_length = 100e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
 
-# ts_save(ts, "/tmp/ex5.trees")
-# ts <- ts_load("/tmp/ex5.trees", model)
-
-
 
 # extract table with names and times of sampled Europeans (ancient and present day)
 eur_inds <- ts_samples(ts) %>% filter(pop == "EUR")

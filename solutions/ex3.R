@@ -137,10 +137,3 @@ all_f4s
 
 unique(all_f4s$f4)
 unique(abs(all_f4s$f4))
-
-# you can ignore the rest -------------------------------------------------
-
-# for comparison of gene flow and non-gene flow models:
-# ts_save(ts, "/tmp/ex3.trees")
-# ts <- ts_load("ex3.trees", model)
-# ts <- ts_load("ex1.trees", model)
