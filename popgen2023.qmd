@@ -1111,7 +1111,7 @@ In our script we'll have something like this:
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "7"
+#| code-line-numbers: "5-7"
 <... population() definitions ...>
 
 model <- compile_model(...)
@@ -1132,8 +1132,12 @@ ts <-
 ::: fragment
 <br>
 
-<center><h2>Now we can simulate data.<br>How do we work with this `ts` thing?</h2></center>
+<center><h3>Always use `ts_mutate()` during exercises! Otherwise you'll get weird results due to the lack of mutations on the tree sequence.</h3></center>
 :::
+
+# So we can simulate data
+
+<center><h3>But how do we work with this `ts` thing?</h3></center>
 
 <!-- ## Conversion to other genotype formats -->
 
@@ -1167,9 +1171,9 @@ ts <-
 
 </center>
 
-Allele-frequecy spectrum, nucleotide diversity $\pi$, $F_{ST}$, etc.
+Allele-frequecy spectrum, diversity $\pi$, $F_{ST}$, Tajima's D, etc.
 
-Find help at [slendr.net/reference](https://slendr.net/reference) or in R under `?ts_fst` etc.
+**Find help at [slendr.net/reference](https://slendr.net/reference) or in R under `?ts_fst` etc.**
 
 ## Extracting sample information
 
@@ -1286,12 +1290,38 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 
 ## Part _a_: One-population AFS simulator
 
-In a new script `model2.R` write a function taking `Ne` as its only parameter.
+In a new script `model2.R` write a function called `simulate_afs()`, which will take `Ne` as its only parameter.
 
 It should create a one-population _forward-time_ model (`simulation_length` 100000, `generation_time` 1), simulate 10Mb tree sequence (recombination and mutation rates of 1e-8), compute AFS for 10 samples and return it.
 
+. . .
+
+<hr>
+
+**Compute and plot AFS for various `Ne` values. Observe how (and why?) do they differ based on `Ne` you simulated.**
+
+## Part _a_: Hint
+
+You can start building `model2.R` from this "template":
+
+```{r}
+#| eval: false
+library(slendr); init_env()
+
+simulate_afs <- function(Ne) {
+  ... AFS code taken from slides: population(), compile_model(), msprime() ...
+  
+  result <- ... compute AFS using ts_afs(), save it to `result` ...
+
+  return(result)
+}
+
+afs_1 <- simulate_afs(Ne = 1000)
+plot(afs_1, type ="o")
+```
+
 ::: fragment
-<br>When used in R, it should work like this:
+When used in R, it should work like this:
 
 ```{r}
 #| echo: false
@@ -1306,28 +1336,6 @@ simulate_afs <- function(Ne) {
 simulate_afs(Ne = 1000)
 ```
 :::
-
-
-## Part _a_: Hint
-
-You can start building `model2.R` from this "template":
-
-```{r}
-#| eval: false
-library(slendr)
-init_env()
-
-simulate_afs <- function(Ne) {
-  <... AFS simulation code you adapted from my slides ...>
-  
-  result <- ts_afs(...) # use this as shown in the example
-  return(result)
-}
-
-afs_1 <- simulate_afs(Ne = 1000)
-plot(afs_1, type ="o")
-```
-
 
 ## Part _b_: Estimating Ne using AFS
 
@@ -1359,21 +1367,21 @@ afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
 
 . . .
 
-You know that the population had constant $N_e$ somewhere between 1000 and 30000 for the past 100,000 generations, and had mutation and recombination rates of 1e-8.
+You know that the population had a constant $N_e$ somewhere between 1000 and 30000 for the past 100,000 generations, and had mutation and recombination rates of 1e-8 (i.e., parameters already implemented by the `simulate_afs()` function).
 
 . . .
 
 <hr>
 
-**Guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing `ts_afs()` results to `afs_observed` (simulate 10 Mb).
+**Guess the true ** $N_e$ given the observed AFS by running single-population simulations for a range of $N_e$ values and comparing each run to `afs_observed`.
 
 ## Part _b_: Hints
 
-2.  Using your custom `simulate_afs()` function, find the value of `Ne` that will give the closest AFS to the observed AFS:
+Using your custom `simulate_afs()` function, find the value of `Ne` that will give the closest AFS to the observed AFS:
 
-    -   _option #1_ [_easy_]: Plot AFS vectors for various $N_e$ values, then eyeball which looks closest to the observed AFS
+-   _option #1_ [_easy_]: Plot AFS vectors for various $N_e$ values, then eyeball which looks closest to the observed AFS
 
-    -   _option #2_ [_hard_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
+-   _option #2_ [_hard_]: Simulate AFS vectors in steps of possible `Ne` (maybe `lapply()`?), find the [closest](https://en.wikipedia.org/wiki/Mean_squared_error) AFS
 
 
 # Exercise #2: solution
@@ -1405,7 +1413,7 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 
 ## Exercise #3: more statistics! (a)
 
-Simulate a 50Mb tree sequence `ts` from your introgression model in `model1.R` using `msprime()`.
+Use `msprime()` to simulate a 50Mb tree sequence `ts` from your introgression model in `model1.R`.
 
 ```{r}
 #| fig-align: center

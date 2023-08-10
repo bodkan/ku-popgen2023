@@ -1188,7 +1188,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpVCe0Ji/file2cb62ca98efb </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpPdeanI/file44ca536e44a6 </code></pre>
 </div>
 </div>
 </section>
@@ -1493,7 +1493,7 @@ With <em>slendr</em>, we can add mutations <em>after</em> the simulation using <
 <p><br></p>
 <p>In our script we’ll have something like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="sc">&lt;</span>... <span class="fu">population</span>() definitions ...<span class="sc">&gt;</span></span>
+<div class="sourceCode cell-code" id="cb38" data-code-line-numbers="5-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="sc">&lt;</span>... <span class="fu">population</span>() definitions ...<span class="sc">&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a></span>
 <span id="cb38-3"><a href="#cb38-3"></a>model <span class="ot">&lt;-</span> <span class="fu">compile_model</span>(...)</span>
 <span id="cb38-4"><a href="#cb38-4"></a>  </span>
@@ -1504,11 +1504,20 @@ With <em>slendr</em>, we can add mutations <em>after</em> the simulation using <
 <div class="fragment">
 <p><br></p>
 <center>
-<h2>
-Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
-</h2>
+<h3>
+Always use <code>ts_mutate()</code> during exercises! Otherwise you’ll get weird results due to the lack of mutations on the tree sequence.
+</h3>
 </center>
 </div>
+</section></section>
+<section>
+<section id="so-we-can-simulate-data" class="title-slide slide level1 center">
+<h1>So we can simulate data</h1>
+<center>
+<h3>
+But how do we work with this <code>ts</code> thing?
+</h3>
+</center>
 <!-- ## Conversion to other genotype formats -->
 <!-- If you have a tree-sequence object `ts`, you can do... -->
 <!-- ```{r} -->
@@ -1532,8 +1541,8 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <center>
 <p><img data-src="images/slendr_tskit.png"></p>
 </center>
-<p>Allele-frequecy spectrum, nucleotide diversity <span class="math inline">\(\pi\)</span>, <span class="math inline">\(F_{ST}\)</span>, etc.</p>
-<p>Find help at <a href="https://slendr.net/reference">slendr.net/reference</a> or in R under <code>?ts_fst</code> etc.</p>
+<p>Allele-frequecy spectrum, diversity <span class="math inline">\(\pi\)</span>, <span class="math inline">\(F_{ST}\)</span>, Tajima’s D, etc.</p>
+<p><strong>Find help at <a href="https://slendr.net/reference">slendr.net/reference</a> or in R under <code>?ts_fst</code> etc.</strong></p>
 </section>
 <section id="extracting-sample-information" class="slide level2">
 <h2>Extracting sample information</h2>
@@ -1585,7 +1594,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4006 2084 1310  900  751  574  683  516  483  351</code></pre>
+<pre><code> [1] 4089 1992 1368  947  880  600  632  511  423  411</code></pre>
 </div>
 </div>
 </div>
@@ -1620,34 +1629,38 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </div></aside></section>
 <section id="part-a-one-population-afs-simulator" class="slide level2">
 <h2>Part <em>a</em>: One-population AFS simulator</h2>
-<p>In a new script <code>model2.R</code> write a function taking <code>Ne</code> as its only parameter.</p>
+<p>In a new script <code>model2.R</code> write a function called <code>simulate_afs()</code>, which will take <code>Ne</code> as its only parameter.</p>
 <p>It should create a one-population <em>forward-time</em> model (<code>simulation_length</code> 100000, <code>generation_time</code> 1), simulate 10Mb tree sequence (recombination and mutation rates of 1e-8), compute AFS for 10 samples and return it.</p>
 <div class="fragment">
-<p><br>When used in R, it should work like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 4000 2000 1333 1000  800  667  571  500  444  400  364</code></pre>
-</div>
-</div>
+<hr>
+<p><strong>Compute and plot AFS for various <code>Ne</code> values. Observe how (and why?) do they differ based on <code>Ne</code> you simulated.</strong></p>
 </div>
 </section>
 <section id="part-a-hint" class="slide level2">
 <h2>Part <em>a</em>: Hint</h2>
 <p>You can start building <code>model2.R</code> from this “template”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slendr)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">init_env</span>()</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>simulate_afs <span class="ot">&lt;-</span> <span class="cf">function</span>(Ne) {</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>... AFS simulation code you adapted from my slides ...<span class="sc">&gt;</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">ts_afs</span>(...) <span class="co"># use this as shown in the example</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>afs_1 <span class="ot">&lt;-</span> <span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(afs_1, <span class="at">type =</span><span class="st">"o"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slendr); <span class="fu">init_env</span>()</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>simulate_afs <span class="ot">&lt;-</span> <span class="cf">function</span>(Ne) {</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  ... AFS code taken from slides<span class="sc">:</span> <span class="fu">population</span>(), <span class="fu">compile_model</span>(), <span class="fu">msprime</span>() ...</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> ... compute AFS using <span class="fu">ts_afs</span>(), save it to <span class="st">`</span><span class="at">result</span><span class="st">`</span> ...</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>afs_1 <span class="ot">&lt;-</span> <span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(afs_1, <span class="at">type =</span><span class="st">"o"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>When used in R, it should work like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 4000 2000 1333 1000  800  667  571  500  444  400  364</code></pre>
+</div>
+</div>
 </div>
 </section>
 <section id="part-b-estimating-ne-using-afs" class="slide level2">
@@ -1659,22 +1672,20 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">264</span>, <span class="dv">218</span>,  <span class="dv">133</span>, <span class="dv">173</span>, <span class="dv">159</span>, <span class="dv">142</span>, <span class="dv">167</span>, <span class="dv">129</span>, <span class="dv">125</span>, <span class="dv">143</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>You know that the population had constant <span class="math inline">\(N_e\)</span> somewhere between 1000 and 30000 for the past 100,000 generations, and had mutation and recombination rates of 1e-8.</p>
+<p>You know that the population had a constant <span class="math inline">\(N_e\)</span> somewhere between 1000 and 30000 for the past 100,000 generations, and had mutation and recombination rates of 1e-8 (i.e., parameters already implemented by the <code>simulate_afs()</code> function).</p>
 </div>
 <div class="fragment">
 <hr>
-<p><strong>Guess the true </strong> <span class="math inline">\(N_e\)</span> given the observed AFS by running single-population simulations for a range of <span class="math inline">\(N_e\)</span> values and comparing <code>ts_afs()</code> results to <code>afs_observed</code> (simulate 10 Mb).</p>
+<p><strong>Guess the true </strong> <span class="math inline">\(N_e\)</span> given the observed AFS by running single-population simulations for a range of <span class="math inline">\(N_e\)</span> values and comparing each run to <code>afs_observed</code>.</p>
 </div>
 </section>
 <section id="part-b-hints" class="slide level2">
 <h2>Part <em>b</em>: Hints</h2>
-<ol start="2" type="1">
-<li><p>Using your custom <code>simulate_afs()</code> function, find the value of <code>Ne</code> that will give the closest AFS to the observed AFS:</p>
+<p>Using your custom <code>simulate_afs()</code> function, find the value of <code>Ne</code> that will give the closest AFS to the observed AFS:</p>
 <ul>
 <li><p><em>option #1</em> [<em>easy</em>]: Plot AFS vectors for various <span class="math inline">\(N_e\)</span> values, then eyeball which looks closest to the observed AFS</p></li>
 <li><p><em>option #2</em> [<em>hard</em>]: Simulate AFS vectors in steps of possible <code>Ne</code> (maybe <code>lapply()</code>?), find the <a href="https://en.wikipedia.org/wiki/Mean_squared_error">closest</a> AFS</p></li>
-</ul></li>
-</ol>
+</ul>
 </section></section>
 <section id="exercise-2-solution" class="title-slide slide level1 center">
 <h1>Exercise #2: solution</h1>
@@ -1695,7 +1706,7 @@ Now we can simulate data.<br>How do we work with this <code>ts</code> thing?
 </div></aside></section>
 <section id="exercise-3-more-statistics-a" class="slide level2">
 <h2>Exercise #3: more statistics! (a)</h2>
-<p>Simulate a 50Mb tree sequence <code>ts</code> from your introgression model in <code>model1.R</code> using <code>msprime()</code>.</p>
+<p>Use <code>msprime()</code> to simulate a 50Mb tree sequence <code>ts</code> from your introgression model in <code>model1.R</code>.</p>
 
 <img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-52-1.png" width="672" class="r-stretch quarto-figure-center"><p>(Remember to add mutations with <code>ts_mutate()</code>.)</p>
 </section>
@@ -1926,9 +1937,9 @@ $NEA
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1 4540          0          0          0          0          1          1
-2 5755          0          0          0          0          1          1
-3 6331          0          0          0          0          1          1</code></pre>
+1  221          1          1          0          1          1          1
+2 3930          0          1          0          1          0          0
+3 7723          1          1          0          1          1          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">
