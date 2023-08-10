@@ -1,3 +1,11 @@
+#
+#
+# This is a bonus super-advanced version. Ignore this unless you're an R expert. :)
+#
+# Otherwise, look at the solution in ex2_simple.R!
+#
+#
+
 library(slendr)
 init_env()
 
