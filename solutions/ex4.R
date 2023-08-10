@@ -43,5 +43,6 @@ eur_inds %>%
   ggplot(aes(time, ancestry)) +
     geom_point() +
     geom_smooth(method = "lm", linetype = 2, color = "red", linewidth = 0.5) +
-    xlim(40000, 0) + coord_cartesian(ylim = c(0, 0.1)) +
+    xlim(40000, 0) +
+    coord_cartesian(ylim = c(0, 0.1)) +
     labs(x = "time [years ago]", y = "Neanderthal ancestry proportion")
