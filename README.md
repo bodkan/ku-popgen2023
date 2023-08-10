@@ -8,7 +8,7 @@
 
 ### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises).
 
-### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a homework 'bonus').
+### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework').
 
 ------------------------------------------------------------------------
 
