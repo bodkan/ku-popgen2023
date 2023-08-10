@@ -594,7 +594,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.500 0.521 0.544 0.529 0.536 0.563 0.556 0.555 0.548 0.556</code></pre>
+<pre><code> [1] 0.500 0.491 0.481 0.494 0.476 0.467 0.459 0.458 0.475 0.496</code></pre>
 </div>
 </div>
 </div>
@@ -1196,7 +1196,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpSY0iWI/file9a8a4ad93c97 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmpbc5qNk/filea720759be4df </code></pre>
 </div>
 </div>
 </section>
@@ -1603,7 +1603,7 @@ But how do we work with this <code>ts</code> thing?
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4061 2154 1258  902  715  586  627  605  557  443</code></pre>
+<pre><code> [1] 4022 1831 1241  945  775  666  628  505  494  408</code></pre>
 </div>
 </div>
 </div>
@@ -1642,7 +1642,7 @@ But how do we work with this <code>ts</code> thing?
 <p>It should create a one-population <em>forward-time</em> model (<code>simulation_length</code> 100000, <code>generation_time</code> 1), simulate 10Mb tree sequence (recombination and mutation rates of 1e-8), compute AFS for 10 samples and return it.</p>
 <div class="fragment">
 <hr>
-<p><strong>Compute and plot AFS for various <code>Ne</code> values. Observe how (and why?) do they differ based on <code>Ne</code> you simulated.</strong></p>
+<p><strong>Use this function to compute AFS vectors for various <code>Ne</code> values. Plot those AFS and observe how (and why?) do they differ based on <code>Ne</code> you simulated.</strong></p>
 </div>
 </section>
 <section id="part-a-hint" class="slide level2">
@@ -1652,9 +1652,9 @@ But how do we work with this <code>ts</code> thing?
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slendr); <span class="fu">init_env</span>()</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>simulate_afs <span class="ot">&lt;-</span> <span class="cf">function</span>(Ne) {</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  ... AFS code taken from slides<span class="sc">:</span> <span class="fu">population</span>(), <span class="fu">compile_model</span>(), <span class="fu">msprime</span>() ...</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  ... your one<span class="sc">-</span>population model code<span class="sc">:</span> <span class="fu">population</span>(), <span class="fu">compile_model</span>(), <span class="fu">msprime</span>() ...</span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> ... compute AFS using <span class="fu">ts_afs</span>(), save it to <span class="st">`</span><span class="at">result</span><span class="st">`</span> ...</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> ... compute AFS using <span class="fu">ts_afs</span>() on <span class="dv">10</span> samples, save it to <span class="st">`</span><span class="at">result</span><span class="st">`</span> ...</span>
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -1663,11 +1663,12 @@ But how do we work with this <code>ts</code> thing?
 <span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(afs_1, <span class="at">type =</span><span class="st">"o"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>When used in R, it should work like this:</p>
+<p>When used in R, your function should work like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_afs</span>(<span class="at">Ne =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4000 2000 1333 1000  800  667  571  500  444  400  364</code></pre>
+<pre><code> [1] 4000 2000 1333 1000  800  667  571  500  444  400  364  333  308  286  267
+[16]  250  235  222  211  200</code></pre>
 </div>
 </div>
 </div>
@@ -1946,9 +1947,9 @@ $NEA
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1 1464          0          0          0          0          0          1
-2 3047          1          0          0          0          0          0
-3 4321          0          1          1          1          0          1</code></pre>
+1  578          1          1          1          1          1          1
+2 1111          0          0          0          0          0          1
+3 3838          0          0          1          0          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

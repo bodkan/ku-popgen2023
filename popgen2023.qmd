@@ -1306,7 +1306,7 @@ It should create a one-population _forward-time_ model (`simulation_length` 1000
 
 <hr>
 
-**Compute and plot AFS for various `Ne` values. Observe how (and why?) do they differ based on `Ne` you simulated.**
+**Use this function to compute AFS vectors for various `Ne` values. Plot those AFS and observe how (and why?) do they differ based on `Ne` you simulated.**
 
 ## Part _a_: Hint
 
@@ -1317,9 +1317,9 @@ You can start building `model2.R` from this "template":
 library(slendr); init_env()
 
 simulate_afs <- function(Ne) {
-  ... AFS code taken from slides: population(), compile_model(), msprime() ...
+  ... your one-population model code: population(), compile_model(), msprime() ...
   
-  result <- ... compute AFS using ts_afs(), save it to `result` ...
+  result <- ... compute AFS using ts_afs() on 10 samples, save it to `result` ...
 
   return(result)
 }
@@ -1329,12 +1329,12 @@ plot(afs_1, type ="o")
 ```
 
 ::: fragment
-When used in R, it should work like this:
+When used in R, your function should work like this:
 
 ```{r}
 #| echo: false
 simulate_afs <- function(Ne) {
-  n <- 10 + 1 # 1 is for the fixed sites included by tskit
+  n <- 20 # 1 is for the fixed sites included by tskit
   theta <- 4 * 1e-8 * Ne * 100e6
   round(theta * 1/1:n)
 }
