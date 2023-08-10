@@ -535,7 +535,7 @@ library(dplyr)
 
 ## Creating a `population()`
 
-Each needs a name, size and time of appearance (i.e., "split"):
+Each needs a name, size and time of appearance:
 
 ```{r}
 pop1 <- population("pop1", N = 1000, time = 1)
@@ -653,6 +653,8 @@ We can schedule `gene_flow()` from `pop1` into `pop2` with:
 ```{r}
 gf <- gene_flow(from = pop1, to = pop2, start = 2000, end = 2200, rate = 0.13)
 ```
+
+Here `rate = 0.13` means 13% migrants over the given time window will come from "pop1" into "pop2".
 
 . . .
 
