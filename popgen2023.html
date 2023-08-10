@@ -594,7 +594,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.500 0.491 0.481 0.494 0.476 0.467 0.459 0.458 0.475 0.496</code></pre>
+<pre><code> [1] 0.500 0.492 0.516 0.499 0.490 0.486 0.468 0.481 0.483 0.466</code></pre>
 </div>
 </div>
 </div>
@@ -1196,7 +1196,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmpbc5qNk/filea720759be4df </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpRTiVBR/fileac055d79adc0 </code></pre>
 </div>
 </div>
 </section>
@@ -1603,7 +1603,7 @@ But how do we work with this <code>ts</code> thing?
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4022 1831 1241  945  775  666  628  505  494  408</code></pre>
+<pre><code> [1] 4221 1952 1256  961  743  695  594  432  436  359</code></pre>
 </div>
 </div>
 </div>
@@ -1738,11 +1738,12 @@ But how do we work with this <code>ts</code> thing?
 <ul>
 <li><p><strong>Compute <span class="math inline">\(f_4\)</span> test of Neanderthal introgression in EUR:</strong></p>
 <ul>
-<li><p>hint: check the values of these two statistics:</p>
+<li><p>Hint: check the values of these two statistics (<code>ts_f4()</code>):</p>
 <ul>
 <li><span class="math inline">\(f_4\)</span>(&lt;afr&gt;, &lt;eur&gt;; &lt;neand&gt;, &lt;chimp&gt;)</li>
 <li><span class="math inline">\(f_4\)</span>(&lt;afr1&gt;, &lt;afr2&gt;; &lt;neand&gt;, &lt;chimp&gt;)]</li>
 </ul></li>
+<li><p>Is one “much more negative” than the other as expected assuming introgression?</p></li>
 </ul></li>
 <li><p>You’ve learned about symmetries in <span class="math inline">\(f_4\)</span> depending on the arrangement of the “quartet”. <strong>How many unique <span class="math inline">\(f_4\)</span> values involving a single quartet can you find and why?</strong> (When computing <code>ts_f4()</code> here, set <code>mode = "branch"</code>).</p></li>
 </ul>
@@ -1947,9 +1948,9 @@ $NEA
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  578          1          1          1          1          1          1
-2 1111          0          0          0          0          0          1
-3 3838          0          0          1          0          0          0</code></pre>
+1  390          0          0          0          0          1          0
+2 1064          0          0          0          0          0          1
+3 1786          0          0          1          1          0          0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

@@ -1459,10 +1459,12 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
 
 - **Compute $f_4$ test of Neanderthal introgression in EUR:**
 
-    + hint: check the values of these two statistics:
+    + Hint: check the values of these two statistics (`ts_f4()`):
     
         + $f_4$(\<afr\>, \<eur\>; \<neand\>, \<chimp\>)
         + $f_4$(\<afr1\>, \<afr2\>; \<neand\>, \<chimp\>)\]
+        
+    + Is one "much more negative" than the other as expected assuming introgression?
     
 - You've learned about symmetries in $f_4$ depending on the arrangement of the "quartet". **How many unique $f_4$ values involving a single quartet can you find and why?** (When computing `ts_f4()` here, set `mode = "branch"`).
 
