@@ -27,14 +27,16 @@ This README summarizes steps needed to set up your machine for the lecture and e
 
 ## If you want to use the RStudio server provided for the course
 
-**If you want to use** the [online RStudio server](http://emily.popgen.dk:3838/) provided by the course organizers, you should run this bit of code in the R console after you log in:
+**I was told this `setup_env()` was already ran for every participant. You don't have to do the below step yourself then, but I'm leaving it here regardless in case you run into trouble.**
+
+If you want to use the [online RStudio server](http://emily.popgen.dk:3838/) provided by the course organizers, you should run this bit of code in the R console after you log in:
 
 ```
 library(slendr)
 setup_env(agree = TRUE)
 ```
 
-This will automatically install and set up necessary Python modules. **The server is quite slow, so the process can easily take five or more minutes!**
+This will automatically install and set up necessary Python modules. The server is quite slow, so the process can easily take five or more minutes!
 
 ## If you want to use your computer (just in case the server is slow)
 
