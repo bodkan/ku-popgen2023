@@ -14,7 +14,7 @@ gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 55000, end = 50000)
 
 model <- compile_model(
   populations = list(chimp, nea, afr, eur),
-  gene_flow = gf,  # <-------------------------- we need to compile this too
+  gene_flow = gf,
   generation_time = 30
 )
 

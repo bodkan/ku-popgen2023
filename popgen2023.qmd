@@ -7,15 +7,15 @@ author:
 date: "August 2023"
 date-format: "MMMM YYYY"
 format:
-  # revealjs:
-  #   echo: true
-  #   code-line-numbers: false
-  #   fig-align: center
-  #   slide-number: true
-  html:
+  revealjs:
     echo: true
     code-line-numbers: false
     fig-align: center
+    slide-number: true
+  # html:
+  #   echo: true
+  #   code-line-numbers: false
+  #   fig-align: center
 ---
 
 # First things first
@@ -632,11 +632,47 @@ pop5 <-
 pop5
 ```
 
+
+
+
+
+## Gene flow / admixture
+
+We can schedule `gene_flow()` from `pop1` into `pop2` with:
+
+```{r}
+gf <- gene_flow(from = pop1, to = pop2, start = 2000, end = 2200, rate = 0.13)
+```
+
+. . .
+
+<br>
+
+Multiple gene-flow events can be gathered in a list:
+
+```{r}
+#| eval: false
+gf <- list(
+  gene_flow(from = pop1, to = pop2, start = 500, end = 600, rate = 0.13),
+  gene_flow(from = ..., to = ..., start = ..., end = ..., rate = ...),
+  ...
+)
+```
+
+. . .
+
+<br>
+
+<center>**`gene_flow()` checks for consistency!**</center>
+
+
+
 ## Last step before simulation: `compile_model()`
 
 <br>
 
 ```{r}
+#| code-line-numbers: true
 model <- compile_model(
   list(pop1, pop2, pop3, pop4, pop5),
   generation_time = 1,
@@ -647,6 +683,25 @@ model <- compile_model(
 <br>
 
 <center>**Compilation takes a list of model components, performs internal consistency checks, returns a single model object.**</center>
+
+
+## Last step before simulation: `compile_model()`
+
+<br>
+
+```{r}
+#| code-line-numbers: "3"
+model <- compile_model(
+  list(pop1, pop2, pop3, pop4, pop5),
+  gene_flow = gf,      # <----- in case our model includes gene flow
+  generation_time = 1,
+  simulation_length = 3000
+)
+```
+
+<br>
+
+<center>**Gene flow(s) that we programmed are included<br>via the `gene_flow` argument.**</center>
 
 ## Model summary
 
@@ -661,7 +716,7 @@ model
 ```{r}
 #| fig-width: 7
 #| fig-align: center
-plot_model(model)
+plot_model(model, proportions = TRUE)
 ```
 
 
@@ -688,14 +743,13 @@ Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this "
 
 ```{r}
 #| eval: false
-library(slendr)
-init_env()
+library(slendr); init_env()
 
-chimp <- population("CHIMP", time = 7e6, N = 5000)
-# <... rest of your code ...>
+# <... population definitions ...>
 
 model <- compile_model(
-  populations = list(chimp, ...),
+  populations = list(...),
+  gene_flow = <...>,
   generation_time = 30
 )
 
@@ -722,7 +776,11 @@ If applicable, include bottlenecks, expansions, etc. Don't hesitate to make it a
 
 <br>
 
-Save it in a different script&mdash;you will use it in later exercises.
+Use `plot_model()` to check your model visually.
+
+<br>
+
+Save it all in a different R script&mdash;you will use it in a later exercise.
 
 # Exercise #1: solution
 
@@ -1319,6 +1377,9 @@ simulate_afs <- function(Ne) {
 afs_1k  <- simulate_afs(Ne = 1000)
 afs_12k <- simulate_afs(Ne = 12000)
 <...>
+  
+afs_observed <- c(2520, 1449, 855, 622, 530, 446, 365, 334, 349, 244,
+                  264, 218,  133, 173, 159, 142, 167, 129, 125, 143)
 
 <... some plotting or statistics ...>
 ```
@@ -1342,69 +1403,6 @@ See [`ex2_grid.R`](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/e
 
 
 
-# Gene flow / admixture
-
-## We use the function `gene_flow()`
-
-<br>
-
-If we have populations `p1` and `p2`, we schedule gene flow as:
-
-```{r}
-#| eval: false
-gf <- gene_flow(from = p1, to = p2, start = 500, end = 600, rate = 0.13)
-```
-
-. . .
-
-<br>
-
-Multiple gene-flow events can be gathered in a list:
-
-```{r}
-#| eval: false
-gf <- list(
-  gene_flow(from = p1, to = p2, start = 500, end = 600, rate = 0.13),
-  gene_flow(from = ..., to = ..., start = ..., end = ..., rate = ...),
-  ...
-)
-```
-
-. . .
-
-<br>
-
-<center>**`gene_flow()` checks for consistency!**</center>
-
-
-## Plugging gene flow(s) into a model
-
-<br>
-In a _slendr_ script with your model, you can do this:
-<br>
-
-```{r}
-#| eval: false
-#| code-line-numbers: 3-7|9-13|11
-<... population() definitions ...>
-
-gf <- list(
-  gene_flow(from = ... to = ..., start = ..., end = ..., rate = ...),
-  gene_flow(from = ..., to = ..., start = ..., end = ..., rate = ...),
-  ...
-)
-
-model <- compile_model(
-  populations = list(...),
-  gene_flow = gf,           # <--- gene flow(s) specified
-  generation_time = <...>
-)
-```
-
-
-
-
-
 # Exercise #3
 
 <br><br><br><br>
@@ -1413,88 +1411,29 @@ model <- compile_model(
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
-## Exercise #3: adding gene flow
+## Exercise #3: more statistics! (a)
 
-Add NEA → EUR introgression to your `model1.R` script:
-
-```{r}
-#| echo: false
-#| fig-align: center
-chimp <- population("CHIMP", time = 7e6, N = 5000)
-afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
-eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
-nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
-
-model <- compile_model(populations = list(chimp, nea, afr, eur), generation_time = 30)
-
-cowplot::plot_grid(
-  plot_model(model) + ggtitle("Normal time scale"),
-  plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
-)
-```
-
-&nbsp;
-
-## Exercise #3: adding gene flow
-
-Add NEA → EUR introgression to your `model1.R` script:
-
-```{r}
-#| echo: false
-#| fig-align: center
-gf <- gene_flow(nea, eur, start = 55000, end = 50000, rate = 0.03)
-model <- compile_model(populations = list(chimp, nea, afr, eur), gene_flow = gf, generation_time = 30)
-cowplot::plot_grid(
-  plot_model(model, proportions = TRUE) + ggtitle("Normal time scale"),
-  plot_model(model, log = TRUE, proportions = TRUE) + ggtitle("Logarithmic time scale")
-)
-```
-
-3% pulse (`rate = 0.03`) between 55-50 kya (`start`-`end`)
-
-
-# Exercise #3: solution
-
-<br><br><br><br>
-
-::: aside
-See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3_ex4.R) for a solution.
-:::
-
-
-
-
-
-
-
-
-
-
-
-
-# Exercise #4
-
-<br><br><br><br>
-
-::: aside
-Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
-:::
-
-## Exercise #4: more statistics! (a)
-
-Simulate a `ts` tree sequence from your complete Neanderthal introgression model in `model1.R`.
+Simulate a 50Mb tree sequence `ts` from your introgression model in `model1.R` using `msprime()`.
 
 ```{r}
 #| fig-align: center
 #| fig-height: 5
 #| fig-width: 7
 #| echo: false
+chimp <- population("CHIMP", time = 7e6, N = 5000)
+afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
+eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
+nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
+
+gf <- gene_flow(nea, eur, start = 55000, end = 50000, rate = 0.03)
+model <- compile_model(populations = list(chimp, nea, afr, eur), gene_flow = gf, generation_time = 30)
+
 plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
 
 (Remember to add mutations with `ts_mutate()`.)
 
-## Exercise #4: more statistics! (b)
+## Exercise #3: more statistics! (b)
 
 **In `model1.R` compute (some of) these on your `ts` object:**
 
@@ -1508,20 +1447,18 @@ plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), l
     
 **You can find help by typing `?ts_diversity` etc. into R!**
 
-## Exercise #4: more statistics! (c)
+## Exercise #3: more statistics! (c)
 
 - **Compute $f_4$ test of Neanderthal introgression in EUR:**
 
     + hint: check the values of these two statistics:
     
-        - $f_4$(\<afr\>, \<eur\>; \<neand\>, \<chimp\>)
-        - $f_4$(\<afr1\>, \<afr2\>; \<neand\>, \<chimp\>)\]
+        + $f_4$(\<afr\>, \<eur\>; \<neand\>, \<chimp\>)
+        + $f_4$(\<afr1\>, \<afr2\>; \<neand\>, \<chimp\>)\]
+    
+- You've learned about symmetries in $f_4$ depending on the arrangement of the "quartet". **How many unique $f_4$ values involving a single quartet can you find and why?** (When computing `ts_f4()` here, set `mode = "branch"`).
 
-<be>
-
-- You've learned about symmetries in $f_4$ depending on the arrangement of the "quartet". **How many unique $f_4$ values involving a quartet can you find and why?** (When computing `ts_f4()` here, set `mode = "branch"`).
-
-## Exercise #4: hint
+## Exercise #3: hint
 
 For multipopulation statistics, you need a (named) list of samples recorded in each population.
 
@@ -1549,12 +1486,12 @@ ts_diversity(ts, sample_sets = samples)
 
 
 
-# Exercise #4: solution
+# Exercise #3: solution
 
 <br><br><br><br>
 
 ::: aside
-See [`ex3_ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3_ex4.R) for a solution.
+See [`ex3.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex3.R) for a solution.
 :::
 
 
@@ -1653,7 +1590,7 @@ ts_samples(ts)
 ```
 
 
-# Exercise #5
+# Exercise #4
 
 <br><br><br><br>
 
@@ -1661,7 +1598,7 @@ ts_samples(ts)
 Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts for reference.
 :::
 
-## Exercise #5a: ancient samples
+## Exercise #4a: ancient samples
 
 Let's return to your introgression model:
 
@@ -1685,7 +1622,7 @@ model <- compile_model(
 plot_model(model, proportions = TRUE, order = c("NEA", "EUR", "AFR", "CHIMP"), log = TRUE)
 ```
 
-## Exercise #5a: ancient samples
+## Exercise #4a: ancient samples
 
 Simulate data from your model using this sampling:
 
@@ -1705,7 +1642,7 @@ ts <-
   ts_mutate(mutation_rate = 1e-8)
 ```
 
-## Exercise #5b: $f_4$-ratio statistic
+## Exercise #4b: $f_4$-ratio statistic
 
 Use $f_4$-ratio statistic to replicate the [following figure](https://www.pnas.org/doi/10.1073/pnas.1814338116#fig01):
 
@@ -1715,12 +1652,12 @@ Use $f_4$-ratio statistic to replicate the [following figure](https://www.pnas.o
 Hint: You can compute Neanderthal ancestry for a vector of individuals `X` as `ts_f4ratio(ts, X = X, "NEA_1", "NEA_2", "AFR_1", "CHIMP_1")`.
 :::
 
-# Exercise #5: solution
+# Exercise #4: solution
 
 <br><br><br><br>
 
 ::: aside
-See [`ex5.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex5.R) for a solution.
+See [`ex4.R` script on GitHub](https://github.com/bodkan/ku-popgen2023/blob/main/solutions/ex4.R) for a solution.
 :::
 
 
