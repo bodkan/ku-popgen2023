@@ -594,7 +594,7 @@ Single-locus<br>Wright-Fisher<br>simulation in R
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.500 0.496 0.504 0.511 0.493 0.492 0.506 0.529 0.512 0.511</code></pre>
+<pre><code> [1] 0.500 0.521 0.544 0.529 0.536 0.563 0.556 0.555 0.548 0.556</code></pre>
 </div>
 </div>
 </div>
@@ -1133,7 +1133,9 @@ population history overview:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gf <span class="ot">&lt;-</span> <span class="fu">gene_flow</span>(<span class="at">from =</span> pop1, <span class="at">to =</span> pop2, <span class="at">start =</span> <span class="dv">2000</span>, <span class="at">end =</span> <span class="dv">2200</span>, <span class="at">rate =</span> <span class="fl">0.13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="fragment">
 <p>Here <code>rate = 0.13</code> means 13% migrants over the given time window will come from “pop1” into “pop2”.</p>
+</div>
 <div class="fragment">
 <p><br></p>
 <p>Multiple gene-flow events can be gathered in a list:</p>
@@ -1144,12 +1146,6 @@ population history overview:
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="fragment">
-<p><br></p>
-<center>
-<strong><code>gene_flow()</code> checks for consistency!</strong>
-</center>
 </div>
 </section>
 <section id="last-step-before-simulation-compile_model" class="slide level2">
@@ -1200,7 +1196,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/Rtmptr5GTa/file8dc917c4f497 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpSY0iWI/file9a8a4ad93c97 </code></pre>
 </div>
 </div>
 </section>
@@ -1221,9 +1217,9 @@ configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T
 <h3>
 Link: <a href="https://github.com/bodkan/ku-popgen2023">github.com/bodkan/ku-popgen2023</a>
 </h3>
-<p>Open the two red-highlighted links.</p>
+<p>Open the relevant red-highlighted links:</p>
 <center>
-<img data-src="images/github.png">
+<img data-src="images/github.png" style="width:80.0%">
 </center>
 </section>
 <section id="exercise-1-write-this-model-in-slendr" class="slide level2">
@@ -1237,15 +1233,16 @@ Link: <a href="https://github.com/bodkan/ku-popgen2023">github.com/bodkan/ku-pop
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slendr); <span class="fu">init_env</span>()</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;... population definitions ...&gt;</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">compile_model</span>(</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">populations =</span> <span class="fu">list</span>(...),</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">gene_flow =</span> <span class="sc">&lt;</span>...<span class="sc">&gt;</span>,</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">generation_time =</span> <span class="dv">30</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(model) <span class="co"># verify visually</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>... population definitions ...<span class="sc">&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>... gene flow definition ...<span class="sc">&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">compile_model</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">populations =</span> <span class="fu">list</span>(...),</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">gene_flow =</span> <span class="sc">&lt;</span>...<span class="sc">&gt;</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">generation_time =</span> <span class="dv">30</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(model) <span class="co"># verify visually</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1606,7 +1603,7 @@ But how do we work with this <code>ts</code> thing?
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4132 2101 1262 1028  916  744  516  443  420  316</code></pre>
+<pre><code> [1] 4061 2154 1258  902  715  586  627  605  557  443</code></pre>
 </div>
 </div>
 </div>
@@ -1948,10 +1945,10 @@ $NEA
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>  pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1 521          1          1          0          1          1          1
-2 918          1          0          0          1          1          1
-3 982          0          0          1          0          0          0</code></pre>
+<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1 1464          0          0          0          0          0          1
+2 3047          1          0          0          0          0          0
+3 4321          0          1          1          1          0          1</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

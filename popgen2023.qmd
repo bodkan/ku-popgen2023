@@ -654,6 +654,8 @@ We can schedule `gene_flow()` from `pop1` into `pop2` with:
 gf <- gene_flow(from = pop1, to = pop2, start = 2000, end = 2200, rate = 0.13)
 ```
 
+. . .
+
 Here `rate = 0.13` means 13% migrants over the given time window will come from "pop1" into "pop2".
 
 . . .
@@ -670,13 +672,6 @@ gf <- list(
   ...
 )
 ```
-
-. . .
-
-<br>
-
-<center>**`gene_flow()` checks for consistency!**</center>
-
 
 
 ## Last step before simulation: `compile_model()`
@@ -740,9 +735,9 @@ plot_model(model, proportions = TRUE)
 
 <h3>Link: [github.com/bodkan/ku-popgen2023](https://github.com/bodkan/ku-popgen2023)</h3>
 
-Open the two red-highlighted links.
+Open the relevant red-highlighted links:
 
-<center>![](images/github.png)</center>
+<center>![](images/github.png){width="80%"}</center>
 
 
 ## Exercise #1: write this model in _slendr_
@@ -762,7 +757,8 @@ Start a `model1.R` script in [RStudio](http://emily.popgen.dk:3838/) with this "
 #| eval: false
 library(slendr); init_env()
 
-# <... population definitions ...>
+<... population definitions ...>
+<... gene flow definition ...>
 
 model <- compile_model(
   populations = list(...),
