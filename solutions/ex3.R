@@ -28,6 +28,8 @@ model <- compile_model(
 plot_model(model, proportions = TRUE)
 plot_model(model, proportions = TRUE, log = TRUE)
 
+# if the command below takes way too much time to run, feel free to go down from
+# 100 Mb sequence_length to even 10Mb (it doesn't matter much)
 ts <-
   msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
