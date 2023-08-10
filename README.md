@@ -2,13 +2,12 @@
 
 *These lecture materials were originally part of the ["Summer course in analysis of high throughput data for population genetics 2023"](http://popgen.dk/popgen23/).*
 
+# Open your RStudio [here](http://emily.popgen.dk:3838)
 ------------------------------------------------------------------------
 
 ### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content)
 
 ### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises)
-
-### You can login to the online RStudio session here: [emily.popgen.dk:3838](http://emily.popgen.dk:3838)
 
 ### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework')
 
