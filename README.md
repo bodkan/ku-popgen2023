@@ -4,11 +4,13 @@
 
 ------------------------------------------------------------------------
 
-### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content).
+### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content)
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises).
+### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises)
 
-### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework').
+### You can login to the online RStudio session here: [emily.popgen.dk:3838](http://emily.popgen.dk:3838)
+
+### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework')
 
 ------------------------------------------------------------------------
 
@@ -33,7 +35,7 @@ setup_env(agree = TRUE)
 
 This will automatically install and set up necessary Python modules. **The server is quite slow, so the process can easily take five or more minutes!**
 
-## If you want to use your computer (the server can be slow)
+## If you want to use your computer (just in case the server is slow)
 
 You will need:
 
