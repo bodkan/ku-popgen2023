@@ -2,16 +2,23 @@ library(slendr)
 init_env()
 
 
-# Exercise #3 ------------------------------------------------------------------
+# Exercise #1 ------------------------------------------------------------------
 
+# chimpanzee outgroup
 chimp <- population("CHIMP", time = 7e6, N = 5000)
+
+# two populations of anatomically modern humans: Africans and Europeans
 afr <- population("AFR", parent = chimp, time = 6e6, N = 15000)
 eur <- population("EUR", parent = afr, time = 70e3, N = 3000)
+
+# Neanderthal population splitting at 600 ky ago from modern humans
+# (becomes extinct by 40 ky ago)
 nea <- population("NEA", parent = afr, time = 600e3, N = 1000, remove = 40e3)
 
-# this is a thing we added to the base model without gene flow
+# Neanderthal introgression event (3% admixture between 55-50 kya)
 gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 55000, end = 50000)
 
+# compile the entire model into a single object
 model <- compile_model(
   populations = list(chimp, nea, afr, eur),
   gene_flow = gf,
@@ -25,6 +32,8 @@ ts <-
   msprime(model, sequence_length = 100e6, recombination_rate = 1e-8) %>%
   ts_mutate(mutation_rate = 1e-8)
 
+# ts_save(ts, "ex3.trees")
+# ts <- ts_load("ex3.trees", model)
 
 # Exercise #4 ------------------------------------------------------------------
 
@@ -36,13 +45,18 @@ library(ggplot2)
 samples <- ts_names(ts, split = "pop")
 samples
 
-# compute diversity
+lapply(samples, head, 5) # get just 5 samples from each population
+
+# compute nucleotide diversity (pi) in each population
 
 pi <- ts_diversity(ts, sample_sets = samples)
 
 arrange(pi, diversity)
 
-# compute divergence
+# heterozygosity in a single sample
+ts_diversity(ts, "NEA_1")
+
+# compute pairwise population divergence
 
 div <- ts_divergence(ts, sample_sets = samples)
 
@@ -65,31 +79,21 @@ ts_f3(ts, B = samples["EUR"], C = samples["NEA"], A = "CHIMP_1")
 
 # outgroup f3 as a linear combination of f2 statistics
 
-# mutation-based version
-ts_f3(ts, B = "AFR_1", C = "AFR_2", A = "CHIMP_1")
-
-my_f3 <- (
-  ts_f2(ts, A = "AFR_1", B = "CHIMP_1")$f2 +
-  ts_f2(ts, A = "AFR_2", B = "CHIMP_1")$f2 -
-  ts_f2(ts, A = "AFR_1", B = "AFR_2")$f2
-) / 2
-
-my_f3
-
 # branch-based version
 ts_f3(ts, B = "AFR_1", C = "AFR_2", A = "CHIMP_1", mode = "branch")
 
 my_f3 <- (
   ts_f2(ts, A = "AFR_1", B = "CHIMP_1", mode = "branch")$f2 +
-    ts_f2(ts, A = "AFR_2", B = "CHIMP_1", mode = "branch")$f2 -
-    ts_f2(ts, A = "AFR_1", B = "AFR_2", mode = "branch")$f2
+  ts_f2(ts, A = "AFR_2", B = "CHIMP_1", mode = "branch")$f2 -
+  ts_f2(ts, A = "AFR_1", B = "AFR_2", mode = "branch")$f2
 ) / 2
 my_f3
 
 
 # admixture detection -----------------------------------------------------
 
-# D(AFR, EUR; NEA, CHIMP)
+# D(AFR, EUR; NEA, CHIMP)      ~  (BABA - ABBA) / (BABA + ABBA)
+
 
 ts_f4(ts, W = "AFR_1", X = "AFR_2", Y = "NEA_1", Z = "CHIMP_1")
 
@@ -124,7 +128,7 @@ quartet <- c("AFR_1", "EUR_1", "NEA_1", "CHIMP_1")
 quartets <- combinat::permn(quartet)
 
 # how many permutations there are in total?
-# 4! = 4 * 3 * 2 * 1 = 24
+#   4! = 4 * 3 * 2 * 1 = 24
 
 length(quartets)
 
@@ -132,8 +136,8 @@ length(quartets)
 all_f4s <- lapply(quartets, function(q) ts_f4(ts, q[1], q[2], q[3], q[4], mode = "branch"))
 
 # bind the list of f4 results into a single data frame
-all_f4s <- do.call(rbind, all_f4s) %>% dplyr::arrange(abs(f4)) %>% as.data.frame()
-all_f4s
+all_f4s <- bind_rows(all_f4s) %>% arrange(abs(f4))
+print(all_f4s, n = Inf)
 
-unique(all_f4s$f4)
-unique(abs(all_f4s$f4))
+distinct(all_f4s, f4, .keep_all = TRUE)
+distinct(all_f4s, abs(f4), .keep_all = TRUE)

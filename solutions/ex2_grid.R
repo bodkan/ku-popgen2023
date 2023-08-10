@@ -14,7 +14,7 @@ simulate_afs <- function(Ne) {
   # get a random sample of names of 10 individuals
   samples <- ts_names(ts) %>% sample(10)
   
-  # compute the AFS vector (dropping the 0-th element added by tskit)
+  # compute the AFS vector (dropping the '0-th' element added by tskit)
   afs <- ts_afs(ts, list(samples))[-1]
   
   afs
@@ -48,7 +48,6 @@ errors <- sapply(afs_grid, function(sim_afs) {
 
 plot(Ne_grid, errors, ylab = "error")
 abline(v = Ne_grid[which.min(errors)], col = "red")
-# abline(v = TRUE_NE, col = "black")
 legend("topright", legend = paste("minimum error Ne =", Ne_grid[which.min(errors)]), fill = "red")
 
 # Plot the AFS again, highlighting the most likely spectrum
