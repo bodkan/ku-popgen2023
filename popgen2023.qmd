@@ -1356,7 +1356,7 @@ samples <- ts_names(ts) %>% sample(10)
 afs_observed <- ts_afs(ts, list(samples))
 ```
 
-Imagine you sequenced 10 samples from a population and computed this AFS vector (# singletons, doubletons, etc.):
+Imagine you sequenced 10 samples from a population and computed this AFS vector in R (# singletons, doubletons, etc.):
 
 <!-- dput(as.vector(observed_afs)) -->
 
@@ -1413,7 +1413,7 @@ Use [these](https://bodkan.quarto.pub/ku-popgen2023-onepage/) one-page handouts 
 
 ## Exercise #3: more statistics! (a)
 
-Use `msprime()` to simulate a 50Mb tree sequence `ts` from your introgression model in `model1.R`.
+Use `msprime()` to simulate a 50Mb tree sequence `ts` from your introgression model in `model1.R` (if that takes more than two minutes, try just 10Mb).
 
 ```{r}
 #| fig-align: center

@@ -1188,7 +1188,7 @@ time direction: forward
 total running length: 3000 model time units
 model type: non-spatial
 
-configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpKH3ani/file4e062bf153b2 </code></pre>
+configuration files in: /private/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T/RtmpCQG89Y/file6d737e4a724f </code></pre>
 </div>
 </div>
 </section>
@@ -1594,7 +1594,7 @@ But how do we work with this <code>ts</code> thing?
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>afs[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3726 1953 1275  935  840  625  568  499  364  397</code></pre>
+<pre><code> [1] 3975 1973 1433  997  813  668  585  495  478  412</code></pre>
 </div>
 </div>
 </div>
@@ -1665,7 +1665,7 @@ But how do we work with this <code>ts</code> thing?
 </section>
 <section id="part-b-estimating-ne-using-afs" class="slide level2">
 <h2>Part <em>b</em>: Estimating Ne using AFS</h2>
-<p>Imagine you sequenced 10 samples from a population and computed this AFS vector (# singletons, doubletons, etc.):</p>
+<p>Imagine you sequenced 10 samples from a population and computed this AFS vector in R (# singletons, doubletons, etc.):</p>
 <!-- dput(as.vector(observed_afs)) -->
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>afs_observed <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2520</span>, <span class="dv">1449</span>, <span class="dv">855</span>, <span class="dv">622</span>, <span class="dv">530</span>, <span class="dv">446</span>, <span class="dv">365</span>, <span class="dv">334</span>, <span class="dv">349</span>, <span class="dv">244</span>,</span>
@@ -1706,7 +1706,7 @@ But how do we work with this <code>ts</code> thing?
 </div></aside></section>
 <section id="exercise-3-more-statistics-a" class="slide level2">
 <h2>Exercise #3: more statistics! (a)</h2>
-<p>Use <code>msprime()</code> to simulate a 50Mb tree sequence <code>ts</code> from your introgression model in <code>model1.R</code>.</p>
+<p>Use <code>msprime()</code> to simulate a 50Mb tree sequence <code>ts</code> from your introgression model in <code>model1.R</code> (if that takes more than two minutes, try just 10Mb).</p>
 
 <img data-src="popgen2023_files/figure-revealjs/unnamed-chunk-52-1.png" width="672" class="r-stretch quarto-figure-center"><p>(Remember to add mutations with <code>ts_mutate()</code>.)</p>
 </section>
@@ -1936,10 +1936,10 @@ $NEA
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>   pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
-1  267          0          0          1          0          1          0
-2  927          0          1          1          0          1          0
-3 1456          0          1          0          0          0          0</code></pre>
+<pre><code>  pos EUR_1_chr1 EUR_1_chr2 EUR_2_chr1 EUR_2_chr2 AFR_1_chr1 AFR_1_chr2
+1 117          1          1          1          1          0          0
+2 756          0          0          0          0          1          0
+3 937          0          0          0          0          1          1</code></pre>
 </div>
 </div>
 <div class="footer footer-default">
