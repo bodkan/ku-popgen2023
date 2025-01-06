@@ -7,9 +7,9 @@
 ### remote participants: http://cloud.popgen.dk:3838
 ------------------------------------------------------------------------
 
-### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content)
+### You can find the slides [here](popgen2023.html) (lecture, exercises, bonus content)
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises)
+**It's better if you download the whole repository first and open the slides from there (to get proper links to all images and plots).**
 
 ### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework')
 
