@@ -7,9 +7,9 @@
 ### remote participants: http://cloud.popgen.dk:3838
 ------------------------------------------------------------------------
 
-### You can find the slides [here](https://bodkan.quarto.pub/ku-popgen2023/) (lecture, exercises, bonus content)
+### You can find the slides [here](popgen2023.html) (lecture, exercises, bonus content)
 
-### [Here](https://bodkan.quarto.pub/ku-popgen2023-onepage/) is a one-page version (useful for reference while doing the exercises)
+**It's better if you download the whole repository first and open the slides from there (to get proper links to all images and plots).**
 
 ### [Here](https://github.com/bodkan/ku-popgen2023/tree/main/solutions) are solutions to Exercises #1-#3 (#4 is a 'homework')
 
@@ -110,3 +110,13 @@ RStudio sometimes interferes with Python which is needed for simulations.
 Go to `Tools` → `Global Options` in your RStudio and set the following options like this:
 
 ![](images/rstudio_setting.png)
+
+---
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
